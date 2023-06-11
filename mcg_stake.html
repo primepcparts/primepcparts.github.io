@@ -67,130 +67,6 @@
     <aside id="sidebar" class="sidebar">
 
     </aside><!-- End Sidebar-->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Connect to MetaMask provider
-            async function connectToMetaMask() {
-                // Check if MetaMask is installed
-                if (typeof window.ethereum !== 'undefined') {
-                    // Create a Web3 instance
-                    const web3 = new Web3(window.ethereum);
-
-                    try {
-                        // Request access to user's MetaMask accounts
-                        await window.ethereum.enable();
-
-                        // Get selected account
-                        const accounts = await web3.eth.getAccounts();
-                        const selectedAccount = accounts[0];
-
-                        // Display selected account
-                        console.log('Connected to MetaMask with account:', selectedAccount);
-
-                        // Change button text to "Connected"
-                        document.getElementById('connectButton').innerText = 'Connected';
-                        document.getElementById('connectButton').disabled = true;
-
-                        // Retrieve BEP-20 token details
-                        const tokenContractAddress = '0x332B51aD765541C7a965feD1C7332c6F7CF3B9C5';
-
-                        // Load BEP-20 token contract ABI
-                        const tokenContractABI = [
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "name",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "string"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "symbol",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "string"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "totalSupply",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "decimals",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint8"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            }
-                        ];
-
-                        // Create a token contract instance
-                        const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
-
-                        // Get token name
-                        const tokenName = await tokenContract.methods.name().call();
-                        console.log('Token Name:', tokenName);
-
-                        // Get token symbol
-                        const tokenSymbol = await tokenContract.methods.symbol().call();
-                        console.log('Token Symbol:', tokenSymbol);
-
-                        // Get token total supply
-                        const totalSupply = await tokenContract.methods.totalSupply().call();
-                        console.log('Total Supply:', totalSupply);
-
-                        // Get token decimals
-                        const decimals = await tokenContract.methods.decimals().call();
-                        console.log('Decimals:', decimals);
-
-                        // Display token details on the page
-                        document.getElementById('tokenName').innerText = `Token Name: ${tokenName}`;
-                        document.getElementById('tokenSymbol').innerText = `Token Symbol: ${tokenSymbol}`;
-                        document.getElementById('totalSupply').innerText = `Total Supply: ${totalSupply}`;
-                        document.getElementById('decimals').innerText = `Decimals: ${decimals}`;
-
-                        // You can perform other token-related operations as needed
-
-                    } catch (error) {
-                        console.error('Error connecting to MetaMask:', error);
-                    }
-                } else {
-                    console.error('MetaMask not detected. Please install MetaMask extension.');
-                }
-            }
-        });
-    </script>
-
     <main id="main" class="main">
         <div class="pagetitle">
             <hr>
@@ -221,7 +97,129 @@
                 </div>
             </div>
         </section>
-
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Connect to MetaMask provider
+                async function connectToMetaMask() {
+                    // Check if MetaMask is installed
+                    if (typeof window.ethereum !== 'undefined') {
+                        // Create a Web3 instance
+                        const web3 = new Web3(window.ethereum);
+    
+                        try {
+                            // Request access to user's MetaMask accounts
+                            await window.ethereum.enable();
+    
+                            // Get selected account
+                            const accounts = await web3.eth.getAccounts();
+                            const selectedAccount = accounts[0];
+    
+                            // Display selected account
+                            console.log('Connected to MetaMask with account:', selectedAccount);
+    
+                            // Change button text to "Connected"
+                            document.getElementById('connectButton').innerText = 'Connected';
+                            document.getElementById('connectButton').disabled = true;
+    
+                            // Retrieve BEP-20 token details
+                            const tokenContractAddress = '0x332B51aD765541C7a965feD1C7332c6F7CF3B9C5';
+    
+                            // Load BEP-20 token contract ABI
+                            const tokenContractABI = [
+                                {
+                                    "constant": true,
+                                    "inputs": [],
+                                    "name": "name",
+                                    "outputs": [
+                                        {
+                                            "name": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "payable": false,
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "constant": true,
+                                    "inputs": [],
+                                    "name": "symbol",
+                                    "outputs": [
+                                        {
+                                            "name": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "payable": false,
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "constant": true,
+                                    "inputs": [],
+                                    "name": "totalSupply",
+                                    "outputs": [
+                                        {
+                                            "name": "",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "payable": false,
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "constant": true,
+                                    "inputs": [],
+                                    "name": "decimals",
+                                    "outputs": [
+                                        {
+                                            "name": "",
+                                            "type": "uint8"
+                                        }
+                                    ],
+                                    "payable": false,
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                }
+                            ];
+    
+                            // Create a token contract instance
+                            const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
+    
+                            // Get token name
+                            const tokenName = await tokenContract.methods.name().call();
+                            console.log('Token Name:', tokenName);
+    
+                            // Get token symbol
+                            const tokenSymbol = await tokenContract.methods.symbol().call();
+                            console.log('Token Symbol:', tokenSymbol);
+    
+                            // Get token total supply
+                            const totalSupply = await tokenContract.methods.totalSupply().call();
+                            console.log('Total Supply:', totalSupply);
+    
+                            // Get token decimals
+                            const decimals = await tokenContract.methods.decimals().call();
+                            console.log('Decimals:', decimals);
+    
+                            // Display token details on the page
+                            document.getElementById('tokenName').innerText = `Token Name: ${tokenName}`;
+                            document.getElementById('tokenSymbol').innerText = `Token Symbol: ${tokenSymbol}`;
+                            document.getElementById('totalSupply').innerText = `Total Supply: ${totalSupply}`;
+                            document.getElementById('decimals').innerText = `Decimals: ${decimals}`;
+    
+                            // You can perform other token-related operations as needed
+    
+                        } catch (error) {
+                            console.error('Error connecting to MetaMask:', error);
+                        }
+                    } else {
+                        console.error('MetaMask not detected. Please install MetaMask extension.');
+                    }
+                }
+            });
+        </script>
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
