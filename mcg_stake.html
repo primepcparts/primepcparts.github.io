@@ -234,7 +234,7 @@
                                         "type": "uint256"
                                     }
                                 ],
-                                "name": "stakeTokens",
+                                "name": "stake",
                                 "outputs": [],
                                 "payable": false,
                                 "stateMutability": "nonpayable",
@@ -283,14 +283,14 @@
             }
 
             // Function to stake tokens
-            async function stakeTokens() {
+            async function stake() {
                 const stakeAmount = document.getElementById('stakeAmount').value;
                 const stakingDuration = document.getElementById('stakingDuration').value;
 
                 // Perform staking logic here
                 try {
                     // Call the staking function of the token contract
-                    await tokenContract.methods.stakeTokens(stakeAmount, stakingDuration).send({
+                    await tokenContract.methods.stake(stakeAmount, stakingDuration).send({
                         from: selectedAccount,
                         gas: '500000' // Adjust the gas limit as needed
                     });
