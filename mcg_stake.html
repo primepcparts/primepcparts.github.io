@@ -98,210 +98,90 @@
                             <p id="decimals"></p>
                             <h2>Wallet Balance</h2>
                             <p id="balance"></p>
-
+                            
                             <h2>Stake Tokens</h2>
-                            <input type="number" id="stakeAmount" placeholder="Enter amount to stake" min="0"
-                                step="any" />
+                            <input type="number" id="stakeAmount" placeholder="Enter amount to stake" min="0" step="any" />
                             <select id="stakingDuration">
-                                <option value="86400">1 day</option>
-                                <option value="604800">7 days</option>
+                                <option value="1">1 day</option>
+                                <option value="7">7 days</option>
                             </select>
                             <button onclick="stakeTokens()">Stake</button>
-
+                        
                             <h2>Check Staked Tokens</h2>
                             <button onclick="checkStakedTokens()">Check</button>
                             <p id="stakedTokens"></p>
-
+                        
                             <h2>Unstake Tokens</h2>
-                            <input type="number" id="unstakeAmount" placeholder="Enter amount to unstake" min="0"
-                                step="any" />
+                            <input type="number" id="unstakeAmount" placeholder="Enter amount to unstake" min="0" step="any" />
                             <button onclick="unstakeTokens()">Unstake</button>
                         </div>
                     </div>
-        </section>
+        </section>    
         <script>
             let web3;
             let tokenContract;
             let selectedAccount;
-
+    
             // Connect to MetaMask provider
             async function connectToMetaMask() {
                 // Check if MetaMask is installed
                 if (typeof window.ethereum !== 'undefined') {
                     // Create a Web3 instance
                     web3 = new Web3(window.ethereum);
-
+    
                     try {
                         // Request access to user's MetaMask accounts
                         await window.ethereum.enable();
-
+    
                         // Get selected account
                         const accounts = await web3.eth.getAccounts();
                         selectedAccount = accounts[0];
-
+    
                         // Display selected account
                         console.log('Connected to MetaMask with account:', selectedAccount);
-
+    
                         // Change button text to "Connected"
                         document.getElementById('connectButton').innerText = 'Connected';
                         document.getElementById('connectButton').disabled = true;
-
+    
                         // Retrieve BEP-20 token details
                         const tokenContractAddress = '0xDB8dF27d88Fb2D072531b21d026D5Ee44fBe8000';
-
+    
                         // Load BEP-20 token contract ABI
-                        const tokenContractABI = [
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "name",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "string"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "symbol",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "string"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "totalSupply",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "decimals",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint8"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [
-                                    {
-                                        "name": "_owner",
-                                        "type": "address"
-                                    }
-                                ],
-                                "name": "balanceOf",
-                                "outputs": [
-                                    {
-                                        "name": "balance",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "stakers",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": false,
-                                "inputs": [
-                                    {
-                                        "name": "_amount",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "name": "unstake",
-                                "outputs": [],
-                                "payable": false,
-                                "stateMutability": "nonpayable",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "stake",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            }
-                        ];
-
+                        const tokenContractABI = [{"inputs":[{"internalType":"string","name":"_NAME","type":"string"},{"internalType":"string","name":"_SYMBOL","type":"string"},{"internalType":"uint256","name":"_DECIMALS","type":"uint256"},{"internalType":"uint256","name":"_supply","type":"uint256"},{"internalType":"uint256","name":"_txFee","type":"uint256"},{"internalType":"uint256","name":"_lpFee","type":"uint256"},{"internalType":"uint256","name":"_MAXAMOUNT","type":"uint256"},{"internalType":"uint256","name":"SELLMAXAMOUNT","type":"uint256"},{"internalType":"address","name":"routerAddress","type":"address"},{"internalType":"address","name":"tokenOwner","type":"address"}],"stateMutability":"nonpayable","type":"constructor"}, /*... rest of the ABI */ ];
+    
                         // Create a token contract instance
                         tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
-
+    
                         // Get token name
                         const tokenName = await tokenContract.methods.name().call();
                         console.log('Token Name:', tokenName);
-
+    
                         // Get token symbol
                         const tokenSymbol = await tokenContract.methods.symbol().call();
                         console.log('Token Symbol:', tokenSymbol);
-
+    
                         // Get token total supply
                         const totalSupply = await tokenContract.methods.totalSupply().call();
                         console.log('Total Supply:', totalSupply);
-
+    
                         // Get token decimals
                         const decimals = await tokenContract.methods.decimals().call();
                         console.log('Decimals:', decimals);
-
+    
                         // Display token details on the page
                         document.getElementById('tokenName').innerText = `Token Name: ${tokenName}`;
                         document.getElementById('tokenSymbol').innerText = `Token Symbol: ${tokenSymbol}`;
                         document.getElementById('totalSupply').innerText = `Total Supply: ${totalSupply}`;
                         document.getElementById('decimals').innerText = `Decimals: ${decimals}`;
-
+    
                         // Get token balance of the connected account
                         const balance = await tokenContract.methods.balanceOf(selectedAccount).call();
                         console.log('Balance:', balance);
-
+    
                         // Display token balance on the page
                         document.getElementById('balance').innerText = `Wallet Balance: ${balance}`;
-
+    
                     } catch (error) {
                         console.error('Error connecting to MetaMask:', error);
                     }
@@ -309,12 +189,12 @@
                     console.error('MetaMask not detected. Please install MetaMask extension.');
                 }
             }
-
+    
             // Function to stake tokens
             async function stakeTokens() {
                 const stakeAmount = document.getElementById('stakeAmount').value;
                 const stakingDuration = document.getElementById('stakingDuration').value;
-
+    
                 // Perform staking logic here
                 try {
                     // Call the staking function of the token contract
@@ -322,54 +202,40 @@
                         from: selectedAccount,
                         gas: '500000' // Adjust the gas limit as needed
                     });
-
-                    // Display success message
+    
                     console.log('Tokens staked successfully');
-                    alert('Tokens staked successfully');
-
-                    // Clear the input fields
-                    document.getElementById('stakeAmount').value = '';
-                    document.getElementById('stakingDuration').selectedIndex = 0;
-
                 } catch (error) {
                     console.error('Error staking tokens:', error);
                 }
             }
-
+    
             // Function to check staked tokens
             async function checkStakedTokens() {
-                try {
-                    // Call the getStakedTokens function of the token contract
-                    const stakedTokens = await tokenContract.methods.stakers().call();
-                    console.log('Staked Tokens:', stakedTokens);
-
-                    // Display staked tokens on the page
-                    document.getElementById('stakedTokens').innerText = `Staked Tokens: ${stakedTokens}`;
-
-                } catch (error) {
-                    console.error('Error checking staked tokens:', error);
-                }
+                // Call the stakers function of the token contract to get staked tokens
+                const stakedTokens = await tokenContract.methods.stakers(selectedAccount).call();
+                const stakedAmount = stakedTokens.amount;
+                const stakedDuration = stakedTokens.duration;
+    
+                console.log('Staked Amount:', stakedAmount);
+                console.log('Staked Duration:', stakedDuration);
+    
+                // Display staked tokens on the page
+                document.getElementById('stakedTokens').innerText = `Staked Amount: ${stakedAmount}\nStaked Duration: ${stakedDuration}`;
             }
-
+    
             // Function to unstake tokens
             async function unstakeTokens() {
                 const unstakeAmount = document.getElementById('unstakeAmount').value;
-
+    
                 // Perform unstaking logic here
                 try {
-                    // Call the unstaking function of the token contract
+                    // Call the unstake function of the token contract
                     await tokenContract.methods.unstake(unstakeAmount).send({
                         from: selectedAccount,
                         gas: '500000' // Adjust the gas limit as needed
                     });
-
-                    // Display success message
+    
                     console.log('Tokens unstaked successfully');
-                    alert('Tokens unstaked successfully');
-
-                    // Clear the input field
-                    document.getElementById('unstakeAmount').value = '';
-
                 } catch (error) {
                     console.error('Error unstaking tokens:', error);
                 }
