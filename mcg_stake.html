@@ -148,14 +148,12 @@
                         const tokenContractAddress = '0xDB8dF27d88Fb2D072531b21d026D5Ee44fBe8000';
     
                         // Load BEP-20 token contract ABI
-                        const tokenContractABI = [{"inputs":[{"internalType":"string","name":"_NAME","type":"string"},{"internalType":"string","name":"_SYMBOL","type":"string"},{"internalType":"uint256","name":"_DECIMALS","type":"uint256"},{"internalType":"uint256","name":"_supply","type":"uint256"},{"internalType":"uint256","name":"_txFee","type":"uint256"},{"internalType":"uint256","name":"_lpFee","type":"uint256"},{"internalType":"uint256","name":"_MAXAMOUNT","type":"uint256"},{"internalType":"uint256","name":"SELLMAXAMOUNT","type":"uint256"},{"internalType":"address","name":"routerAddress","type":"address"},{"internalType":"address","name":"tokenOwner","type":"address"}],"stateMutability":"nonpayable","type":"constructor"}, /*... rest of the ABI */ ];
+                        const tokenContractABI = [
+                            //... (Token contract ABI)
+                        ];
     
                         // Create a token contract instance
                         tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
-    
-                        // Get token name
-                        const tokenName = await tokenContract.methods.name().call();
-                        console.log('Token Name:', tokenName);
     
                         // Get token symbol
                         const tokenSymbol = await tokenContract.methods.symbol().call();
@@ -170,7 +168,6 @@
                         console.log('Decimals:', decimals);
     
                         // Display token details on the page
-                        document.getElementById('tokenName').innerText = `Token Name: ${tokenName}`;
                         document.getElementById('tokenSymbol').innerText = `Token Symbol: ${tokenSymbol}`;
                         document.getElementById('totalSupply').innerText = `Total Supply: ${totalSupply}`;
                         document.getElementById('decimals').innerText = `Decimals: ${decimals}`;
