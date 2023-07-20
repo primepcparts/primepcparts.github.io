@@ -244,20 +244,6 @@
                   {
                     "name": "_amount",
                     "type": "uint256"
-                  }
-                ],
-                "name": "unstakeTokens",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "constant": false,
-                "inputs": [
-                  {
-                    "name": "_amount",
-                    "type": "uint256"
                   },
                   {
                     "name": "_duration",
@@ -315,8 +301,14 @@
                 "payable": false,
                 "stateMutability": "view",
                 "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "unstake",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
               }
-
             ];
 
             // Create a token contract instance
@@ -376,20 +368,26 @@
         document.getElementById('stakedTokens').innerText = `Staked Tokens: ${stakedTokens}`;
       }
 
-
       // Function to unstake tokens
       async function unstakeTokens() {
-        const unstakeAmount = document.getElementById('unstakeAmount').value;
+        // Get the staked amount for the selected account
+        const stakedAmount = await tokenContract.methods.stakers(selectedAccount).call();
+
+        // Check if there are any tokens staked
+        if (stakedAmount.amount === '0') {
+          console.error('You do not have any tokens staked to unstake.');
+          return;
+        }
 
         // Perform unstaking logic here
         try {
           // Call the unstake function of the token contract
-          await tokenContract.methods.unstake(unstakeAmount).send({
+          await unstakeContract.methods.unstake().send({
             from: selectedAccount,
             gas: '500000' // Adjust the gas limit as needed
           });
 
-          console.log('Tokens unstaked successfully');
+          console.log('All tokens unstaked successfully');
         } catch (error) {
           console.error('Error unstaking tokens:', error);
         }
