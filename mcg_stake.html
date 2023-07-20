@@ -274,6 +274,7 @@
                 "constant": true,
                 "inputs": [
                   {
+                    "internalType": "address",
                     "name": "account",
                     "type": "address"
                   }
@@ -367,13 +368,14 @@
 
       // Function to check staked tokens
       async function checkStakedTokens() {
-        // Call the getStakedTokens function of the token contract to get staked tokens
-        const stakedTokens = await tokenContract.methods.stakers().call();
+        // Call the stakers function of the token contract to get staked tokens
+        const stakedTokens = await tokenContract.methods.stakers(selectedAccount).call();
         console.log('Staked Tokens:', stakedTokens);
 
         // Display staked tokens on the page
         document.getElementById('stakedTokens').innerText = `Staked Tokens: ${stakedTokens}`;
       }
+
 
       // Function to unstake tokens
       async function unstakeTokens() {
