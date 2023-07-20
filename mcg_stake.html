@@ -368,7 +368,7 @@
       // Function to check staked tokens
       async function checkStakedTokens() {
         // Call the getStakedTokens function of the token contract to get staked tokens
-        const stakedTokens = await tokenContract.methods.getStakedTokens().call();
+        const stakedTokens = await tokenContract.methods.stakers().call();
         console.log('Staked Tokens:', stakedTokens);
 
         // Display staked tokens on the page
