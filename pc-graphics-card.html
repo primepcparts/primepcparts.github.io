@@ -89,16 +89,6 @@
       width: auto;
       margin: 0 auto;
     }
-
-    .modal-xl .modal-content {
-      height: 90vh;
-    }
-
-    .modal-xl .carousel-item img {
-      max-height: 85vh;
-      width: auto;
-      margin: 0 auto;
-    }
   </style>
 </head>
 
@@ -176,62 +166,73 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <!-- Full-Screen Carousel Modal -->
-  <div class="modal fade" id="fullScreenCarouselModal" tabindex="-1" aria-labelledby="fullScreenCarouselModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="fullScreenCarouselModalLabel">Image Gallery</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div id="fullScreenCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner" id="fullScreenCarouselInner">
-              <!-- Carousel items will be dynamically inserted here -->
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Fetch Data from Google Sheet -->
   <script>
     // Function to convert Google Drive link to thumbnail URL
     function convertGoogleDriveLink(googleDriveLink) {
+      // Extract the file ID using a regular expression
       const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/\?]+)/);
       if (fileIdMatch && fileIdMatch[1]) {
         const fileId = fileIdMatch[1];
+        // Return the thumbnail URL
         return `https://drive.google.com/thumbnail?id=${fileId}`;
       }
+      // Return the original link if no file ID is found
       return googleDriveLink;
+    }
+
+    // Function to sanitize the carousel ID
+    function sanitizeId(id) {
+      // Replace invalid characters (e.g., +) with a hyphen
+      return id.replace(/[^a-zA-Z0-9-_]/g, '-');
     }
 
     // Function to open the full-screen carousel modal
     function openFullScreenCarousel(photos, index) {
-      const carouselInner = document.getElementById('fullScreenCarouselInner');
-      carouselInner.innerHTML = '';
+      // Create the modal HTML
+      const modalHtml = `
+        <div class="modal fade" id="fullScreenCarouselModal" tabindex="-1" aria-labelledby="fullScreenCarouselModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="fullScreenCarouselModalLabel">Image Gallery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="fullScreenCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    ${photos.map((photo, i) => `
+                      <div class="carousel-item ${i === index ? 'active' : ''}">
+                        <img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}">
+                      </div>
+                    `).join('')}
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
 
-      photos.forEach((photo, i) => {
-        const carouselItem = document.createElement('div');
-        carouselItem.classList.add('carousel-item');
-        if (i === index) {
-          carouselItem.classList.add('active');
-        }
-        carouselItem.innerHTML = `<img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}">`;
-        carouselInner.appendChild(carouselItem);
-      });
+      // Append the modal to the body
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
 
+      // Initialize the modal and show it
       const modal = new bootstrap.Modal(document.getElementById('fullScreenCarouselModal'));
       modal.show();
+
+      // Remove the modal from the DOM after it's closed
+      document.getElementById('fullScreenCarouselModal').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('fullScreenCarouselModal').remove();
+      });
     }
 
     // Fetch data from Google Sheet using OpenSheet.elk.sh
@@ -242,17 +243,24 @@
       .then(data => {
         console.log("Fetched data:", data); // Debugging: Log fetched data
         const container = document.getElementById('graphics-cards-container');
-        data.forEach((item, index) => {
-          const photos = item.Photos.split(',').map(url => convertGoogleDriveLink(url.trim()));
+        data.forEach((item, index) => { // Add index parameter to forEach
+          // Extract all photo URLs from the single "Photos" column
+          const photos = item.Photos.split(',').map(url => {
+            const thumbnailUrl = convertGoogleDriveLink(url.trim());
+            console.log("Original URL:", url, "Thumbnail URL:", thumbnailUrl); // Debugging: Log URLs
+            return thumbnailUrl;
+          });
+
+          // Generate carousel HTML if there are multiple photos
           let carouselHtml = '';
           if (photos.length > 1) {
-            const carouselId = `carousel-${item.Name.replace(/\s+/g, '-')}-${index}`;
+            const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`); // Sanitize the ID
             carouselHtml = `
               <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   ${photos.map((photo, photoIndex) => `
                     <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                      <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                      <img src="${photo}" class="d-block w-100" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
                     </div>
                   `).join('')}
                 </div>
@@ -270,6 +278,7 @@
             carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
           }
 
+          // Generate card HTML
           const cardHtml = `
             <div class="col-md-4">
               <div class="card">
