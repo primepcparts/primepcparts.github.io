@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -29,55 +29,134 @@
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
-
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-right justify-content-between">
-      <i class="bi bi-list toggle-sidebar-btn align-items-center"></i>&nbsp;&nbsp;
+    <div class="d-flex align-items-center justify-content-between">
+      <i class="bi bi-list toggle-sidebar-btn" aria-label="Toggle Sidebar"></i>&nbsp;&nbsp;
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="desktop-text" style="color: #012970; font-family: 'Ubuntu';">&nbsp;Prime Pc Parts</span><span
-          class="mobile-text" style="color: #012970; font-family: 'Ubuntu';">MCG</span>
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span class="desktop-text" style="color: #012970; font-family: 'Ubuntu';">&nbsp;Prime Pc Parts</span>
+        <span class="mobile-text" style="color: #012970; font-family: 'Ubuntu';">PrimePcParts</span>
       </a>
     </div>
     <nav class="header-nav ms-auto">
+      <!-- Add navigation items here if needed -->
     </nav>
   </header>
 
-  <script>
-    $(function () {
-      $("#sidebar").load("aside.html");
-    });
-  </script>
-
+  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
+    <!-- Sidebar content loaded from aside.html -->
+    <script>
+      $(function () {
+        $("#sidebar").load("aside.html");
+      });
+    </script>
   </aside>
 
+  <!-- ======= Main Content ======= -->
   <main id="main" class="main">
     <div class="pagetitle">
-      <hr>
+      <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
-      <hr>
-      <h2>Building and Selling PC Parts</h2>
-      <p>At PrimePcParts, we offer a wide range of PC components, both new and used, to cater to gamers, professionals, and tech enthusiasts. Whether you're looking for the latest GPUs, CPUs, motherboards, or budget-friendly refurbished parts, we have you covered.</p>
-      <h3>Our Services</h3>
-      <ul>
-        <li>Custom PC Builds</li>
-        <li>New and Used PC Parts</li>
-        <li>Gaming and Workstation Components</li>
-        <li>Hardware Consultation</li>
-      </ul>
     </div>
+
+    <section class="section dashboard">
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Welcome to PrimePcParts</h5>
+              <p>At PrimePcParts, we offer a wide range of PC components, both new and used, to cater to gamers, professionals, and tech enthusiasts. Whether you're looking for the latest GPUs, CPUs, motherboards, or budget-friendly refurbished parts, we have you covered.</p>
+              <h3>Our Services</h3>
+              <ul>
+                <li>Custom PC Builds</li>
+                <li>New and Used PC Parts</li>
+                <li>Gaming and Workstation Components</li>
+                <li>Hardware Consultation</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Featured Products Section -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Featured Products</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="assets/img/products/gpu.jpg" class="card-img-top" alt="GPU">
+                    <div class="card-body">
+                      <h6 class="card-title">Graphics Cards</h6>
+                      <p class="card-text">High-performance GPUs for gaming and professional use.</p>
+                      <a href="#" class="btn btn-primary">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="assets/img/products/cpu.jpg" class="card-img-top" alt="CPU">
+                    <div class="card-body">
+                      <h6 class="card-title">Processors</h6>
+                      <p class="card-text">Latest CPUs for gaming, streaming, and productivity.</p>
+                      <a href="#" class="btn btn-primary">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="assets/img/products/ram.jpg" class="card-img-top" alt="RAM">
+                    <div class="card-body">
+                      <h6 class="card-title">Memory (RAM)</h6>
+                      <p class="card-text">High-speed RAM for seamless multitasking.</p>
+                      <a href="#" class="btn btn-primary">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Quick Links</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="products.html">Explore Products</a></li>
+                <li class="list-group-item"><a href="custom-builds.html">Custom Builds</a></li>
+                <li class="list-group-item"><a href="contact.html">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Recent Activity Section -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Recent Activity</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">New GPU models added.</li>
+                <li class="list-group-item">Custom build requests increased by 20%.</li>
+                <li class="list-group-item">Special discounts on RAM kits.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ======= Footer ======= -->
@@ -86,11 +165,16 @@
       &copy; Copyright <strong><span>Prime Pc Parts 2025</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
+      <a href="https://facebook.com/PrimePcParts" target="_blank">Facebook</a> |
+      <a href="https://twitter.com/PrimePcParts" target="_blank">Twitter</a> |
+      <a href="mailto:support@primepcparts.com">Contact Us</a>
     </div>
   </footer>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -101,6 +185,9 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 </body>
+
 </html>
