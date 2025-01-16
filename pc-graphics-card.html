@@ -65,6 +65,22 @@
     .btn-buy:hover {
       background-color: #717ff5;
     }
+
+    .carousel-item img {
+      height: 200px;
+      object-fit: contain;
+      width: 100%;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 40px;
+      height: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+    }
   </style>
 </head>
 
@@ -97,7 +113,6 @@
   <!-- ======= Main Content ======= -->
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>PC Graphics Cards</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -153,10 +168,40 @@
       .then(data => {
         const container = document.getElementById('graphics-cards-container');
         data.forEach(item => {
+          // Extract all photo URLs from the single "Photos" column
+          const photos = item.Photos.split(',').map(url => url.trim());
+
+          // Generate carousel HTML if there are multiple photos
+          let carouselHtml = '';
+          if (photos.length > 1) {
+            carouselHtml = `
+              <div id="carousel-${item.Name.replace(/\s+/g, '-')}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  ${photos.map((photo, index) => `
+                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                      <img src="${photo}" class="d-block w-100" alt="${item.Name} Photo ${index + 1}">
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${item.Name.replace(/\s+/g, '-')}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-${item.Name.replace(/\s+/g, '-')}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            `;
+          } else if (photos.length === 1) {
+            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}">`;
+          }
+
+          // Generate card HTML
           const cardHtml = `
             <div class="col-md-4">
               <div class="card">
-                <img src="${item.Image}" class="card-img-top" alt="${item.Name}">
+                ${carouselHtml}
                 <div class="card-body">
                   <h5 class="card-title">${item.Name}</h5>
                   <p class="card-text"><strong>Price:</strong> $${item.Price}</p>
