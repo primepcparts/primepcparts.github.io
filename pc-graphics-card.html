@@ -36,15 +36,12 @@
   <!-- Custom CSS for Graphics Cards Page -->
   <style>
     .card-img-top {
-      height: 200px;
-      object-fit: contain;
-      width: 100%;
-      padding: 10px;
+      max-height: 300px; /* Adjust based on your layout */
+      width: auto;
+      object-fit: contain; /* Maintain aspect ratio */
       cursor: pointer; /* Add pointer cursor to indicate clickable images */
-      transform: rotate(90deg); /* Rotate images vertically */
-      transform-origin: center center; /* Ensure rotation is centered */
-      image-rendering: -webkit-optimize-contrast; /* Improve image quality */
-      image-rendering: crisp-edges; /* Improve image quality */
+      margin: 0 auto; /* Center the image */
+      display: block; /* Ensure the image is treated as a block element */
     }
 
     .card {
@@ -82,13 +79,11 @@
     }
 
     .carousel-item img {
-      height: 200px;
-      object-fit: contain;
-      width: 100%;
-      transform: rotate(90deg); /* Rotate images vertically */
-      transform-origin: center center; /* Ensure rotation is centered */
-      image-rendering: -webkit-optimize-contrast; /* Improve image quality */
-      image-rendering: crisp-edges; /* Improve image quality */
+      max-height: 300px; /* Adjust based on your layout */
+      width: auto;
+      object-fit: contain; /* Maintain aspect ratio */
+      margin: 0 auto; /* Center the image */
+      display: block; /* Ensure the image is treated as a block element */
     }
 
     .carousel-control-prev,
@@ -106,9 +101,7 @@
       max-height: 80vh;
       width: auto;
       margin: 0 auto;
-      transform: rotate(0deg); /* Reset rotation for full-screen modal */
-      image-rendering: -webkit-optimize-contrast; /* Improve image quality */
-      image-rendering: crisp-edges; /* Improve image quality */
+      object-fit: contain; /* Maintain aspect ratio */
     }
 
     .modal-xl .modal-content {
