@@ -32,6 +32,33 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Custom CSS for Image Sizing -->
+  <style>
+    /* Adjust image size in the featured products section */
+    .featured-products .card-img-top {
+      height: 150px; /* Fixed height for uniformity */
+      object-fit: contain; /* Ensures images maintain aspect ratio without cropping */
+      width: 100%; /* Full width of the card */
+      padding: 10px; /* Add some padding around the image */
+    }
+
+    /* Ensure cards in the featured products section have consistent height */
+    .featured-products .card {
+      height: 100%; /* Make cards fill the height of their container */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .featured-products .card-body {
+      flex-grow: 1; /* Allow card body to grow and fill remaining space */
+    }
+
+    /* Ensure cards in the services section have consistent height */
+    .services-section .card {
+      height: 100%; /* Make cards fill the height of their container */
+    }
+  </style>
 </head>
 
 <body>
@@ -86,7 +113,7 @@
         </div>
 
         <!-- Featured Products Section -->
-        <div class="col-lg-12">
+        <div class="col-lg-12 featured-products">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Featured Products</h5>
@@ -130,7 +157,7 @@
         </div>
 
         <!-- Services Section -->
-        <div class="col-lg-12">
+        <div class="col-lg-12 services-section">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Our Services</h5>
