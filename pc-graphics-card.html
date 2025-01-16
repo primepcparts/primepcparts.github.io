@@ -125,16 +125,41 @@
       text-align: center; /* Center the title */
     }
 
-    /* Quantity dropdown styling */
+    /* Custom styles for the quantity dropdown */
     .form-group {
       margin-bottom: 15px;
     }
 
     .form-control {
       width: 100%;
-      padding: 10px;
+      padding: 6px 10px; /* Reduced padding to make it smaller */
       border: 1px solid #e0e0e0;
-      border-radius: 5px;
+      border-radius: 4px;
+      font-size: 12px; /* Smaller font size */
+      height: 32px; /* Smaller height */
+      line-height: 1.5; /* Ensure text is vertically centered */
+    }
+
+    .form-control:focus {
+      border-color: #4154f1;
+      box-shadow: 0 0 5px rgba(65, 84, 241, 0.3);
+    }
+
+    /* Adjust the dropdown arrow */
+    .form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23012970' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 12px;
+    }
+
+    /* Ensure the dropdown aligns properly with the label */
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px; /* Smaller font size for the label */
+      font-weight: bold;
     }
   </style>
 </head>
