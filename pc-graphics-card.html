@@ -160,6 +160,19 @@
 
   <!-- Fetch Data from Google Sheet -->
   <script>
+    // Function to convert Google Drive link to direct image URL
+    function convertGoogleDriveLink(googleDriveLink) {
+      // Extract the file ID using a regular expression
+      const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/]+)\//);
+      if (fileIdMatch && fileIdMatch[1]) {
+        const fileId = fileIdMatch[1];
+        // Return the direct image URL
+        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+      }
+      // Return the original link if no file ID is found
+      return googleDriveLink;
+    }
+
     // Fetch data from Google Sheet using OpenSheet.elk.sh
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/Sheet1';
 
@@ -169,7 +182,10 @@
         const container = document.getElementById('graphics-cards-container');
         data.forEach(item => {
           // Extract all photo URLs from the single "Photos" column
-          const photos = item.Photos.split(',').map(url => url.trim());
+          const photos = item.Photos.split(',').map(url => {
+            // Convert Google Drive link to direct image URL
+            return convertGoogleDriveLink(url.trim());
+          });
 
           // Generate carousel HTML if there are multiple photos
           let carouselHtml = '';
