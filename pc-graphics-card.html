@@ -41,6 +41,8 @@
       width: 100%;
       padding: 10px;
       cursor: pointer; /* Add pointer cursor to indicate clickable images */
+      transform: rotate(90deg); /* Rotate images vertically */
+      transform-origin: center center; /* Ensure rotation is centered */
     }
 
     .card {
@@ -48,10 +50,19 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      border: 1px solid #e0e0e0; /* Add a border to the card */
+      border-radius: 10px; /* Rounded corners for the card */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+      transition: transform 0.2s ease-in-out; /* Add hover effect */
+    }
+
+    .card:hover {
+      transform: translateY(-5px); /* Lift the card on hover */
     }
 
     .card-body {
       flex-grow: 1;
+      padding: 15px; /* Add padding inside the card */
     }
 
     .btn-buy {
@@ -61,6 +72,7 @@
       padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
+      width: 100%; /* Make the button full width */
     }
 
     .btn-buy:hover {
@@ -71,6 +83,8 @@
       height: 200px;
       object-fit: contain;
       width: 100%;
+      transform: rotate(90deg); /* Rotate images vertically */
+      transform-origin: center center; /* Ensure rotation is centered */
     }
 
     .carousel-control-prev,
@@ -88,6 +102,7 @@
       max-height: 80vh;
       width: auto;
       margin: 0 auto;
+      transform: rotate(0deg); /* Reset rotation for full-screen modal */
     }
 
     .modal-xl .modal-content {
@@ -98,6 +113,19 @@
       max-height: 85vh;
       width: auto;
       margin: 0 auto;
+    }
+
+    /* Add gap between cards */
+    .graphics-cards-container .col-md-4 {
+      padding: 10px; /* Add padding between cards */
+    }
+
+    /* Card title styling */
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center; /* Center the title */
     }
   </style>
 </head>
@@ -140,7 +168,7 @@
     </div>
 
     <section class="section dashboard">
-      <div class="row" id="graphics-cards-container">
+      <div class="row graphics-cards-container" id="graphics-cards-container">
         <!-- Graphics Cards will be dynamically inserted here -->
       </div>
     </section>
@@ -279,10 +307,10 @@
           const cardHtml = `
             <div class="col-md-4">
               <div class="card">
-                ${carouselHtml}
                 <div class="card-body">
-                  <h5 class="card-title">${item.Name}</h5>
-                  <p class="card-text"><strong>Price:</strong> $${item.Price}</p>
+                  <h5 class="card-title">${item.Name}</h5> <!-- Card name moved to the top -->
+                  ${carouselHtml} <!-- Images come after the name -->
+                  <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p> <!-- Updated to display price in Rupees -->
                   <p class="card-text"><strong>Quantity:</strong> ${item.Quantity}</p>
                   <button class="btn btn-buy" onclick="buyItem('${item.Name}')">Buy It</button>
                 </div>
