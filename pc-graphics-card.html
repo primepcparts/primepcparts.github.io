@@ -36,12 +36,13 @@
   <!-- Custom CSS for Graphics Cards Page -->
   <style>
     .card-img-top {
-      max-height: 300px; /* Adjust based on your layout */
-      width: auto;
-      object-fit: contain; /* Maintain aspect ratio */
+      height: 200px;
+      object-fit: contain;
+      width: 100%;
+      padding: 10px;
       cursor: pointer; /* Add pointer cursor to indicate clickable images */
-      margin: 0 auto; /* Center the image */
-      display: block; /* Ensure the image is treated as a block element */
+      transform: rotate(90deg); /* Rotate images vertically */
+      transform-origin: center center; /* Ensure rotation is centered */
     }
 
     .card {
@@ -79,11 +80,11 @@
     }
 
     .carousel-item img {
-      max-height: 300px; /* Adjust based on your layout */
-      width: auto;
-      object-fit: contain; /* Maintain aspect ratio */
-      margin: 0 auto; /* Center the image */
-      display: block; /* Ensure the image is treated as a block element */
+      height: 200px;
+      object-fit: contain;
+      width: 100%;
+      transform: rotate(90deg); /* Rotate images vertically */
+      transform-origin: center center; /* Ensure rotation is centered */
     }
 
     .carousel-control-prev,
@@ -101,7 +102,7 @@
       max-height: 80vh;
       width: auto;
       margin: 0 auto;
-      object-fit: contain; /* Maintain aspect ratio */
+      transform: rotate(0deg); /* Reset rotation for full-screen modal */
     }
 
     .modal-xl .modal-content {
@@ -232,12 +233,12 @@
 
   <!-- Fetch Data from Google Sheet -->
   <script>
-    // Function to convert Google Drive link to original image URL
+    // Function to convert Google Drive link to thumbnail URL
     function convertGoogleDriveLink(googleDriveLink) {
       const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/\?]+)/);
       if (fileIdMatch && fileIdMatch[1]) {
         const fileId = fileIdMatch[1];
-        return `https://drive.google.com/uc?export=view&id=${fileId}`; // Use original image URL
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
       }
       return googleDriveLink;
     }
@@ -259,7 +260,7 @@
         if (i === index) {
           carouselItem.classList.add('active');
         }
-        carouselItem.innerHTML = `<img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}" style="max-height: 80vh; width: auto; margin: 0 auto;">`;
+        carouselItem.innerHTML = `<img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}">`;
         carouselInner.appendChild(carouselItem);
       });
 
