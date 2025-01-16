@@ -160,14 +160,14 @@
 
   <!-- Fetch Data from Google Sheet -->
   <script>
-    // Function to convert Google Drive link to direct image URL
+    // Function to convert Google Drive link to thumbnail URL
     function convertGoogleDriveLink(googleDriveLink) {
       // Extract the file ID using a regular expression
-      const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/]+)\//);
+      const fileIdMatch = googleDriveLink.match(/[&?]id=([^&]+)/);
       if (fileIdMatch && fileIdMatch[1]) {
         const fileId = fileIdMatch[1];
-        // Return the direct image URL
-        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+        // Return the thumbnail URL
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
       }
       // Return the original link if no file ID is found
       return googleDriveLink;
@@ -184,9 +184,9 @@
         data.forEach(item => {
           // Extract all photo URLs from the single "Photos" column
           const photos = item.Photos.split(',').map(url => {
-            const directUrl = convertGoogleDriveLink(url.trim());
-            console.log("Original URL:", url, "Direct URL:", directUrl); // Debugging: Log URLs
-            return directUrl;
+            const thumbnailUrl = convertGoogleDriveLink(url.trim());
+            console.log("Original URL:", url, "Thumbnail URL:", thumbnailUrl); // Debugging: Log URLs
+            return thumbnailUrl;
           });
 
           // Generate carousel HTML if there are multiple photos
