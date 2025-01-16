@@ -43,6 +43,8 @@
       cursor: pointer; /* Add pointer cursor to indicate clickable images */
       transform: rotate(90deg); /* Rotate images vertically */
       transform-origin: center center; /* Ensure rotation is centered */
+      image-rendering: -webkit-optimize-contrast; /* Improve image quality */
+      image-rendering: crisp-edges; /* Improve image quality */
     }
 
     .card {
@@ -85,6 +87,8 @@
       width: 100%;
       transform: rotate(90deg); /* Rotate images vertically */
       transform-origin: center center; /* Ensure rotation is centered */
+      image-rendering: -webkit-optimize-contrast; /* Improve image quality */
+      image-rendering: crisp-edges; /* Improve image quality */
     }
 
     .carousel-control-prev,
@@ -103,6 +107,8 @@
       width: auto;
       margin: 0 auto;
       transform: rotate(0deg); /* Reset rotation for full-screen modal */
+      image-rendering: -webkit-optimize-contrast; /* Improve image quality */
+      image-rendering: crisp-edges; /* Improve image quality */
     }
 
     .modal-xl .modal-content {
@@ -233,12 +239,12 @@
 
   <!-- Fetch Data from Google Sheet -->
   <script>
-    // Function to convert Google Drive link to thumbnail URL
+    // Function to convert Google Drive link to original image URL
     function convertGoogleDriveLink(googleDriveLink) {
       const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/\?]+)/);
       if (fileIdMatch && fileIdMatch[1]) {
         const fileId = fileIdMatch[1];
-        return `https://drive.google.com/thumbnail?id=${fileId}`;
+        return `https://drive.google.com/uc?export=view&id=${fileId}`; // Use original image URL
       }
       return googleDriveLink;
     }
@@ -260,7 +266,7 @@
         if (i === index) {
           carouselItem.classList.add('active');
         }
-        carouselItem.innerHTML = `<img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}">`;
+        carouselItem.innerHTML = `<img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}" style="max-height: 80vh; width: auto; margin: 0 auto;">`;
         carouselInner.appendChild(carouselItem);
       });
 
