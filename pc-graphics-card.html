@@ -42,8 +42,7 @@
       object-fit: contain; /* Maintain aspect ratio */
       padding: 10px;
       cursor: pointer; /* Add pointer cursor to indicate clickable images */
-      transform: rotate(90deg); /* Rotate images vertically */
-      transform-origin: center center; /* Ensure rotation is centered */
+      /* Removed transform: rotate(90deg) to display images in original orientation */
     }
 
     .card {
@@ -85,8 +84,7 @@
       width: 100%; /* Make the image fill the carousel width */
       max-height: 200px; /* Limit the height to fit within the carousel */
       object-fit: contain; /* Maintain aspect ratio */
-      transform: rotate(90deg); /* Rotate images vertically */
-      transform-origin: center center; /* Ensure rotation is centered */
+      /* Removed transform: rotate(90deg) to display images in original orientation */
     }
 
     .carousel-control-prev,
@@ -104,7 +102,7 @@
       max-height: 80vh; /* Limit height for full-screen modal */
       width: auto; /* Allow width to adjust based on height */
       margin: 0 auto; /* Center the image */
-      transform: rotate(0deg); /* Reset rotation for full-screen modal */
+      /* Removed transform: rotate(0deg) as it's no longer needed */
     }
 
     .modal-xl .modal-content {
