@@ -3,12 +3,14 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #f8f9fa;
   color: #333;
+  line-height: 1.6;
 }
 
 /* Header styling */
 .header {
   background-color: #012970;
-  padding: 10px 0;
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .header .logo img {
@@ -54,14 +56,14 @@ body {
 }
 
 .card-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #012970;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .card-text {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #555;
   margin-bottom: 15px;
 }
@@ -73,7 +75,7 @@ body {
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   width: 100%;
@@ -161,6 +163,7 @@ body {
   color: #fff;
   padding: 20px 0;
   text-align: center;
+  margin-top: 40px;
 }
 
 .footer .copyright {
@@ -196,8 +199,10 @@ body {
   font-size: 1.2rem;
   text-decoration: none;
   transition: background-color 0.3s ease;
+  opacity: 0.9;
 }
 
 .back-to-top:hover {
   background-color: #717ff5;
+  opacity: 1;
 }
