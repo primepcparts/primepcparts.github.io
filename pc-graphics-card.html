@@ -179,12 +179,14 @@
     fetch(sheetUrl)
       .then(response => response.json())
       .then(data => {
+        console.log("Fetched data:", data); // Debugging: Log fetched data
         const container = document.getElementById('graphics-cards-container');
         data.forEach(item => {
           // Extract all photo URLs from the single "Photos" column
           const photos = item.Photos.split(',').map(url => {
-            // Convert Google Drive link to direct image URL
-            return convertGoogleDriveLink(url.trim());
+            const directUrl = convertGoogleDriveLink(url.trim());
+            console.log("Original URL:", url, "Direct URL:", directUrl); // Debugging: Log URLs
+            return directUrl;
           });
 
           // Generate carousel HTML if there are multiple photos
