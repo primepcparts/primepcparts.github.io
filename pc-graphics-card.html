@@ -36,9 +36,10 @@
   <!-- Custom CSS for Graphics Cards Page -->
   <style>
     .card-img-top {
-      height: 3840px; /* Adjusted to match original height */
-      width: 2160px; /* Adjusted to match original width */
-      object-fit: contain;
+      height: auto; /* Allow height to adjust based on width */
+      width: 100%; /* Make the image fill the card width */
+      max-height: 200px; /* Limit the height to fit within the card */
+      object-fit: contain; /* Maintain aspect ratio */
       padding: 10px;
       cursor: pointer; /* Add pointer cursor to indicate clickable images */
       transform: rotate(90deg); /* Rotate images vertically */
@@ -80,9 +81,10 @@
     }
 
     .carousel-item img {
-      height: 3840px; /* Adjusted to match original height */
-      width: 2160px; /* Adjusted to match original width */
-      object-fit: contain;
+      height: auto; /* Allow height to adjust based on width */
+      width: 100%; /* Make the image fill the carousel width */
+      max-height: 200px; /* Limit the height to fit within the carousel */
+      object-fit: contain; /* Maintain aspect ratio */
       transform: rotate(90deg); /* Rotate images vertically */
       transform-origin: center center; /* Ensure rotation is centered */
     }
@@ -99,20 +101,20 @@
 
     /* Full-screen modal carousel styles */
     .modal-carousel .carousel-item img {
-      max-height: 80vh;
-      width: auto;
-      margin: 0 auto;
+      max-height: 80vh; /* Limit height for full-screen modal */
+      width: auto; /* Allow width to adjust based on height */
+      margin: 0 auto; /* Center the image */
       transform: rotate(0deg); /* Reset rotation for full-screen modal */
     }
 
     .modal-xl .modal-content {
-      height: 90vh;
+      height: 90vh; /* Set modal height */
     }
 
     .modal-xl .carousel-item img {
-      max-height: 85vh;
-      width: auto;
-      margin: 0 auto;
+      max-height: 85vh; /* Limit height for full-screen modal */
+      width: auto; /* Allow width to adjust based on height */
+      margin: 0 auto; /* Center the image */
     }
 
     /* Add gap between cards */
