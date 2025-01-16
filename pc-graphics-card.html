@@ -40,6 +40,7 @@
       object-fit: contain;
       width: 100%;
       padding: 10px;
+      cursor: pointer; /* Add pointer cursor to indicate clickable images */
     }
 
     .card {
@@ -80,6 +81,13 @@
       top: 50%;
       transform: translateY(-50%);
       border-radius: 50%;
+    }
+
+    /* Full-screen modal carousel styles */
+    .modal-carousel .carousel-item img {
+      max-height: 80vh;
+      width: auto;
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -179,6 +187,53 @@
       return id.replace(/[^a-zA-Z0-9-_]/g, '-');
     }
 
+    // Function to open the full-screen carousel modal
+    function openFullScreenCarousel(photos, index) {
+      const modalHtml = `
+        <div class="modal fade" id="fullScreenCarouselModal" tabindex="-1" aria-labelledby="fullScreenCarouselModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="fullScreenCarouselModalLabel">Image Gallery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="fullScreenCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    ${photos.map((photo, i) => `
+                      <div class="carousel-item ${i === index ? 'active' : ''}">
+                        <img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}">
+                      </div>
+                    `).join('')}
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Append the modal to the body
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+      // Initialize the modal and show it
+      const modal = new bootstrap.Modal(document.getElementById('fullScreenCarouselModal'));
+      modal.show();
+
+      // Remove the modal from the DOM after it's closed
+      document.getElementById('fullScreenCarouselModal').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('fullScreenCarouselModal').remove();
+      });
+    }
+
     // Fetch data from Google Sheet using OpenSheet.elk.sh
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/Sheet1';
 
@@ -204,7 +259,7 @@
                 <div class="carousel-inner">
                   ${photos.map((photo, photoIndex) => `
                     <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                      <img src="${photo}" class="d-block w-100" alt="${item.Name} Photo ${photoIndex + 1}">
+                      <img src="${photo}" class="d-block w-100" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
                     </div>
                   `).join('')}
                 </div>
@@ -219,7 +274,7 @@
               </div>
             `;
           } else if (photos.length === 1) {
-            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}">`;
+            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
           }
 
           // Generate card HTML
