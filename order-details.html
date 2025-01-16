@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Order Details - PrimePcParts</title>
+  <meta content="Provide your details to proceed with the order." name="description">
+  <meta content="order details, name, address, email, phone number, WhatsApp" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Custom CSS for Order Details Page -->
+  <style>
+    .order-details-form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-details-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #012970;
+    }
+
+    .order-details-form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .order-details-form input,
+    .order-details-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+    }
+
+    .order-details-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4154f1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .order-details-form button:hover {
+      background-color: #717ff5;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <i class="bi bi-list toggle-sidebar-btn" aria-label="Toggle Sidebar"></i>&nbsp;&nbsp;
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span class="desktop-text" style="color: #012970; font-family: 'Ubuntu';">&nbsp;Prime Pc Parts</span>
+        <span class="mobile-text" style="color: #012970; font-family: 'Ubuntu';">PrimePcParts</span>
+      </a>
+    </div>
+    <nav class="header-nav ms-auto">
+      <!-- Add navigation items here if needed -->
+    </nav>
+  </header>
+
+  <!-- ======= Main Content ======= -->
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Order Details</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section">
+      <div class="order-details-form">
+        <h2>Provide Your Details</h2>
+        <form id="orderDetailsForm">
+          <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <button type="submit">Proceed to WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Prime Pc Parts 2025</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <a href="https://facebook.com/PrimePcParts" target="_blank">Facebook</a> |
+      <a href="https://twitter.com/PrimePcParts" target="_blank">Twitter</a> |
+      <a href="mailto:support@primepcparts.com">Contact Us</a>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Custom JavaScript for Order Details Page -->
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemName = urlParams.get('name');
+    const itemPrice = urlParams.get('price');
+    const itemQuantity = urlParams.get('quantity');
+
+    // Update the WhatsApp message to include graphics card details
+    document.getElementById('orderDetailsForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get form values
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      // Replace this number with your WhatsApp Business number (include country code)
+      const whatsappNumber = "+918275433068"; // Example: +911234567890
+
+      // Create the WhatsApp message with the user's details and graphics card details
+      const message = `Hello, I am interested in placing an order. Here are my details:\n\n` +
+                      `*Name:* ${name}\n` +
+                      `*Address:* ${address}\n` +
+                      `*Email:* ${email}\n` +
+                      `*Phone:* ${phone}\n\n` +
+                      `*Graphics Card Details:*\n` +
+                      `- Name: ${itemName}\n` +
+                      `- Price: ₹${itemPrice}\n` +
+                      `- Quantity: ${itemQuantity}\n\n` +
+                      `Please let me know how to proceed.`;
+
+      // Encode the message for the URL
+      const encodedMessage = encodeURIComponent(message);
+
+      // Create the WhatsApp Business link
+      const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      // Open the WhatsApp link in a new tab
+      window.open(whatsappLink, "_blank");
+    });
+  </script>
+</body>
+</html>

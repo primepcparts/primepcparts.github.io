@@ -124,6 +124,18 @@
       margin-bottom: 10px;
       text-align: center; /* Center the title */
     }
+
+    /* Quantity dropdown styling */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+    }
   </style>
 </head>
 
@@ -246,45 +258,23 @@
       return id.replace(/[^a-zA-Z0-9-_]/g, '-');
     }
 
-    // Function to open the full-screen carousel modal
-    function openFullScreenCarousel(photos, index) {
-      const carouselInner = document.getElementById('fullScreenCarouselInner');
-      carouselInner.innerHTML = '';
-
-      photos.forEach((photo, i) => {
-        const carouselItem = document.createElement('div');
-        carouselItem.classList.add('carousel-item');
-        if (i === index) {
-          carouselItem.classList.add('active');
-        }
-        carouselItem.innerHTML = `<img src="${photo}" class="d-block w-100" alt="Photo ${i + 1}">`;
-        carouselInner.appendChild(carouselItem);
-      });
-
-      const modal = new bootstrap.Modal(document.getElementById('fullScreenCarouselModal'));
-      modal.show();
+    // Function to generate quantity options for the dropdown
+    function generateQuantityOptions(maxQuantity) {
+      let options = '';
+      for (let i = 1; i <= maxQuantity; i++) {
+        options += `<option value="${i}">${i}</option>`;
+      }
+      return options;
     }
 
     // Function to handle "Buy It" button click
-    function buyItem(itemName, itemPrice, itemQuantity) {
-      // Replace this number with your WhatsApp Business number (include country code)
-      const whatsappNumber = "+918275433068"; // Example: +911234567890
+    function buyItem(itemName, itemPrice, maxQuantity, index) {
+      // Get the selected quantity from the dropdown
+      const quantityDropdown = document.getElementById(`quantity-${index}`);
+      const selectedQuantity = quantityDropdown.value;
 
-      // Create the WhatsApp message with the item details
-      const message = `Hello, I am interested in buying the following graphics card:\n\n` +
-                      `*Name:* ${itemName}\n` +
-                      `*Price:* ₹${itemPrice}\n` +
-                      `*Quantity:* ${itemQuantity}\n\n` +
-                      `Please let me know how to proceed.`;
-
-      // Encode the message for the URL
-      const encodedMessage = encodeURIComponent(message);
-
-      // Create the WhatsApp Business link
-      const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-      // Open the WhatsApp link in a new tab
-      window.open(whatsappLink, "_blank");
+      // Redirect to the order details page with item details as URL parameters
+      window.location.href = `order-details.html?name=${encodeURIComponent(itemName)}&price=${encodeURIComponent(itemPrice)}&quantity=${encodeURIComponent(selectedQuantity)}`;
     }
 
     // Fetch data from Google Sheet using OpenSheet.elk.sh
@@ -330,8 +320,14 @@
                   <h5 class="card-title">${item.Name}</h5> <!-- Card name moved to the top -->
                   ${carouselHtml} <!-- Images come after the name -->
                   <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p> <!-- Updated to display price in Rupees -->
-                  <p class="card-text"><strong>Quantity:</strong> ${item.Quantity}</p>
-                  <button class="btn btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', '${item.Quantity}')">Buy It</button>
+                  <p class="card-text"><strong>Quantity Available:</strong> ${item.Quantity}</p>
+                  <div class="form-group">
+                    <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
+                    <select class="form-control" id="quantity-${index}">
+                      ${generateQuantityOptions(item.Quantity)}
+                    </select>
+                  </div>
+                  <button class="btn btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
                 </div>
               </div>
             </div>
