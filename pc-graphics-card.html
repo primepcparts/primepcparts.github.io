@@ -172,40 +172,41 @@
       // Return the original link if no file ID is found
       return googleDriveLink;
     }
-
+  
     // Fetch data from Google Sheet using OpenSheet.elk.sh
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/Sheet1';
-
+  
     fetch(sheetUrl)
       .then(response => response.json())
       .then(data => {
         console.log("Fetched data:", data); // Debugging: Log fetched data
         const container = document.getElementById('graphics-cards-container');
-        data.forEach(item => {
+        data.forEach((item, index) => { // Add index parameter to forEach
           // Extract all photo URLs from the single "Photos" column
           const photos = item.Photos.split(',').map(url => {
             const thumbnailUrl = convertGoogleDriveLink(url.trim());
             console.log("Original URL:", url, "Thumbnail URL:", thumbnailUrl); // Debugging: Log URLs
             return thumbnailUrl;
           });
-
+  
           // Generate carousel HTML if there are multiple photos
           let carouselHtml = '';
           if (photos.length > 1) {
+            const carouselId = `carousel-${item.Name.replace(/\s+/g, '-')}-${index}`; // Add index to make ID unique
             carouselHtml = `
-              <div id="carousel-${item.Name.replace(/\s+/g, '-')}" class="carousel slide" data-bs-ride="carousel">
+              <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  ${photos.map((photo, index) => `
-                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                      <img src="${photo}" class="d-block w-100" alt="${item.Name} Photo ${index + 1}">
+                  ${photos.map((photo, photoIndex) => `
+                    <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
+                      <img src="${photo}" class="d-block w-100" alt="${item.Name} Photo ${photoIndex + 1}">
                     </div>
                   `).join('')}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${item.Name.replace(/\s+/g, '-')}" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carousel-${item.Name.replace(/\s+/g, '-')}" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Next</span>
                 </button>
@@ -214,7 +215,7 @@
           } else if (photos.length === 1) {
             carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}">`;
           }
-
+  
           // Generate card HTML
           const cardHtml = `
             <div class="col-md-4">
@@ -233,7 +234,7 @@
         });
       })
       .catch(error => console.error('Error fetching data:', error));
-
+  
     // Function to handle "Buy It" button click
     function buyItem(itemName) {
       alert(`You clicked "Buy It" for ${itemName}`);
