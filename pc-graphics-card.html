@@ -163,7 +163,7 @@
     // Function to convert Google Drive link to thumbnail URL
     function convertGoogleDriveLink(googleDriveLink) {
       // Extract the file ID using a regular expression
-      const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/]+)\//);
+      const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/\?]+)/);
       if (fileIdMatch && fileIdMatch[1]) {
         const fileId = fileIdMatch[1];
         // Return the thumbnail URL
