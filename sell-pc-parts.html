@@ -120,11 +120,6 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <!-- Sidebar content loaded from aside.html -->
-    <script>
-      $(function () {
-        $("#sidebar").load("aside.html");
-      });
-    </script>
   </aside>
 
   <!-- ======= Main Content ======= -->
@@ -252,6 +247,16 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Load jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Load Aside Content -->
+  <script>
+    $(function () {
+      $("#sidebar").load("aside.html");
+    });
+  </script>
 
   <!-- Custom JavaScript for Sell PC Parts Page -->
   <script>
