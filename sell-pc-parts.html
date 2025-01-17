@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Sell PC Parts - PrimePcParts</title>
+  <meta content="Sell your used or new PC parts to PrimePcParts." name="description">
+  <meta content="sell pc parts, used pc parts, new pc parts, sell graphics card, sell processor" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Custom CSS for Sell PC Parts Page -->
+  <style>
+    .sell-pc-parts-form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    .sell-pc-parts-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #012970;
+    }
+
+    .sell-pc-parts-form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #012970;
+    }
+
+    .sell-pc-parts-form input,
+    .sell-pc-parts-form select,
+    .sell-pc-parts-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .sell-pc-parts-form input:focus,
+    .sell-pc-parts-form select:focus,
+    .sell-pc-parts-form textarea:focus {
+      border-color: #4154f1;
+      box-shadow: 0 0 5px rgba(65, 84, 241, 0.3);
+    }
+
+    .sell-pc-parts-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4154f1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sell-pc-parts-form button:hover {
+      background-color: #717ff5;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group.required label::after {
+      content: " *";
+      color: #ff0000;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <i class="bi bi-list toggle-sidebar-btn" aria-label="Toggle Sidebar"></i>&nbsp;&nbsp;
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span class="desktop-text" style="color: #012970; font-family: 'Ubuntu';">&nbsp;Prime Pc Parts</span>
+        <span class="mobile-text" style="color: #012970; font-family: 'Ubuntu';">PrimePcParts</span>
+      </a>
+    </div>
+    <nav class="header-nav ms-auto">
+      <!-- Add navigation items here if needed -->
+    </nav>
+  </header>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <!-- Sidebar content loaded from aside.html -->
+    <script>
+      $(function () {
+        $("#sidebar").load("aside.html");
+      });
+    </script>
+  </aside>
+
+  <!-- ======= Main Content ======= -->
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Sell PC Parts</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section">
+      <div class="sell-pc-parts-form">
+        <h2>Sell Your PC Parts</h2>
+        <form id="sellPcPartsForm">
+          <!-- Part Type -->
+          <div class="form-group required">
+            <label for="partType">Part Type</label>
+            <select id="partType" name="partType" required>
+              <option value="">Select Part Type</option>
+              <option value="graphics-card">Graphics Card</option>
+              <option value="processor">Processor (CPU)</option>
+              <option value="motherboard">Motherboard</option>
+              <option value="ram">RAM</option>
+              <option value="storage">Storage (SSD/HDD)</option>
+              <option value="power-supply">Power Supply</option>
+              <option value="cooler">Cooler</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Part Name -->
+          <div class="form-group required">
+            <label for="partName">Part Name</label>
+            <input type="text" id="partName" name="partName" placeholder="Enter part name" required>
+          </div>
+
+          <!-- Condition -->
+          <div class="form-group required">
+            <label for="condition">Condition</label>
+            <select id="condition" name="condition" required>
+              <option value="">Select Condition</option>
+              <option value="new">New</option>
+              <option value="used">Used</option>
+              <option value="refurbished">Refurbished</option>
+            </select>
+          </div>
+
+          <!-- Bill/Box Availability -->
+          <div class="form-group required">
+            <label for="billBox">Bill/Box Available?</label>
+            <select id="billBox" name="billBox" required>
+              <option value="">Select Option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <!-- Warranty Information -->
+          <div class="form-group required">
+            <label for="warranty">Leftover Company Warranty?</label>
+            <select id="warranty" name="warranty" required>
+              <option value="">Select Option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <!-- Price -->
+          <div class="form-group required">
+            <label for="price">Price (₹)</label>
+            <input type="number" id="price" name="price" placeholder="Enter price" required>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Enter a brief description"></textarea>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="form-group required">
+            <label for="contactName">Your Name</label>
+            <input type="text" id="contactName" name="contactName" placeholder="Enter your name" required>
+          </div>
+
+          <div class="form-group required">
+            <label for="contactEmail">Your Email</label>
+            <input type="email" id="contactEmail" name="contactEmail" placeholder="Enter your email" required>
+          </div>
+
+          <div class="form-group required">
+            <label for="contactPhone">Your Phone Number</label>
+            <input type="tel" id="contactPhone" name="contactPhone" placeholder="Enter your phone number" required>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Prime Pc Parts 2025</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <a href="https://facebook.com/PrimePcParts" target="_blank">Facebook</a> |
+      <a href="https://twitter.com/PrimePcParts" target="_blank">Twitter</a> |
+      <a href="mailto:support@primepcparts.com">Contact Us</a>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Custom JavaScript for Sell PC Parts Page -->
+  <script>
+    document.getElementById('sellPcPartsForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Validate form fields
+      const partType = document.getElementById('partType').value;
+      const partName = document.getElementById('partName').value;
+      const condition = document.getElementById('condition').value;
+      const billBox = document.getElementById('billBox').value;
+      const warranty = document.getElementById('warranty').value;
+      const price = document.getElementById('price').value;
+      const contactName = document.getElementById('contactName').value;
+      const contactEmail = document.getElementById('contactEmail').value;
+      const contactPhone = document.getElementById('contactPhone').value;
+
+      if (!partType || !partName || !condition || !billBox || !warranty || !price || !contactName || !contactEmail || !contactPhone) {
+        alert('Please fill out all required fields.');
+        return;
+      }
+
+      // Prepare data for submission
+      const formData = {
+        partType,
+        partName,
+        condition,
+        billBox,
+        warranty,
+        price,
+        description: document.getElementById('description').value,
+        contactName,
+        contactEmail,
+        contactPhone,
+      };
+
+      // Create the WhatsApp message
+      const message = `Hello, I want to sell my PC part. Here are the details:\n\n` +
+                      `*Part Type:* ${formData.partType}\n` +
+                      `*Part Name:* ${formData.partName}\n` +
+                      `*Condition:* ${formData.condition}\n` +
+                      `*Bill/Box Available:* ${formData.billBox}\n` +
+                      `*Leftover Warranty:* ${formData.warranty}\n` +
+                      `*Price:* ₹${formData.price}\n` +
+                      `*Description:* ${formData.description}\n\n` +
+                      `*Contact Information:*\n` +
+                      `- Name: ${formData.contactName}\n` +
+                      `- Email: ${formData.contactEmail}\n` +
+                      `- Phone: ${formData.contactPhone}\n\n` +
+                      `Please let me know how to proceed.`;
+
+      // Replace this number with your WhatsApp Business number (include country code)
+      const whatsappNumber = "+918275433068"; // Example: +911234567890
+
+      // Encode the message for the URL
+      const encodedMessage = encodeURIComponent(message);
+
+      // Create the WhatsApp Business link
+      const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      // Open the WhatsApp link in a new tab
+      window.open(whatsappLink, "_blank");
+
+      // Reset form
+      document.getElementById('sellPcPartsForm').reset();
+    });
+  </script>
+</body>
+
+</html>

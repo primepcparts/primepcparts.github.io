@@ -95,6 +95,11 @@
     </nav>
   </header>
 
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <!-- Sidebar content loaded from aside.html -->
+  </aside>
+
   <!-- ======= Main Content ======= -->
   <main id="main" class="main">
     <div class="pagetitle">
@@ -154,6 +159,14 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Load Aside Content -->
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+    $(function () {
+      $("#sidebar").load("aside.html");
+    });
+  </script>
 
   <!-- Custom JavaScript for Order Details Page -->
   <script>
