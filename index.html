@@ -37,28 +37,45 @@
   <style>
     /* Adjust image size in the featured products section */
     .featured-products .card-img-top {
-      height: 150px; /* Fixed height for uniformity */
-      object-fit: contain; /* Ensures images maintain aspect ratio without cropping */
-      width: 100%; /* Full width of the card */
-      padding: 10px; /* Add some padding around the image */
+      height: 150px;
+      /* Fixed height for uniformity */
+      object-fit: contain;
+      /* Ensures images maintain aspect ratio without cropping */
+      width: 100%;
+      /* Full width of the card */
+      padding: 10px;
+      /* Add some padding around the image */
     }
 
     /* Ensure cards in the featured products section have consistent height */
     .featured-products .card {
-      height: 100%; /* Make cards fill the height of their container */
+      height: 100%;
+      /* Make cards fill the height of their container */
       display: flex;
       flex-direction: column;
     }
 
     .featured-products .card-body {
-      flex-grow: 1; /* Allow card body to grow and fill remaining space */
+      flex-grow: 1;
+      /* Allow card body to grow and fill remaining space */
     }
 
     /* Ensure cards in the services section have consistent height */
     .services-section .card {
-      height: 100%; /* Make cards fill the height of their container */
+      height: 100%;
+      /* Make cards fill the height of their container */
     }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16823927659">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16823927659');
+  </script>
 </head>
 
 <body>
@@ -105,7 +122,9 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Welcome to PrimePcParts</h5>
-              <p class="card-text">At PrimePcParts, we offer a wide range of PC components, both new and used, to cater to gamers, professionals, and tech enthusiasts. Whether you're looking for the latest GPUs, CPUs, motherboards, or budget-friendly refurbished parts, we have you covered.</p>
+              <p class="card-text">At PrimePcParts, we offer a wide range of PC components, both new and used, to cater
+                to gamers, professionals, and tech enthusiasts. Whether you're looking for the latest GPUs, CPUs,
+                motherboards, or budget-friendly refurbished parts, we have you covered.</p>
               <a href="products.html" class="btn btn-primary">Explore Products</a>
             </div>
           </div>
@@ -166,7 +185,8 @@
                   <div class="card">
                     <div class="card-body">
                       <h6 class="card-title">Custom PC Builds</h6>
-                      <p class="card-text">We build custom PCs tailored to your needs, whether for gaming, work, or creativity.</p>
+                      <p class="card-text">We build custom PCs tailored to your needs, whether for gaming, work, or
+                        creativity.</p>
                     </div>
                   </div>
                 </div>
