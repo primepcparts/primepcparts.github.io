@@ -1,11 +1,19 @@
-// Function to convert Google Drive link to thumbnail URL
-function convertGoogleDriveLink(googleDriveLink) {
-  const fileIdMatch = googleDriveLink.match(/\/file\/d\/([^\/\?]+)/);
-  if (fileIdMatch && fileIdMatch[1]) {
-    const fileId = fileIdMatch[1];
-    return `https://drive.google.com/thumbnail?id=${fileId}`;
+// Function to construct local image paths
+function getLocalImagePaths(folderName) {
+  // Assuming the folder structure is: /img/{folderName}/photo1.jpg, /img/{folderName}/photo2.jpg, etc.
+  const basePath = `/img/${folderName}/`;
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp']; // Add more extensions if needed
+  const imagePaths = [];
+
+  // Generate image paths dynamically
+  for (let i = 1; i <= 10; i++) { // Adjust the limit based on the maximum number of photos per folder
+    for (const ext of imageExtensions) {
+      const imagePath = `${basePath}photo${i}${ext}`;
+      imagePaths.push(imagePath);
+    }
   }
-  return googleDriveLink;
+
+  return imagePaths;
 }
 
 // Function to sanitize the carousel ID
@@ -55,7 +63,12 @@ fetch(sheetUrl)
     console.log("Fetched data:", data); // Debugging: Log fetched data
     const container = document.getElementById('graphics-cards-container');
     data.forEach((item, index) => {
-      const photos = item.Photos.split(',').map(url => convertGoogleDriveLink(url.trim()));
+      // Get the folder name from the Google Sheet
+      const folderName = item.PhotoFolder;
+
+      // Construct local image paths based on the folder name
+      const photos = getLocalImagePaths(folderName);
+
       let carouselHtml = '';
       if (photos.length > 1) {
         const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`); // Sanitize the ID
