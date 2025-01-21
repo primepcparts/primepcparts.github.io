@@ -1,15 +1,26 @@
+// Function to check if an image exists
+async function checkImageExists(imagePath) {
+  try {
+    const response = await fetch(imagePath, { method: 'HEAD' });
+    return response.ok; // Returns true if the image exists
+  } catch (error) {
+    return false; // Returns false if the image does not exist
+  }
+}
+
 // Function to construct local image paths
-function getLocalImagePaths(folderName) {
-  // Assuming the folder structure is: /img/{folderName}/photo1.jpg, /img/{folderName}/photo2.jpg, etc.
-  const basePath = `/img/gpu/${folderName}/`;
-  const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp']; // Add more extensions if needed
+async function getLocalImagePaths(folderName) {
+  const basePath = `/assets/img/gpu/${folderName}/`; // Updated base path
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp']; // Supported image extensions
   const imagePaths = [];
 
-  // Generate image paths dynamically
+  // Generate image paths dynamically and check if they exist
   for (let i = 1; i <= 10; i++) { // Adjust the limit based on the maximum number of photos per folder
     for (const ext of imageExtensions) {
       const imagePath = `${basePath}photo${i}${ext}`;
-      imagePaths.push(imagePath);
+      if (await checkImageExists(imagePath)) {
+        imagePaths.push(imagePath);
+      }
     }
   }
 
@@ -59,15 +70,19 @@ const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pz
 
 fetch(sheetUrl)
   .then(response => response.json())
-  .then(data => {
+  .then(async (data) => { // Make the callback async to use await
     console.log("Fetched data:", data); // Debugging: Log fetched data
     const container = document.getElementById('graphics-cards-container');
-    data.forEach((item, index) => {
+
+    // Loop through each item in the data
+    for (let index = 0; index < data.length; index++) {
+      const item = data[index];
+
       // Get the folder name from the Google Sheet
       const folderName = item.PhotoFolder;
 
       // Construct local image paths based on the folder name
-      const photos = getLocalImagePaths(folderName);
+      const photos = await getLocalImagePaths(folderName); // Wait for image paths to be resolved
 
       let carouselHtml = '';
       if (photos.length > 1) {
@@ -114,6 +129,6 @@ fetch(sheetUrl)
         </div>
       `;
       container.insertAdjacentHTML('beforeend', cardHtml);
-    });
+    }
   })
   .catch(error => console.error('Error fetching data:', error));
