@@ -76,6 +76,13 @@
 
     gtag('config', 'AW-16823927659');
   </script>
+  <script>
+    document.getElementById("exploreProductsBtn").addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default link behavior
+      const aside = document.getElementById("sidebar"); // Get the aside element
+      aside.classList.toggle("show"); // Toggle the "show" class
+    });
+  </script>
 </head>
 
 <body>
@@ -125,7 +132,7 @@
               <p class="card-text">At PrimePcParts, we offer a wide range of PC components, both new and used, to cater
                 to gamers, professionals, and tech enthusiasts. Whether you're looking for the latest GPUs, CPUs,
                 motherboards, or budget-friendly refurbished parts, we have you covered.</p>
-              <a href="products.html" class="btn btn-primary">Explore Products</a>
+              <a href="products.html" class="btn btn-primary" id="exploreProductsBtn">Explore Products</a>
             </div>
           </div>
         </div>

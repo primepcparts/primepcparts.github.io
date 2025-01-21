@@ -790,6 +790,18 @@ code {
   background-color: #4154f1;
 }
 
+/* Default aside styles */
+#sidebar {
+  width: 250px; /* Set the width of the aside */
+  transition: width 0.3s ease; /* Add a smooth transition */
+  overflow: hidden; /* Hide overflow content */
+}
+
+/* Expanded aside styles */
+#sidebar.show {
+  width: 100%; /* Expand the aside to full width */
+}
+
 /*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
