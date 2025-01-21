@@ -1,7 +1,7 @@
 // Function to construct local image paths
 function getLocalImagePaths(folderName) {
   // Assuming the folder structure is: /img/{folderName}/photo1.jpg, /img/{folderName}/photo2.jpg, etc.
-  const basePath = `/img/${folderName}/`;
+  const basePath = `/img/gpu/${folderName}/`;
   const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp']; // Add more extensions if needed
   const imagePaths = [];
 
