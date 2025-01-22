@@ -65,6 +65,11 @@
       height: 100%;
       /* Make cards fill the height of their container */
     }
+
+    /* CSS for collapsed sidebar */
+    #sidebar.collapsed {
+      display: none; /* Hide the sidebar */
+    }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16823927659">
@@ -75,13 +80,6 @@
     gtag('js', new Date());
 
     gtag('config', 'AW-16823927659');
-  </script>
-  <script>
-    document.getElementById("exploreProductsBtn").addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default link behavior
-      const aside = document.getElementById("sidebar"); // Get the aside element
-      aside.classList.toggle("show"); // Toggle the "show" class
-    });
   </script>
 </head>
 
@@ -252,6 +250,21 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Script to handle sidebar collapse -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const exploreButton = document.getElementById("exploreProductsBtn");
+      const sidebar = document.getElementById("sidebar");
+
+      if (exploreButton && sidebar) {
+        exploreButton.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default link behavior
+          sidebar.classList.toggle("collapsed"); // Toggle the "collapsed" class
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
