@@ -12,15 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #007bff;
-      --secondary-color: #6c757d;
-      --dark-color: #212529;
-      --light-color: #f8f9fa;
+      --primary-color: #2563eb; /* Updated primary color */
+      --secondary-color: #4f46e5; /* Updated secondary color */
+      --dark-color: #1e293b; /* Updated dark color */
+      --light-color: #f8fafc; /* Updated light color */
+      --accent-color: #f59e0b; /* Accent color for highlights */
     }
 
     body {
       font-family: 'Poppins', sans-serif;
       background-color: var(--light-color);
+      color: var(--dark-color);
     }
 
     /* Navbar */
@@ -30,77 +32,112 @@
       position: sticky;
       top: 0;
       z-index: 1020;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .navbar-brand {
       font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar-brand img {
+      height: 50px;
+      width: auto;
+    }
+
+    .navbar-brand span {
+      font-size: 1.5rem;
       color: white;
     }
 
     .nav-link {
       color: white !important;
       padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
     }
 
     .nav-link:hover {
-      color: var(--primary-color) !important;
+      color: var(--accent-color) !important;
     }
 
     /* Hero Section */
     .hero-section {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
-      padding: 120px 0;
+      padding: 150px 0;
       text-align: center;
     }
 
     .hero-section h1 {
       font-size: 3.5rem;
       font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-section p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
     }
 
     .btn-custom {
-      background-color: var(--primary-color);
+      background-color: var(--accent-color);
       color: white;
       border: none;
       padding: 12px 25px;
       border-radius: 8px;
-      margin: 10px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
     }
 
     .btn-custom:hover {
-      background-color: var(--secondary-color);
+      background-color: var(--primary-color);
     }
 
     /* Cards */
     .card {
       border: none;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: white;
     }
 
     .card:hover {
       transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
-    /* Footer */
-    footer {
-      background-color: var(--dark-color);
-      color: white;
-      padding: 40px 0;
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
     }
 
-    footer a {
-      color: var(--primary-color);
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .card-text {
+      font-size: 1rem;
+      color: var(--secondary-color);
     }
 
     /* Contact Section */
     #contact {
       padding: 80px 0;
+      background-color: white;
     }
 
     #contact .address-wrapper {
-      background: white;
+      background: var(--light-color);
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -112,10 +149,22 @@
       margin-bottom: 20px;
     }
 
-    /* Logo */
-    .navbar-brand img {
-      height: 50px;
-      width: auto;
+    /* Footer */
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--primary-color);
     }
   </style>
 </head>
@@ -126,6 +175,7 @@
     <div class="container">
       <a class="navbar-brand" href="#">
         <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span>PrimePcParts</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
