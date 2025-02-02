@@ -12,11 +12,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #2563eb; /* Updated primary color */
-      --secondary-color: #4f46e5; /* Updated secondary color */
-      --dark-color: #1e293b; /* Updated dark color */
-      --light-color: #f8fafc; /* Updated light color */
-      --accent-color: #f59e0b; /* Accent color for highlights */
+      --primary-color: #2563eb;
+      --secondary-color: #4f46e5;
+      --dark-color: #1e293b;
+      --light-color: #f8fafc;
+      --accent-color: #f59e0b;
     }
 
     body {
@@ -25,7 +25,6 @@
       color: var(--dark-color);
     }
 
-    /* Navbar */
     .navbar {
       background-color: var(--dark-color);
       padding: 1rem;
@@ -63,7 +62,6 @@
       color: var(--accent-color) !important;
     }
 
-    /* Hero Section */
     .hero-section {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
@@ -96,7 +94,6 @@
       background-color: var(--primary-color);
     }
 
-    /* Cards */
     .card {
       border: none;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -110,7 +107,9 @@
     }
 
     .card-img-top {
-      height: 200px;
+      width: 100%;
+      height: 0;
+      padding-top: 75%; /* 4:3 aspect ratio */
       object-fit: cover;
       border-radius: 8px 8px 0 0;
     }
@@ -130,7 +129,6 @@
       color: var(--secondary-color);
     }
 
-    /* Contact Section */
     #contact {
       padding: 80px 0;
       background-color: white;
@@ -149,7 +147,6 @@
       margin-bottom: 20px;
     }
 
-    /* Footer */
     footer {
       background-color: var(--dark-color);
       color: white;
@@ -216,7 +213,7 @@
       <div class="row">
         <div class="col-12 col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top img-fluid">
+            <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">High-Performance GPUs</h3>
               <p class="card-text">Dedicated graphics cards for gaming and professional use.</p>
@@ -226,7 +223,7 @@
         </div>
         <div class="col-12 col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top img-fluid">
+            <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">Latest CPUs</h3>
               <p class="card-text">Powerful processors for gaming, streaming, and productivity.</p>
@@ -236,7 +233,7 @@
         </div>
         <div class="col-12 col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top img-fluid">
+            <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">High-Speed RAM</h3>
               <p class="card-text">Fast memory solutions for seamless multitasking.</p>
