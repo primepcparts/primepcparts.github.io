@@ -13,55 +13,6 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style>
-    /* Updated button CSS */
-    .btn-buy {
-      display: inline-block;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      text-align: center;
-      text-decoration: none;
-      vertical-align: middle;
-      cursor: pointer;
-      user-select: none;
-      background-color: #f59e0b; /* Accent color */
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-buy:hover {
-      background-color: #f79c42; /* Darker shade on hover */
-    }
-
-    .btn-buy:focus, .btn-buy:active {
-      outline: none;
-      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5); /* Focus box-shadow */
-    }
-
-    .card-body {
-      padding-bottom: 10px; /* Add space below the card body */
-    }
-
-    .form-group {
-      margin-bottom: 15px; /* Add space between quantity and buy button */
-    }
-
-    .card-img-top {
-      object-fit: contain; /* Ensures the image fits without distortion */
-      max-height: 300px; /* Adjust to limit the height */
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .carousel-inner img {
-      object-fit: contain;
-      height: 300px; /* Ensures the images in carousel are appropriately sized */
-    }
-
     /* Modal styles for full-screen image */
     .modal {
       display: none;
@@ -83,11 +34,15 @@
       background-color: white;
       padding: 20px;
       border-radius: 8px;
+      overflow: hidden;
     }
 
     .modal img {
-      width: 100%;
-      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+      user-select: none;
     }
 
     .close {
@@ -99,6 +54,17 @@
       cursor: pointer;
     }
 
+    .card-img-top {
+      object-fit: contain; /* Ensures the image fits without distortion */
+      max-height: 300px; /* Adjust to limit the height */
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .carousel-inner img {
+      object-fit: contain;
+      height: 300px; /* Ensures the images in carousel are appropriately sized */
+    }
   </style>
 </head>
 
@@ -256,6 +222,7 @@
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
       modalImage.src = photos[index];
+      modalImage.dataset.scale = 1; // Add data attribute to track scale
     }
 
     // Close full-screen modal
@@ -263,6 +230,20 @@
       const modal = document.getElementById('fullScreenModal');
       modal.style.display = 'none';
     }
+
+    // Zoom in/out on mouse wheel
+    document.getElementById('fullScreenImage').addEventListener('wheel', function (e) {
+      const modalImage = this;
+      let scale = parseFloat(modalImage.dataset.scale) || 1;
+      if (e.deltaY > 0) {
+        scale *= 0.9; // Zoom out
+      } else {
+        scale *= 1.1; // Zoom in
+      }
+      modalImage.style.transform = `scale(${scale})`;
+      modalImage.dataset.scale = scale;
+      e.preventDefault(); // Prevent page scrolling
+    });
   </script>
 </body>
 
