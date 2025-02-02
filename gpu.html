@@ -54,12 +54,51 @@
       object-fit: contain; /* Ensures the image fits without distortion */
       max-height: 300px; /* Adjust to limit the height */
       width: 100%;
+      cursor: pointer;
     }
 
     .carousel-inner img {
       object-fit: contain;
       height: 300px; /* Ensures the images in carousel are appropriately sized */
     }
+
+    /* Modal styles for full-screen image */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .modal img {
+      width: 100%;
+      height: auto;
+    }
+
+    .close {
+      color: white;
+      font-size: 2rem;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 
@@ -99,6 +138,14 @@
       </div>
     </div>
   </section>
+
+  <!-- Full-Screen Image Modal -->
+  <div id="fullScreenModal" class="modal">
+    <span class="close" onclick="closeFullScreen()">&times;</span>
+    <div class="modal-content">
+      <img id="fullScreenImage" src="" alt="Full Screen Image">
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -182,25 +229,17 @@
     async function getLocalImagePaths(folderName) {
       const imagePaths = [];
       for (let i = 1; i <= 5; i++) {
-        const imagePath = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
-        if (await checkImageExists(imagePath)) {
+        const imagePath = `assets/img/${folderName}/photo${i}.jpg`;
+        const response = await fetch(imagePath, { method: 'HEAD' });
+        if (response.ok) {
           imagePaths.push(imagePath);
         }
       }
       return imagePaths;
     }
 
-    async function checkImageExists(imagePath) {
-      try {
-        const response = await fetch(imagePath, { method: 'HEAD' });
-        return response.ok;
-      } catch (error) {
-        return false;
-      }
-    }
-
     function sanitizeId(id) {
-      return id.replace(/[^a-zA-Z0-9]/g, '-');
+      return id.replace(/[^\w-]/g, '_');
     }
 
     function generateQuantityOptions(maxQuantity) {
@@ -211,20 +250,18 @@
       return options;
     }
 
-    function buyItem(name, price, quantity, index) {
-      alert(`You are buying ${quantity} of ${name} at ₹${price} each.`);
-    }
-
-    function openFullScreenCarousel(images, index) {
+    // Open full-screen modal with selected image
+    function openFullScreenCarousel(photos, index) {
       const modal = document.getElementById('fullScreenModal');
-      const fullScreenImage = document.getElementById('fullScreenImage');
-      fullScreenImage.src = images[index];
-      modal.classList.add('open');
+      const modalImage = document.getElementById('fullScreenImage');
+      modal.style.display = 'flex';
+      modalImage.src = photos[index];
     }
 
+    // Close full-screen modal
     function closeFullScreen() {
       const modal = document.getElementById('fullScreenModal');
-      modal.classList.remove('open');
+      modal.style.display = 'none';
     }
   </script>
 </body>
