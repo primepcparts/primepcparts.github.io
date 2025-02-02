@@ -163,7 +163,7 @@
     async function getLocalImagePaths(folderName) {
       const imagePaths = [];
       for (let i = 1; i <= 5; i++) {
-        const imagePath = `assets/img/products/gpus/${folderName}/photo${i}.jpg`;
+        const imagePath = `assets/img/products/gpu/${folderName}/photo${i}.jpg`;
         if (await checkImageExists(imagePath)) {
           imagePaths.push(imagePath);
         }
