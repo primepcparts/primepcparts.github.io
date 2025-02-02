@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,13 +24,16 @@
       .hero-section p {
         font-size: 1rem;
       }
+
+      /* Button fix for mobile view */
+      .hero-section .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
   
       .btn-custom {
         padding: 10px 20px;
-      }
-  
-      .card-img-top {
-        height: auto;
       }
   
       .map-wrapper iframe {
@@ -39,7 +41,6 @@
         height: 200px;
       }
   
-      /* Navbar */
       .navbar {
         padding: 0.5rem;
       }
@@ -54,9 +55,15 @@
       .hero-section {
         padding: 150px 0;
       }
+
+      /* Buttons aligned horizontally on wider screens */
+      .hero-section .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
     }
   </style>
-  
 </head>
 
 <body>
@@ -88,11 +95,13 @@
 
   <!-- Hero Section -->
   <section class="hero-section">
-    <div class="container">
+    <div class="container text-center">
       <h1>Build Your Perfect PC with PrimePcParts</h1>
       <p>Your trusted destination for high-quality PC components, custom builds, and expert hardware solutions.</p>
-      <a href="#products" class="btn btn-custom">Shop Components</a>
-      <a href="#contact" class="btn btn-custom">Get a Custom Build</a>
+      <div class="button-group">
+        <a href="#products" class="btn btn-custom">Shop Components</a>
+        <a href="#contact" class="btn btn-custom">Get a Custom Build</a>
+      </div>
     </div>
   </section>
 
