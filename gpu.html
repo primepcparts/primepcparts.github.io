@@ -15,8 +15,8 @@
   <style>
     /* Modal styles for full-screen image */
 
-        /* Updated button CSS */
-        .btn-buy {
+    /* Updated button CSS */
+    .btn-buy {
       display: inline-block;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
       font-size: 1rem;
@@ -39,7 +39,8 @@
       background-color: #f79c42; /* Darker shade on hover */
     }
 
-    .btn-buy:focus, .btn-buy:active {
+    .btn-buy:focus,
+    .btn-buy:active {
       outline: none;
       box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5); /* Focus box-shadow */
     }
@@ -63,6 +64,7 @@
       object-fit: contain;
       height: 300px; /* Ensures the images in carousel are appropriately sized */
     }
+
     .modal {
       display: none;
       position: fixed;
@@ -185,10 +187,10 @@
           let carouselHtml = '';
           if (photos.length > 1) {
             const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`); // Sanitize the ID
-            carouselHtml = ` 
+            carouselHtml = `
               <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  ${photos.map((photo, photoIndex) => ` 
+                  ${photos.map((photo, photoIndex) => `
                     <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
                       <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
                     </div>
@@ -262,6 +264,8 @@
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
       modalImage.src = photos[index];
+      // Reset any zoom transformations when opening a new image
+      modalImage.style.transform = 'scale(1)';
     }
 
     // Close full-screen modal
@@ -270,7 +274,7 @@
       modal.style.display = 'none';
     }
 
-    // Zoom image functionality
+    // Zoom image functionality (Updated for smoother experience)
     function zoomImage(event) {
       const img = document.getElementById('fullScreenImage');
       const scale = event.deltaY < 0 ? 1.1 : 0.9;
