@@ -18,14 +18,48 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <!-- Google Fonts for Modern Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Custom Blue Theme -->
+  <style>
+    :root {
+      --bs-primary: #0d6efd; /* Bootstrap's default blue */
+      --bs-primary-dark: #0b5ed7; /* Darker shade for hover */
+    }
+
+    .btn-primary {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--bs-primary-dark);
+      border-color: var(--bs-primary-dark);
+    }
+
+    .navbar {
+      background-color: var(--bs-primary) !important;
+    }
+
+    .hero-section {
+      background-color: #e9f2ff; /* Light blue background */
+    }
+
+    .card {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
 </head>
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <i class="fas fa-computer"></i> PrimePcParts
+        <img src="/img/logo.png" alt="PrimePcParts Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+        PrimePcParts
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -50,7 +84,7 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero-section bg-light py-5 mt-5">
+  <section class="hero-section py-5 mt-5">
     <div class="container text-center">
       <h1 class="display-4">Welcome to PrimePcParts</h1>
       <p class="lead">Your trusted partner for PC components, custom builds, and hardware solutions.</p>
@@ -65,7 +99,7 @@
       <div class="row">
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top">
+            <img src="/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">High-Performance GPUs</h3>
               <p class="card-text">Dedicated graphics cards for gaming and professional use.</p>
@@ -75,7 +109,7 @@
         </div>
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top">
+            <img src="/img/products/cpu.jpg" alt="Processors" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">Latest CPUs</h3>
               <p class="card-text">Powerful processors for gaming, streaming, and productivity.</p>
@@ -85,7 +119,7 @@
         </div>
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top">
+            <img src="/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">High-Speed RAM</h3>
               <p class="card-text">Fast memory solutions for seamless multitasking.</p>
@@ -104,7 +138,7 @@
       <div class="row">
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/CustomPC.jpg" alt="Custom PC Builds" class="card-img-top">
+            <img src="/img/CustomPC.jpg" alt="Custom PC Builds" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">Custom PC Builds</h3>
               <p class="card-text">Tailored solutions for gaming, workstations, and creative projects.</p>
@@ -113,7 +147,7 @@
         </div>
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/refurbished.png" alt="Refurbished Parts" class="card-img-top">
+            <img src="/img/refurbished.png" alt="Refurbished Parts" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">Used & Refurbished Components</h3>
               <p class="card-text">Quality refurbished parts at competitive prices.</p>
@@ -122,7 +156,7 @@
         </div>
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="assets/img/consulting.jpg" alt="Hardware Consultation" class="card-img-top">
+            <img src="/img/consulting.jpg" alt="Hardware Consultation" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title">Expert Hardware Consulting</h3>
               <p class="card-text">Professional advice for selecting the right components.</p>
@@ -156,7 +190,7 @@
   <footer class="bg-dark text-white py-4">
     <div class="container text-center">
       <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
-      <p>Contact us: support@primepcparts.com | +91-XXX-XXXXXX</p>
+      <p>Contact us: primepcpartspune@gmail.com | +918275433068</p>
     </div>
   </footer>
 
