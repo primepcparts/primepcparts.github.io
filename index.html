@@ -2,269 +2,151 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - PrimePcParts</title>
-  <meta content="PrimePcParts specializes in building and selling PC parts, both used and new." name="description">
-  <meta content="PC parts, computer hardware, new and used PC components, gaming PC, custom builds" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- Custom CSS for Image Sizing -->
-  <style>
-    /* Adjust image size in the featured products section */
-    .featured-products .card-img-top {
-      height: 150px;
-      /* Fixed height for uniformity */
-      object-fit: contain;
-      /* Ensures images maintain aspect ratio without cropping */
-      width: 100%;
-      /* Full width of the card */
-      padding: 10px;
-      /* Add some padding around the image */
-    }
-
-    /* Ensure cards in the featured products section have consistent height */
-    .featured-products .card {
-      height: 100%;
-      /* Make cards fill the height of their container */
-      display: flex;
-      flex-direction: column;
-    }
-
-    .featured-products .card-body {
-      flex-grow: 1;
-      /* Allow card body to grow and fill remaining space */
-    }
-
-    /* Ensure cards in the services section have consistent height */
-    .services-section .card {
-      height: 100%;
-      /* Make cards fill the height of their container */
-    }
-
-    /* CSS for collapsed sidebar */
-    #sidebar.collapsed {
-      display: none; /* Hide the sidebar */
-    }
-  </style>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16823927659">
-  </script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'AW-16823927659');
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimePcParts | PC Components & Custom Builds</title>
+  <!-- Meta Tags for SEO -->
+  <meta name="description"
+    content="PrimePcParts specializes in building and selling PC parts, both used and new, offering custom builds and hardware consultation services.">
+  <meta name="keywords"
+    content="PC components, computer hardware, gaming PC, custom builds, refurbished parts, high-performance PCs">
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.primepcparts.com">
+  <!-- Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts for Modern Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <i class="bi bi-list toggle-sidebar-btn" aria-label="Toggle Sidebar"></i>&nbsp;&nbsp;
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
-        <span class="desktop-text" style="color: #012970; font-family: 'Ubuntu';">&nbsp;Prime Pc Parts</span>
-        <span class="mobile-text" style="color: #012970; font-family: 'Ubuntu';">PrimePcParts</span>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-computer"></i> PrimePcParts
       </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#services">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <nav class="header-nav ms-auto">
-      <!-- Add navigation items here if needed -->
-    </nav>
-  </header>
+  </nav>
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-    <!-- Sidebar content loaded from aside.html -->
-    <script>
-      $(function () {
-        $("#sidebar").load("aside.html");
-      });
-    </script>
-  </aside>
-
-  <!-- ======= Main Content ======= -->
-  <main id="main" class="main">
-    <div class="pagetitle">
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h1>Welcome to PrimePcParts</h1>
+      <p class="lead">Your trusted partner for PC components, custom builds, and hardware solutions.</p>
+      <a href="#explore-products" class="btn btn-primary btn-lg">Explore Products</a>
     </div>
+  </section>
 
-    <section class="section dashboard">
+  <!-- Featured Products Section -->
+  <section id="products" class="featured-section">
+    <div class="container">
+      <h2>Featured Products</h2>
       <div class="row">
-        <!-- Welcome Section -->
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Welcome to PrimePcParts</h5>
-              <p class="card-text">At PrimePcParts, we offer a wide range of PC components, both new and used, to cater
-                to gamers, professionals, and tech enthusiasts. Whether you're looking for the latest GPUs, CPUs,
-                motherboards, or budget-friendly refurbished parts, we have you covered.</p>
-              <a href="index.html" class="btn btn-primary" id="exploreProductsBtn">Explore Products</a>
-            </div>
+        <div class="col-md-4 mb-4">
+          <div class="product-card">
+            <img src="assets/img/gpu.jpg" alt="Graphics Cards" class="img-fluid mb-3 rounded-top">
+            <h3>High-Performance GPUs</h3>
+            <p>Dedicated graphics cards for gaming and professional use.</p>
+            <a href="#" class="btn btn-primary">Shop Now</a>
           </div>
         </div>
-
-        <!-- Featured Products Section -->
-        <div class="col-lg-12 featured-products">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Featured Products</h5>
-              <div class="row">
-                <!-- Product 1 -->
-                <div class="col-md-4">
-                  <div class="card">
-                    <img src="assets/img/products/gpu.jpg" class="card-img-top" alt="GPU">
-                    <div class="card-body">
-                      <h6 class="card-title">Graphics Cards</h6>
-                      <p class="card-text">High-performance GPUs for gaming and professional use.</p>
-                      <a href="/pc-graphics-card.html" class="btn btn-primary">Shop Now</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Product 2 -->
-                <div class="col-md-4">
-                  <div class="card">
-                    <img src="assets/img/products/cpu.jpg" class="card-img-top" alt="CPU">
-                    <div class="card-body">
-                      <h6 class="card-title">Processors</h6>
-                      <p class="card-text">Latest CPUs for gaming, streaming, and productivity.</p>
-                      <a href="#" class="btn btn-primary">Shop Now</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Product 3 -->
-                <div class="col-md-4">
-                  <div class="card">
-                    <img src="assets/img/products/ram.jpg" class="card-img-top" alt="RAM">
-                    <div class="card-body">
-                      <h6 class="card-title">Memory (RAM)</h6>
-                      <p class="card-text">High-speed RAM for seamless multitasking.</p>
-                      <a href="#" class="btn btn-primary">Shop Now</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="col-md-4 mb-4">
+          <div class="product-card">
+            <img src="assets/img/cpu.jpg" alt="Processors" class="img-fluid mb-3 rounded-top">
+            <h3>Latest CPUs</h3>
+            <p>Powerful processors for gaming, streaming, and productivity.</p>
+            <a href="#" class="btn btn-primary">Shop Now</a>
           </div>
         </div>
-
-        <!-- Services Section -->
-        <div class="col-lg-12 services-section">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Our Services</h5>
-              <div class="row">
-                <!-- Service 1 -->
-                <div class="col-md-4">
-                  <div class="card">
-                    <div class="card-body">
-                      <h6 class="card-title">Custom PC Builds</h6>
-                      <p class="card-text">We build custom PCs tailored to your needs, whether for gaming, work, or
-                        creativity.</p>
-                    </div>
-                  </div>
-                </div>
-                <!-- Service 2 -->
-                <div class="col-md-4">
-                  <div class="card">
-                    <div class="card-body">
-                      <h6 class="card-title">New & Used PC Parts</h6>
-                      <p class="card-text">Find high-quality new and refurbished components at competitive prices.</p>
-                    </div>
-                  </div>
-                </div>
-                <!-- Service 3 -->
-                <div class="col-md-4">
-                  <div class="card">
-                    <div class="card-body">
-                      <h6 class="card-title">Hardware Consultation</h6>
-                      <p class="card-text">Get expert advice on selecting the right components for your build.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="col-md-4 mb-4">
+          <div class="product-card">
+            <img src="assets/img/ram.jpg" alt="Memory (RAM)" class="img-fluid mb-3 rounded-top">
+            <h3>High-Speed RAM</h3>
+            <p>Fast memory solutions for seamless multitasking.</p>
+            <a href="#" class="btn btn-primary">Shop Now</a>
           </div>
         </div>
       </div>
-    </section>
-  </main>
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Prime Pc Parts 2025</span></strong>. All Rights Reserved
     </div>
-    <div class="credits">
-      <a href="https://facebook.com/PrimePcParts" target="_blank">Facebook</a> |
-      <a href="https://twitter.com/PrimePcParts" target="_blank">Twitter</a> |
-      <a href="mailto:support@primepcparts.com">Contact Us</a>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="services-section">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="service-card">
+            <img src="assets/img/custom-build.jpg" alt="Custom PC Builds" class="img-fluid mb-3 rounded-top">
+            <h3>Custom PC Builds</h3>
+            <p>Tailored solutions for gaming, workstations, and creative projects.</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="service-card">
+            <img src="assets/img/refurbished.jpg" alt="Refurbished Parts" class="img-fluid mb-3 rounded-top">
+            <h3>Used & Refurbished Components</h3>
+            <p>Quality refurbished parts at competitive prices.</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="service-card">
+            <img src="assets/img/consulting.jpg" alt="Hardware Consultation" class="img-fluid mb-3 rounded-top">
+            <h3>Expert Hardware Consulting</h3>
+            <p>Professional advice for selecting the right components.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
+      <p>Contact us: support@primepcparts.com | +91-XXX-XXXXXX</p>
     </div>
   </footer>
 
-  <!-- Back to Top Button -->
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-    <i class="bi bi-arrow-up-short"></i>
-  </a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-  <!-- Script to handle sidebar collapse -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const exploreButton = document.getElementById("exploreProductsBtn");
-      const sidebar = document.getElementById("sidebar");
-
-      if (exploreButton && sidebar) {
-        exploreButton.addEventListener("click", function (event) {
-          event.preventDefault(); // Prevent the default link behavior
-          sidebar.classList.toggle("collapsed"); // Toggle the "collapsed" class
-        });
-      }
-    });
-  </script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
