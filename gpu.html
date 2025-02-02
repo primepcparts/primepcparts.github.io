@@ -106,7 +106,7 @@
           }
 
           const cardHtml = `
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">${item.Name}</h5>
@@ -130,8 +130,25 @@
 
     // Helper functions for image paths and buying items
     async function getLocalImagePaths(folderName) {
-      // Simulate fetching image paths based on the folder name (you would replace this logic as per your actual setup)
-      return [`assets/img/products/gpus/${folderName}/1.jpg`, `assets/img/products/gpus/${folderName}/2.jpg`];
+      // Assuming image filenames are photo1.jpg, photo2.jpg, etc., inside the folder named as the folderName
+      const imagePaths = [];
+      for (let i = 1; i <= 5; i++) { // Change this limit if you have more or fewer images
+        const imagePath = `assets/img/products/gpus/${folderName}/photo${i}.jpg`;
+        if (await checkImageExists(imagePath)) {
+          imagePaths.push(imagePath);
+        }
+      }
+      return imagePaths;
+    }
+
+    // Check if the image exists
+    async function checkImageExists(imagePath) {
+      try {
+        const response = await fetch(imagePath, { method: 'HEAD' });
+        return response.ok;
+      } catch (error) {
+        return false;
+      }
     }
 
     function sanitizeId(id) {
