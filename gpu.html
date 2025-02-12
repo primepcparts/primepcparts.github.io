@@ -13,9 +13,20 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style>
-    /* Custom Styles */
+    /* Modal styles for full-screen image */
+  
+    /* Updated button CSS */
     .btn-buy {
-      background-color: #f59e0b;
+      display: inline-block;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: center;
+      text-decoration: none;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      background-color: #f59e0b; /* Accent color */
       color: white;
       border: none;
       padding: 12px 25px;
@@ -23,27 +34,46 @@
       font-weight: 600;
       transition: background-color 0.3s ease;
     }
-
+  
     .btn-buy:hover {
-      background-color: #e58e00;
+      background-color: #f79c42; /* Darker shade on hover */
     }
-
+  
+    .btn-buy:focus,
+    .btn-buy:active {
+      outline: none;
+      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5); /* Focus box-shadow */
+    }
+  
+    .card-body {
+      padding-top: 20px; /* Add space above the card body */
+      padding-bottom: 10px; /* Add space below the card body */
+    }
+  
+    .card-body p.card-text {
+      margin-top: 20px; /* Add space between the image and the price */
+    }
+  
+    .form-group {
+      margin-bottom: 15px; /* Add space between quantity and buy button */
+    }
+  
     .card-img-top {
-      object-fit: contain;
-      max-height: 300px;
+      object-fit: contain; /* Ensures the image fits without distortion */
+      max-height: 300px; /* Adjust to limit the height */
       width: 100%;
       cursor: pointer;
     }
-
+  
     .carousel-inner img {
       object-fit: contain;
-      height: 300px;
+      height: 300px; /* Ensures the images in carousel are appropriately sized */
     }
-
+  
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000;
+      z-index: 1;
       left: 0;
       top: 0;
       width: 100%;
@@ -52,7 +82,7 @@
       justify-content: center;
       align-items: center;
     }
-
+  
     .modal-content {
       max-width: 90%;
       max-height: 90%;
@@ -63,13 +93,13 @@
       overflow: hidden;
       position: relative;
     }
-
+  
     .modal img {
       width: 100%;
       height: auto;
       transition: transform 0.3s ease;
     }
-
+  
     .close {
       color: white;
       font-size: 2rem;
@@ -78,7 +108,7 @@
       right: 20px;
       cursor: pointer;
     }
-
+  
     .zoom {
       cursor: zoom-in;
     }
@@ -87,11 +117,11 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="https://primepcparts.github.io/">
-        <img src="assets/img/logo.png" alt="PrimePcParts Logo" height="40">
-        <span class="ms-2">PrimePcParts</span>
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span>PrimePcParts</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -113,8 +143,8 @@
   <section id="graphics-cards" class="py-5">
     <div class="container">
       <h2 class="text-center mb-4">Browse Graphics Cards</h2>
-      <div class="row row-cols-1 row-cols-md-3 g-4" id="graphics-cards-container">
-        <!-- Product cards will be dynamically inserted here -->
+      <div class="row" id="graphics-cards-container">
+        <!-- Data from Google Sheet will be inserted here -->
       </div>
     </div>
   </section>
@@ -128,7 +158,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-light py-4">
+  <footer>
     <div class="container text-center">
       <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
       <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
@@ -137,122 +167,140 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Fetch data from Google Sheet
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/Sheet1';
 
-    async function fetchProducts() {
-      try {
-        const response = await fetch(sheetUrl);
-        const data = await response.json();
-        renderProducts(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
+    fetch(sheetUrl)
+      .then(response => response.json())
+      .then(async (data) => {
+        console.log("Fetched data:", data); // Debugging: Log fetched data
+        const container = document.getElementById('graphics-cards-container');
 
-    async function renderProducts(products) {
-      const container = document.getElementById('graphics-cards-container');
-      container.innerHTML = ''; // Clear existing content
+        // Loop through each item in the data
+        for (let index = 0; index < data.length; index++) {
+          const item = data[index];
 
-      for (const [index, product] of products.entries()) {
-        const photos = await getLocalImagePaths(product.PhotoFolder);
-        const carouselHtml = photos.length > 1 ? createCarousel(product.Name, photos, index) : createSingleImage(photos[0], product.Name);
+          // Get the folder name from the Google Sheet
+          const folderName = item.PhotoFolder;
 
-        const cardHtml = `
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                <h5 class="card-title">${product.Name}</h5>
-                ${carouselHtml}
-                <p class="card-text mt-3"><strong>Price:</strong> ₹${product.Price}</p>
-                <div class="form-group mb-3">
-                  <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-                  <select class="form-control" id="quantity-${index}">
-                    ${generateQuantityOptions(product.Quantity)}
-                  </select>
+          // Construct local image paths based on the folder name
+          const photos = await getLocalImagePaths(folderName); // Wait for image paths to be resolved
+
+          let carouselHtml = '';
+          if (photos.length > 1) {
+            const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`); // Sanitize the ID
+            carouselHtml = ` 
+              <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  ${photos.map((photo, photoIndex) => `
+                    <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
+                      <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                    </div>
+                  `).join('')}
                 </div>
-                <button class="btn-buy w-100" onclick="buyItem('${product.Name}', '${product.Price}', ${product.Quantity}, ${index})">Buy It</button>
+                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            `;
+          } else if (photos.length === 1) {
+            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
+          }
+
+          const cardHtml = `
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">${item.Name}</h5>
+                  ${carouselHtml}
+                  <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
+                  <div class="form-group">
+                    <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
+                    <select class="form-control" id="quantity-${index}">
+                      ${generateQuantityOptions(item.Quantity)}
+                    </select>
+                  </div>
+                  <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
+                </div>
               </div>
             </div>
-          </div>
-        `;
-        container.insertAdjacentHTML('beforeend', cardHtml);
-      }
-    }
+          `;
+          container.insertAdjacentHTML('beforeend', cardHtml);
+        }
+      })
+      .catch(error => console.error('Error fetching data:', error));
 
+    // Helper functions for image paths and buying items
     async function getLocalImagePaths(folderName) {
       const imagePaths = [];
       for (let i = 1; i <= 5; i++) {
         const imagePath = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
-        try {
-          const response = await fetch(imagePath, { method: 'HEAD' });
-          if (response.ok) imagePaths.push(imagePath);
-        } catch (error) {
-          console.error('Error checking image:', error);
+        const response = await fetch(imagePath, { method: 'HEAD' });
+        if (response.ok) {
+          imagePaths.push(imagePath);
         }
       }
       return imagePaths;
     }
 
-    function createCarousel(productName, photos, index) {
-      const carouselId = `carousel-${productName.replace(/\s+/g, '-')}-${index}`;
-      return `
-        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            ${photos.map((photo, photoIndex) => `
-              <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                <img src="${photo}" class="d-block w-100 card-img-top" alt="${productName} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
-              </div>
-            `).join('')}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      `;
-    }
-
-    function createSingleImage(photo, productName) {
-      return `<img src="${photo}" class="card-img-top" alt="${productName}" onclick="openFullScreenCarousel([${JSON.stringify(photo)}], 0)">`;
+    function sanitizeId(id) {
+      return id.replace(/[^\w-]/g, '_');
     }
 
     function generateQuantityOptions(maxQuantity) {
-      return Array.from({ length: maxQuantity }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('');
+      let options = '';
+      for (let i = 1; i <= maxQuantity; i++) {
+        options += `<option value="${i}">${i}</option>`;
+      }
+      return options;
     }
 
+    // Open full-screen modal with selected image
     function openFullScreenCarousel(photos, index) {
       const modal = document.getElementById('fullScreenModal');
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
       modalImage.src = photos[index];
+      // Reset any zoom transformations when opening a new image
       modalImage.style.transform = 'scale(1)';
     }
 
+    // Close full-screen modal
     function closeFullScreen() {
       const modal = document.getElementById('fullScreenModal');
       modal.style.display = 'none';
     }
 
+    // Zoom image functionality (Updated for smoother experience)
     function zoomImage(event) {
       const img = document.getElementById('fullScreenImage');
       const scale = event.deltaY < 0 ? 1.1 : 0.9;
-      const currentScale = parseFloat(img.style.transform.replace('scale(', '').replace(')', '')) || 1;
-      img.style.transform = `scale(${Math.min(Math.max(currentScale * scale, 1), 3)})`;
+      const currentTransform = img.style.transform || 'scale(1)';
+      const newScale = parseFloat(currentTransform.replace('scale(', '').replace(')', '')) * scale;
+      img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
     }
 
+    // Send details to WhatsApp
     function buyItem(name, price, quantity, index) {
-      const selectedQuantity = document.getElementById(`quantity-${index}`).value;
-      const message = `*Prime PC Parts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${selectedQuantity}\n\nPlease confirm your order and shipping details.`;
-      const whatsappLink = `https://wa.me/+918275433068?text=${encodeURIComponent(message)}`;
+      // Construct the message to send via WhatsApp
+      const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
+                      `Item: ${name}\n` +
+                      `Price: ₹${price}\n` +
+                      `Quantity: ${quantity}\n\n` +
+                      `Please confirm your order and shipping details.`;
+
+      // WhatsApp link with pre-filled message
+      const phoneNumber = "+918275433068";  // Your WhatsApp number (change to your own)
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      // Open WhatsApp with the message
       window.open(whatsappLink, '_blank');
     }
-
-    // Fetch and render products on page load
-    fetchProducts();
   </script>
 </body>
 
