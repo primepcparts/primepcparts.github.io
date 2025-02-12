@@ -143,6 +143,24 @@
   <section id="graphics-cards" class="py-5">
     <div class="container">
       <h2 class="text-center mb-4">Browse Graphics Cards</h2>
+
+      <!-- Filter Section -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="filter-tabs">
+            <input type="text" id="filter-name" placeholder="Filter by Name" class="form-control mb-2">
+            <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control mb-2">
+            <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control mb-2">
+            <select id="filter-stock" class="form-control mb-2">
+              <option value="all">All</option>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out of Stock</option>
+            </select>
+            <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+          </div>
+        </div>
+      </div>
+
       <div class="row" id="graphics-cards-container">
         <!-- Data from Google Sheet will be inserted here -->
       </div>
@@ -169,71 +187,93 @@
   <script>
     // Fetch data from Google Sheet
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/Sheet1';
+    let allData = []; // Store all fetched data for filtering
 
     fetch(sheetUrl)
       .then(response => response.json())
       .then(async (data) => {
-        console.log("Fetched data:", data); // Debugging: Log fetched data
-        const container = document.getElementById('graphics-cards-container');
-
-        // Loop through each item in the data
-        for (let index = 0; index < data.length; index++) {
-          const item = data[index];
-
-          // Get the folder name from the Google Sheet
-          const folderName = item.PhotoFolder;
-
-          // Construct local image paths based on the folder name
-          const photos = await getLocalImagePaths(folderName); // Wait for image paths to be resolved
-
-          let carouselHtml = '';
-          if (photos.length > 1) {
-            const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`); // Sanitize the ID
-            carouselHtml = ` 
-              <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  ${photos.map((photo, photoIndex) => `
-                    <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                      <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
-                    </div>
-                  `).join('')}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            `;
-          } else if (photos.length === 1) {
-            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
-          }
-
-          const cardHtml = `
-            <div class="col-md-4 mb-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">${item.Name}</h5>
-                  ${carouselHtml}
-                  <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
-                  <div class="form-group">
-                    <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-                    <select class="form-control" id="quantity-${index}">
-                      ${generateQuantityOptions(item.Quantity)}
-                    </select>
-                  </div>
-                  <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
-                </div>
-              </div>
-            </div>
-          `;
-          container.insertAdjacentHTML('beforeend', cardHtml);
-        }
+        allData = data; // Store the fetched data
+        renderCards(data); // Render cards initially
       })
       .catch(error => console.error('Error fetching data:', error));
+
+    // Function to render cards based on filtered data
+    function renderCards(data) {
+      const container = document.getElementById('graphics-cards-container');
+      container.innerHTML = ''; // Clear existing cards
+
+      data.forEach(async (item, index) => {
+        const folderName = item.PhotoFolder;
+        const photos = await getLocalImagePaths(folderName);
+
+        let carouselHtml = '';
+        if (photos.length > 1) {
+          const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`);
+          carouselHtml = ` 
+            <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                ${photos.map((photo, photoIndex) => `
+                  <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
+                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                  </div>
+                `).join('')}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          `;
+        } else if (photos.length === 1) {
+          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
+        }
+
+        const stockStatus = item.Quantity > 0 ? 'In Stock' : 'Out of Stock';
+        const cardHtml = `
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${item.Name}</h5>
+                ${carouselHtml}
+                <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
+                <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
+                <div class="form-group">
+                  <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
+                  <select class="form-control" id="quantity-${index}">
+                    ${generateQuantityOptions(item.Quantity)}
+                  </select>
+                </div>
+                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
+              </div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    // Function to apply filters
+    function applyFilters() {
+      const nameFilter = document.getElementById('filter-name').value.toLowerCase();
+      const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
+      const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
+      const stockFilter = document.getElementById('filter-stock').value;
+
+      const filteredData = allData.filter(item => {
+        const matchesName = item.Name.toLowerCase().includes(nameFilter);
+        const matchesPrice = item.Price >= minPrice && item.Price <= maxPrice;
+        const matchesStock = stockFilter === 'all' || 
+                            (stockFilter === 'in-stock' && item.Quantity > 0) || 
+                            (stockFilter === 'out-of-stock' && item.Quantity === 0);
+        return matchesName && matchesPrice && matchesStock;
+      });
+
+      renderCards(filteredData); // Render filtered cards
+    }
 
     // Helper functions for image paths and buying items
     async function getLocalImagePaths(folderName) {
@@ -266,7 +306,6 @@
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
       modalImage.src = photos[index];
-      // Reset any zoom transformations when opening a new image
       modalImage.style.transform = 'scale(1)';
     }
 
@@ -276,7 +315,7 @@
       modal.style.display = 'none';
     }
 
-    // Zoom image functionality (Updated for smoother experience)
+    // Zoom image functionality
     function zoomImage(event) {
       const img = document.getElementById('fullScreenImage');
       const scale = event.deltaY < 0 ? 1.1 : 0.9;
@@ -287,18 +326,13 @@
 
     // Send details to WhatsApp
     function buyItem(name, price, quantity, index) {
-      // Construct the message to send via WhatsApp
       const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
                       `Item: ${name}\n` +
                       `Price: ₹${price}\n` +
                       `Quantity: ${quantity}\n\n` +
                       `Please confirm your order and shipping details.`;
-
-      // WhatsApp link with pre-filled message
-      const phoneNumber = "+918275433068";  // Your WhatsApp number (change to your own)
+      const phoneNumber = "+918275433068";
       const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-      // Open WhatsApp with the message
       window.open(whatsappLink, '_blank');
     }
   </script>
