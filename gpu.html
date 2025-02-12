@@ -10,168 +10,125 @@
   <link rel="canonical" href="https://www.primepcparts.com/">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style>
-    .productDetailCarousel {
-      padding: 2rem 0;
-    }
-
-    .flexBox {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-
-    .detailCarousel {
-      flex: 1 1 600px;
-      max-width: 800px;
-    }
-
-    .detailInfoBox {
-      flex: 1 1 400px;
-      padding: 1rem;
-    }
-
-    .carousel-indicators li {
-      width: 80px;
-      height: 60px;
-      background-size: cover;
-      background-position: center;
-      border: 2px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-
-    .carousel-indicators li.active {
-      border-color: #f59e0b;
-    }
-
-    .infoDetail {
-      background: #f8f9fa;
-      padding: 1.5rem;
-      border-radius: 8px;
-    }
-
-    .buttonBox {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
+    /* Custom Styles */
     .btn-buy {
-      background: #f59e0b;
+      background-color: #f59e0b;
       color: white;
-      padding: 12px 30px;
+      border: none;
+      padding: 12px 25px;
       border-radius: 8px;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
     .btn-buy:hover {
-      background: #e58e00;
-      transform: translateY(-2px);
+      background-color: #e58e00;
     }
 
-    .relatedProduct {
-      display: block;
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-decoration: none;
-      color: inherit;
+    .card-img-top {
+      object-fit: contain;
+      max-height: 300px;
+      width: 100%;
+      cursor: pointer;
     }
 
-    .socialBox {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
+    .carousel-inner img {
+      object-fit: contain;
+      height: 300px;
     }
 
-    .socialBox a {
-      color: #666;
-      transition: color 0.3s ease;
-    }
-
-    .socialBox a:hover {
-      color: #f59e0b;
-    }
-
-    .addCompareBox {
-      margin-top: 1.5rem;
-      display: flex;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
       align-items: center;
-      gap: 1rem;
     }
 
-    @media (max-width: 768px) {
-      .flexBox {
-        flex-direction: column;
-      }
-      
-      .detailCarousel,
-      .detailInfoBox {
-        flex: 1 1 100%;
-      }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .modal img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .close {
+      color: white;
+      font-size: 2rem;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .zoom {
+      cursor: zoom-in;
     }
   </style>
 </head>
 
 <body>
-  <!-- Navbar (Keep your existing navbar) -->
-  
-  <!-- Product Detail Section -->
-  <div class="productDetailCarousel">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <div class="flexBox">
-        <div class="detailCarousel">
-          <!-- Carousel will be dynamically inserted here -->
-        </div>
-        
-        <div class="detailInfoBox">
-          <h3 id="productTitle"></h3>
-          <div class="infoDetail">
-            <div class="desc">
-              <ul id="productSpecs"></ul>
-            </div>
-            
-            <div class="priceBox mb-4">
-              <h4 class="text-primary" id="productPrice"></h4>
-              <div class="form-group">
-                <label><strong>Select Quantity:</strong></label>
-                <select class="form-select" id="productQuantity"></select>
-              </div>
-            </div>
-
-            <div class="buttonBox">
-              <button class="btn-buy" onclick="buyItem()">Buy Now</button>
-              <div class="socialBox">
-                <a href="#" class="shareBtn"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="shareBtn"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="shareBtn"><i class="fas fa-share-alt"></i></a>
-              </div>
-            </div>
-
-            <div class="addCompareBox">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="addCompare">
-                <label class="form-check-label" for="addCompare">
-                  Add to Comparison
-                </label>
-              </div>
-              <a href="#" class="btn btn-outline-secondary">Compare</a>
-            </div>
-          </div>
-        </div>
+      <a class="navbar-brand" href="https://primepcparts.github.io/">
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo" height="40">
+        <span class="ms-2">PrimePcParts</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://primepcparts.github.io/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="https://primepcparts.github.io/gpu.html">Graphics Cards</a>
+          </li>
+        </ul>
       </div>
+    </div>
+  </nav>
+
+  <!-- Graphics Cards Section -->
+  <section id="graphics-cards" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Browse Graphics Cards</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4" id="graphics-cards-container">
+        <!-- Product cards will be dynamically inserted here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Full-Screen Image Modal -->
+  <div id="fullScreenModal" class="modal">
+    <span class="close" onclick="closeFullScreen()">&times;</span>
+    <div class="modal-content">
+      <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
     </div>
   </div>
 
   <!-- Footer -->
-  <footer>
+  <footer class="bg-light py-4">
     <div class="container text-center">
       <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
       <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
@@ -180,71 +137,47 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Updated fetch and render logic
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/Sheet1';
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
 
-    fetch(sheetUrl)
-      .then(response => response.json())
-      .then(async (data) => {
-        const product = data.find(item => item.id === productId);
-        if (!product) return;
+    async function fetchProducts() {
+      try {
+        const response = await fetch(sheetUrl);
+        const data = await response.json();
+        renderProducts(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
 
-        // Set product info
-        document.getElementById('productTitle').textContent = product.Name;
-        document.getElementById('productPrice').textContent = `₹${product.Price}`;
-        
-        // Generate specs list
-        const specsList = document.getElementById('productSpecs');
-        const specs = ['Engine Clock', 'Memory', 'Stream Processors', 'Cooling', 'Features'];
-        specs.forEach(spec => {
-          if (product[spec]) {
-            const li = document.createElement('li');
-            li.textContent = `${spec}: ${product[spec]}`;
-            specsList.appendChild(li);
-          }
-        });
+    async function renderProducts(products) {
+      const container = document.getElementById('graphics-cards-container');
+      container.innerHTML = ''; // Clear existing content
 
-        // Generate quantity options
-        const quantitySelect = document.getElementById('productQuantity');
-        for (let i = 1; i <= product.Quantity; i++) {
-          const option = document.createElement('option');
-          option.value = i;
-          option.textContent = i;
-          quantitySelect.appendChild(option);
-        }
-
-        // Generate carousel
-        const carouselContainer = document.querySelector('.detailCarousel');
+      for (const [index, product] of products.entries()) {
         const photos = await getLocalImagePaths(product.PhotoFolder);
-        
-        if (photos.length > 0) {
-          const carouselId = `productCarousel-${productId}`;
-          const carouselHtml = `
-            <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                ${photos.map((photo, index) => `
-                  <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                    <img src="${photo}" class="d-block w-100" alt="${product.Name}">
-                  </div>
-                `).join('')}
+        const carouselHtml = photos.length > 1 ? createCarousel(product.Name, photos, index) : createSingleImage(photos[0], product.Name);
+
+        const cardHtml = `
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">${product.Name}</h5>
+                ${carouselHtml}
+                <p class="card-text mt-3"><strong>Price:</strong> ₹${product.Price}</p>
+                <div class="form-group mb-3">
+                  <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
+                  <select class="form-control" id="quantity-${index}">
+                    ${generateQuantityOptions(product.Quantity)}
+                  </select>
+                </div>
+                <button class="btn-buy w-100" onclick="buyItem('${product.Name}', '${product.Price}', ${product.Quantity}, ${index})">Buy It</button>
               </div>
-              <ol class="carousel-indicators">
-                ${photos.map((photo, index) => `
-                  <li data-bs-target="#${carouselId}" 
-                      data-bs-slide-to="${index}" 
-                      ${index === 0 ? 'class="active"' : ''}
-                      style="background-image: url(${photo})">
-                  </li>
-                `).join('')}
-              </ol>
             </div>
-          `;
-          carouselContainer.innerHTML = carouselHtml;
-        }
-      })
-      .catch(error => console.error('Error:', error));
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      }
+    }
 
     async function getLocalImagePaths(folderName) {
       const imagePaths = [];
@@ -260,7 +193,67 @@
       return imagePaths;
     }
 
-    // Keep your existing buyItem and zoom functions
+    function createCarousel(productName, photos, index) {
+      const carouselId = `carousel-${productName.replace(/\s+/g, '-')}-${index}`;
+      return `
+        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            ${photos.map((photo, photoIndex) => `
+              <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
+                <img src="${photo}" class="d-block w-100 card-img-top" alt="${productName} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+              </div>
+            `).join('')}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function createSingleImage(photo, productName) {
+      return `<img src="${photo}" class="card-img-top" alt="${productName}" onclick="openFullScreenCarousel([${JSON.stringify(photo)}], 0)">`;
+    }
+
+    function generateQuantityOptions(maxQuantity) {
+      return Array.from({ length: maxQuantity }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('');
+    }
+
+    function openFullScreenCarousel(photos, index) {
+      const modal = document.getElementById('fullScreenModal');
+      const modalImage = document.getElementById('fullScreenImage');
+      modal.style.display = 'flex';
+      modalImage.src = photos[index];
+      modalImage.style.transform = 'scale(1)';
+    }
+
+    function closeFullScreen() {
+      const modal = document.getElementById('fullScreenModal');
+      modal.style.display = 'none';
+    }
+
+    function zoomImage(event) {
+      const img = document.getElementById('fullScreenImage');
+      const scale = event.deltaY < 0 ? 1.1 : 0.9;
+      const currentScale = parseFloat(img.style.transform.replace('scale(', '').replace(')', '')) || 1;
+      img.style.transform = `scale(${Math.min(Math.max(currentScale * scale, 1), 3)})`;
+    }
+
+    function buyItem(name, price, quantity, index) {
+      const selectedQuantity = document.getElementById(`quantity-${index}`).value;
+      const message = `*Prime PC Parts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${selectedQuantity}\n\nPlease confirm your order and shipping details.`;
+      const whatsappLink = `https://wa.me/+918275433068?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, '_blank');
+    }
+
+    // Fetch and render products on page load
+    fetchProducts();
   </script>
 </body>
+
 </html>
