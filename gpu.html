@@ -14,7 +14,7 @@
 
   <style>
     /* Modal styles for full-screen image */
-  
+
     /* Updated button CSS */
     .btn-buy {
       display: inline-block;
@@ -26,7 +26,8 @@
       vertical-align: middle;
       cursor: pointer;
       user-select: none;
-      background-color: #f59e0b; /* Accent color */
+      background-color: #f59e0b;
+      /* Accent color */
       color: white;
       border: none;
       padding: 12px 25px;
@@ -34,42 +35,51 @@
       font-weight: 600;
       transition: background-color 0.3s ease;
     }
-  
+
     .btn-buy:hover {
-      background-color: #f79c42; /* Darker shade on hover */
+      background-color: #f79c42;
+      /* Darker shade on hover */
     }
-  
+
     .btn-buy:focus,
     .btn-buy:active {
       outline: none;
-      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5); /* Focus box-shadow */
+      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
+      /* Focus box-shadow */
     }
-  
+
     .card-body {
-      padding-top: 20px; /* Add space above the card body */
-      padding-bottom: 10px; /* Add space below the card body */
+      padding-top: 20px;
+      /* Add space above the card body */
+      padding-bottom: 10px;
+      /* Add space below the card body */
     }
-  
+
     .card-body p.card-text {
-      margin-top: 20px; /* Add space between the image and the price */
+      margin-top: 20px;
+      /* Add space between the image and the price */
     }
-  
+
     .form-group {
-      margin-bottom: 15px; /* Add space between quantity and buy button */
+      margin-bottom: 15px;
+      /* Add space between quantity and buy button */
     }
-  
+
     .card-img-top {
-      object-fit: contain; /* Ensures the image fits without distortion */
-      max-height: 300px; /* Adjust to limit the height */
+      object-fit: contain;
+      /* Ensures the image fits without distortion */
+      max-height: 300px;
+      /* Adjust to limit the height */
       width: 100%;
       cursor: pointer;
     }
-  
+
     .carousel-inner img {
       object-fit: contain;
-      height: 300px; /* Ensures the images in carousel are appropriately sized */
+      height: 300px;
+      /* Ensures the images in carousel are appropriately sized */
     }
-  
+
     .modal {
       display: none;
       position: fixed;
@@ -82,7 +92,7 @@
       justify-content: center;
       align-items: center;
     }
-  
+
     .modal-content {
       max-width: 90%;
       max-height: 90%;
@@ -93,13 +103,13 @@
       overflow: hidden;
       position: relative;
     }
-  
+
     .modal img {
       width: 100%;
       height: auto;
       transition: transform 0.3s ease;
     }
-  
+
     .close {
       color: white;
       font-size: 2rem;
@@ -108,7 +118,7 @@
       right: 20px;
       cursor: pointer;
     }
-  
+
     .zoom {
       cursor: zoom-in;
     }
@@ -147,16 +157,26 @@
       <!-- Filter Section -->
       <div class="row mb-4">
         <div class="col-md-12">
-          <div class="filter-tabs">
-            <input type="text" id="filter-name" placeholder="Filter by Name" class="form-control mb-2">
-            <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control mb-2">
-            <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control mb-2">
-            <select id="filter-stock" class="form-control mb-2">
-              <option value="all">All</option>
-              <option value="in-stock">In Stock</option>
-              <option value="out-of-stock">Out of Stock</option>
-            </select>
-            <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <input type="text" id="filter-name" placeholder="Filter by Name" class="form-control">
+            </div>
+            <div class="col">
+              <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
+            </div>
+            <div class="col">
+              <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
+            </div>
+            <div class="col">
+              <select id="filter-stock" class="form-control">
+                <option value="all">All</option>
+                <option value="in-stock">In Stock</option>
+                <option value="out-of-stock">Out of Stock</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+            </div>
           </div>
         </div>
       </div>
@@ -179,7 +199,8 @@
   <footer>
     <div class="container text-center">
       <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
-      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
+      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a
+          href="tel:+918275433068">+918275433068</a></p>
     </div>
   </footer>
 
@@ -266,9 +287,9 @@
       const filteredData = allData.filter(item => {
         const matchesName = item.Name.toLowerCase().includes(nameFilter);
         const matchesPrice = item.Price >= minPrice && item.Price <= maxPrice;
-        const matchesStock = stockFilter === 'all' || 
-                            (stockFilter === 'in-stock' && item.Quantity > 0) || 
-                            (stockFilter === 'out-of-stock' && item.Quantity === 0);
+        const matchesStock = stockFilter === 'all' ||
+          (stockFilter === 'in-stock' && item.Quantity > 0) ||
+          (stockFilter === 'out-of-stock' && item.Quantity === 0);
         return matchesName && matchesPrice && matchesStock;
       });
 
@@ -327,10 +348,10 @@
     // Send details to WhatsApp
     function buyItem(name, price, quantity, index) {
       const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
-                      `Item: ${name}\n` +
-                      `Price: ₹${price}\n` +
-                      `Quantity: ${quantity}\n\n` +
-                      `Please confirm your order and shipping details.`;
+        `Item: ${name}\n` +
+        `Price: ₹${price}\n` +
+        `Quantity: ${quantity}\n\n` +
+        `Please confirm your order and shipping details.`;
       const phoneNumber = "+918275433068";
       const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       window.open(whatsappLink, '_blank');
