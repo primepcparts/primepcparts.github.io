@@ -156,26 +156,36 @@
 
       <!-- Filter Section -->
       <div class="row mb-4">
-        <div class="col-md-12">
-          <div class="row g-2 align-items-center">
-            <div class="col">
-              <input type="text" id="filter-name" placeholder="Filter by Name" class="form-control">
+        <div class="col-12">
+          <div class="row g-2 row-cols-1 row-cols-md-5 align-items-center">
+            <!-- Name Filter -->
+            <div class="col mb-2 mb-md-0">
+              <input type="text" id="filter-name" placeholder="Name" class="form-control">
             </div>
-            <div class="col">
+
+            <!-- Price Filters -->
+            <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
             </div>
-            <div class="col">
+            <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
             </div>
-            <div class="col">
-              <select id="filter-stock" class="form-control">
-                <option value="all">All</option>
+
+            <!-- Stock Filter -->
+            <div class="col mb-2 mb-md-0">
+              <select id="filter-stock" class="form-select">
+                <option value="all">All Stock</option>
                 <option value="in-stock">In Stock</option>
                 <option value="out-of-stock">Out of Stock</option>
               </select>
             </div>
-            <div class="col-auto">
-              <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+
+            <!-- Apply Button -->
+            <div class="col">
+              <button class="btn btn-primary w-100" onclick="applyFilters()">
+                <span class="d-none d-md-inline">Apply</span>
+                <span class="d-md-none">Filter</span>
+              </button>
             </div>
           </div>
         </div>
