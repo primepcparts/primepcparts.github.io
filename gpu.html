@@ -7,15 +7,12 @@
   <title>PrimePcParts | Buy Graphics Cards</title>
   <meta name="description" content="Browse and buy high-performance graphics cards at PrimePcParts.">
   <meta name="keywords" content="graphics cards, buy GPU, gaming GPU, professional GPU">
-  <link rel="canonical" href="https://www.primepcparts.com/">
+  <link rel="canonical" href="https://primepcparts.github.io/">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style>
-    /* Modal styles for full-screen image */
-
-    /* Updated button CSS */
     .btn-buy {
       display: inline-block;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
@@ -27,7 +24,6 @@
       cursor: pointer;
       user-select: none;
       background-color: #f59e0b;
-      /* Accent color */
       color: white;
       border: none;
       padding: 12px 25px;
@@ -38,38 +34,30 @@
 
     .btn-buy:hover {
       background-color: #f79c42;
-      /* Darker shade on hover */
     }
 
     .btn-buy:focus,
     .btn-buy:active {
       outline: none;
       box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
-      /* Focus box-shadow */
     }
 
     .card-body {
       padding-top: 20px;
-      /* Add space above the card body */
       padding-bottom: 10px;
-      /* Add space below the card body */
     }
 
     .card-body p.card-text {
       margin-top: 20px;
-      /* Add space between the image and the price */
     }
 
     .form-group {
       margin-bottom: 15px;
-      /* Add space between quantity and buy button */
     }
 
     .card-img-top {
       object-fit: contain;
-      /* Ensures the image fits without distortion */
       max-height: 300px;
-      /* Adjust to limit the height */
       width: 100%;
       cursor: pointer;
     }
@@ -77,50 +65,95 @@
     .carousel-inner img {
       object-fit: contain;
       height: 300px;
-      /* Ensures the images in carousel are appropriately sized */
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 1;
-      left: 0;
       top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
       justify-content: center;
       align-items: center;
     }
 
     .modal-content {
-      max-width: 90%;
-      max-height: 90%;
-      margin: auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      overflow: hidden;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
     }
 
     .modal img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
       height: auto;
-      transition: transform 0.3s ease;
+      object-fit: contain;
+      cursor: crosshair;
     }
 
     .close {
       color: white;
-      font-size: 2rem;
+      font-size: 2.5rem;
       position: absolute;
-      top: 10px;
-      right: 20px;
+      top: 15px;
+      right: 25px;
       cursor: pointer;
+      z-index: 1001;
     }
 
-    .zoom {
-      cursor: zoom-in;
+    .modal-prev, .modal-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      font-size: 2rem;
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .modal-prev {
+      left: 10px;
+    }
+
+    .modal-next {
+      right: 10px;
+    }
+
+    .modal-prev:hover, .modal-next:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    .card .out-of-stock {
+      color: red !important;
+    }
+
+    .magnifier {
+      display: none;
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 1002;
+      pointer-events: none;
+    }
+
+    .magnifier img {
+      position: absolute;
+      width: 300%; /* Adjusted to 3x zoom for clarity */
+      height: 300%;
+      object-fit: none;
     }
   </style>
 </head>
@@ -158,20 +191,15 @@
       <div class="row mb-4">
         <div class="col-12">
           <div class="row g-2 row-cols-1 row-cols-md-5 align-items-center">
-            <!-- Name Filter -->
             <div class="col mb-2 mb-md-0">
               <input type="text" id="filter-name" placeholder="Name" class="form-control">
             </div>
-
-            <!-- Price Filters -->
             <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
             </div>
             <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
             </div>
-
-            <!-- Stock Filter -->
             <div class="col mb-2 mb-md-0">
               <select id="filter-stock" class="form-select">
                 <option value="all">All Stock</option>
@@ -179,8 +207,6 @@
                 <option value="out-of-stock">Out of Stock</option>
               </select>
             </div>
-
-            <!-- Apply Button -->
             <div class="col">
               <button class="btn btn-primary w-100" onclick="applyFilters()">
                 <span class="d-none d-md-inline">Apply</span>
@@ -199,16 +225,21 @@
 
   <!-- Full-Screen Image Modal -->
   <div id="fullScreenModal" class="modal">
-    <span class="close" onclick="closeFullScreen()">&times;</span>
+    <span class="close" onclick="closeFullScreen()">×</span>
     <div class="modal-content">
-      <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
+      <img id="fullScreenImage" src="" alt="Full Screen Image">
+      <button class="modal-prev" onclick="changeImage(-1)"><</button>
+      <button class="modal-next" onclick="changeImage(1)">></button>
+      <div id="magnifier" class="magnifier">
+        <img id="magnifiedImage" src="" alt="Magnified Image">
+      </div>
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
     <div class="container text-center">
-      <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
       <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a
           href="tel:+918275433068">+918275433068</a></p>
     </div>
@@ -216,156 +247,219 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Fetch data from Google Sheet
-    const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
-    let allData = []; // Store all fetched data for filtering
+    // Wait for DOM to load
+    document.addEventListener('DOMContentLoaded', () => {
+      const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
+      let allData = [];
 
-    fetch(sheetUrl)
-      .then(response => response.json())
-      .then(async (data) => {
-        allData = data; // Store the fetched data
-        renderCards(data); // Render cards initially
-      })
-      .catch(error => console.error('Error fetching data:', error));
+      fetch(sheetUrl)
+        .then(response => response.json())
+        .then(async (data) => {
+          allData = data;
+          renderCards(data);
+          console.log('Data fetched and cards rendered:', data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
 
-    // Function to render cards based on filtered data
-    function renderCards(data) {
-      const container = document.getElementById('graphics-cards-container');
-      container.innerHTML = ''; // Clear existing cards
+      function renderCards(data) {
+        const container = document.getElementById('graphics-cards-container');
+        container.innerHTML = '';
 
-      data.forEach(async (item, index) => {
-        const folderName = item.PhotoFolder;
-        const photos = await getLocalImagePaths(folderName);
+        data.forEach(async (item, index) => {
+          const folderName = item.PhotoFolder;
+          const photos = await getLocalImagePaths(folderName);
 
-        let carouselHtml = '';
-        if (photos.length > 1) {
-          const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`);
-          carouselHtml = ` 
-            <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                ${photos.map((photo, photoIndex) => `
-                  <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
-                  </div>
-                `).join('')}
+          let carouselHtml = '';
+          if (photos.length > 1) {
+            const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`);
+            carouselHtml = `
+              <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  ${photos.map((photo, photoIndex) => `
+                    <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
+                      <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreen(${JSON.stringify(photos)}, ${photoIndex})">
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
+            `;
+          } else if (photos.length === 1) {
+            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreen(${JSON.stringify(photos)}, 0)">`;
+          }
+
+          const quantity = parseInt(item.Quantity, 10) || 0;
+          const stockStatus = quantity > 0 ? 'In Stock' : 'Out of Stock';
+          const stockClass = quantity === 0 ? 'out-of-stock' : '';
+          const cardHtml = `
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title ${stockClass}">${item.Name}</h5>
+                  ${carouselHtml}
+                  <p class="card-text ${stockClass}"><strong>Price:</strong> ₹${item.Price}</p>
+                  <p class="card-text ${stockClass}"><strong>Stock:</strong> ${stockStatus}</p>
+                  <div class="form-group">
+                    <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
+                    <select class="form-control" id="quantity-${index}">
+                      ${generateQuantityOptions(quantity)}
+                    </select>
+                  </div>
+                  <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${index})">Buy It</button>
+                </div>
+              </div>
             </div>
           `;
-        } else if (photos.length === 1) {
-          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
-        }
-
-        const stockStatus = item.Quantity > 0 ? 'In Stock' : 'Out of Stock';
-        const cardHtml = `
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">${item.Name}</h5>
-                ${carouselHtml}
-                <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
-                <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
-                <div class="form-group">
-                  <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-                  <select class="form-control" id="quantity-${index}">
-                    ${generateQuantityOptions(item.Quantity)}
-                  </select>
-                </div>
-                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
-              </div>
-            </div>
-          </div>
-        `;
-        container.insertAdjacentHTML('beforeend', cardHtml);
-      });
-    }
-
-    // Function to apply filters
-    function applyFilters() {
-      const nameFilter = document.getElementById('filter-name').value.toLowerCase();
-      const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
-      const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
-      const stockFilter = document.getElementById('filter-stock').value;
-
-      const filteredData = allData.filter(item => {
-        const matchesName = item.Name.toLowerCase().includes(nameFilter);
-        const matchesPrice = item.Price >= minPrice && item.Price <= maxPrice;
-        const matchesStock = stockFilter === 'all' ||
-          (stockFilter === 'in-stock' && item.Quantity > 0) ||
-          (stockFilter === 'out-of-stock' && item.Quantity === 0);
-        return matchesName && matchesPrice && matchesStock;
-      });
-
-      renderCards(filteredData); // Render filtered cards
-    }
-
-    // Helper functions for image paths and buying items
-    async function getLocalImagePaths(folderName) {
-      const imagePaths = [];
-      for (let i = 1; i <= 5; i++) {
-        const imagePath = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
-        const response = await fetch(imagePath, { method: 'HEAD' });
-        if (response.ok) {
-          imagePaths.push(imagePath);
-        }
+          container.insertAdjacentHTML('beforeend', cardHtml);
+        });
       }
-      return imagePaths;
-    }
 
-    function sanitizeId(id) {
-      return id.replace(/[^\w-]/g, '_');
-    }
+      function applyFilters() {
+        const nameFilter = document.getElementById('filter-name').value.toLowerCase();
+        const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
+        const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
+        const stockFilter = document.getElementById('filter-stock').value;
 
-    function generateQuantityOptions(maxQuantity) {
-      let options = '';
-      for (let i = 1; i <= maxQuantity; i++) {
-        options += `<option value="${i}">${i}</option>`;
+        const filteredData = allData.filter(item => {
+          const quantity = parseInt(item.Quantity, 10) || 0;
+          const matchesName = item.Name.toLowerCase().includes(nameFilter);
+          const matchesPrice = parseFloat(item.Price) >= minPrice && parseFloat(item.Price) <= maxPrice;
+          const matchesStock = stockFilter === 'all' ||
+            (stockFilter === 'in-stock' && quantity > 0) ||
+            (stockFilter === 'out-of-stock' && quantity === 0);
+          return matchesName && matchesPrice && matchesStock;
+        });
+
+        renderCards(filteredData);
       }
-      return options;
-    }
 
-    // Open full-screen modal with selected image
-    function openFullScreenCarousel(photos, index) {
-      const modal = document.getElementById('fullScreenModal');
+      async function getLocalImagePaths(folderName) {
+        const imagePaths = [];
+        for (let i = 1; i <= 5; i++) {
+          const imagePath = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
+          try {
+            const response = await fetch(imagePath, { method: 'HEAD' });
+            if (response.ok) {
+              imagePaths.push(imagePath);
+              console.log(`Image loaded: ${imagePath}`);
+            }
+          } catch (error) {
+            console.log(`Image not found: ${imagePath}`);
+          }
+        }
+        return imagePaths;
+      }
+
+      function sanitizeId(id) {
+        return id.replace(/[^\w-]/g, '_');
+      }
+
+      function generateQuantityOptions(maxQuantity) {
+        let options = '';
+        for (let i = 1; i <= maxQuantity; i++) {
+          options += `<option value="${i}">${i}</option>`;
+        }
+        return options || `<option value="0">0</option>`;
+      }
+
+      // Full-screen image functionality
+      let currentPhotos = [];
+      let currentIndex = 0;
+
+      function openFullScreen(photos, index) {
+        const modal = document.getElementById('fullScreenModal');
+        const modalImage = document.getElementById('fullScreenImage');
+        const magnifiedImage = document.getElementById('magnifiedImage');
+        currentPhotos = photos;
+        currentIndex = index;
+
+        modal.style.display = 'flex';
+        modalImage.src = photos[index];
+        magnifiedImage.src = photos[index];
+        console.log('Modal opened with image:', photos[index]);
+      }
+
+      function closeFullScreen() {
+        const modal = document.getElementById('fullScreenModal');
+        const magnifier = document.getElementById('magnifier');
+        modal.style.display = 'none';
+        magnifier.style.display = 'none';
+      }
+
+      function changeImage(direction) {
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = currentPhotos.length - 1;
+        if (currentIndex >= currentPhotos.length) currentIndex = 0;
+        const modalImage = document.getElementById('fullScreenImage');
+        const magnifiedImage = document.getElementById('magnifiedImage');
+        modalImage.src = currentPhotos[currentIndex];
+        magnifiedImage.src = currentPhotos[currentIndex];
+        console.log('Image changed to:', currentPhotos[currentIndex]);
+      }
+
+      // Magnifier functionality
       const modalImage = document.getElementById('fullScreenImage');
-      modal.style.display = 'flex';
-      modalImage.src = photos[index];
-      modalImage.style.transform = 'scale(1)';
-    }
+      const magnifier = document.getElementById('magnifier');
+      const magnifiedImage = document.getElementById('magnifiedImage');
 
-    // Close full-screen modal
-    function closeFullScreen() {
-      const modal = document.getElementById('fullScreenModal');
-      modal.style.display = 'none';
-    }
+      modalImage.addEventListener('mousemove', (e) => {
+        const rect = modalImage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-    // Zoom image functionality
-    function zoomImage(event) {
-      const img = document.getElementById('fullScreenImage');
-      const scale = event.deltaY < 0 ? 1.1 : 0.9;
-      const currentTransform = img.style.transform || 'scale(1)';
-      const newScale = parseFloat(currentTransform.replace('scale(', '').replace(')', '')) * scale;
-      img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
-    }
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+          magnifier.style.display = 'block';
+          const magnifierSize = 200;
+          magnifier.style.left = `${e.clientX - magnifierSize / 2}px`;
+          magnifier.style.top = `${e.clientY - magnifierSize / 2}px`;
 
-    // Send details to WhatsApp
-    function buyItem(name, price, quantity, index) {
-      const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
-        `Item: ${name}\n` +
-        `Price: ₹${price}\n` +
-        `Quantity: ${quantity}\n\n` +
-        `Please confirm your order and shipping details.`;
-      const phoneNumber = "+918275433068";
-      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-      window.open(whatsappLink, '_blank');
-    }
+          const zoomLevel = 3; // Matches 300% in CSS
+          const imgX = (x / rect.width) * (modalImage.naturalWidth * zoomLevel) - magnifierSize / 2;
+          const imgY = (y / rect.height) * (modalImage.naturalHeight * zoomLevel) - magnifierSize / 2;
+          magnifiedImage.style.objectPosition = `-${imgX}px -${imgY}px`;
+          console.log('Magnifier moved to:', { x: e.clientX, y: e.clientY });
+        } else {
+          magnifier.style.display = 'none';
+        }
+      });
+
+      modalImage.addEventListener('mouseleave', () => {
+        magnifier.style.display = 'none';
+        console.log('Magnifier hidden');
+      });
+
+      document.addEventListener('keydown', (event) => {
+        const modal = document.getElementById('fullScreenModal');
+        if (modal.style.display === 'flex') {
+          if (event.key === 'ArrowLeft' && currentIndex > 0) {
+            changeImage(-1);
+          } else if (event.key === 'ArrowRight' && currentIndex < currentPhotos.length - 1) {
+            changeImage(1);
+          } else if (event.key === 'Escape') {
+            closeFullScreen();
+          }
+        }
+      });
+
+      function buyItem(name, price, index) {
+        const selectedQuantity = document.getElementById(`quantity-${index}`).value;
+        const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
+          `Item: ${name}\n` +
+          `Price: ₹${price}\n` +
+          `Quantity: ${selectedQuantity}\n\n` +
+          `Please confirm your order and shipping details.`;
+        const phoneNumber = "+918275433068";
+        const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappLink, '_blank');
+      }
+    });
   </script>
 </body>
 
