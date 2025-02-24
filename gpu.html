@@ -13,9 +13,6 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style>
-    /* Modal styles for full-screen image */
-
-    /* Updated button CSS */
     .btn-buy {
       display: inline-block;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
@@ -27,7 +24,6 @@
       cursor: pointer;
       user-select: none;
       background-color: #f59e0b;
-      /* Accent color */
       color: white;
       border: none;
       padding: 12px 25px;
@@ -38,38 +34,30 @@
 
     .btn-buy:hover {
       background-color: #f79c42;
-      /* Darker shade on hover */
     }
 
     .btn-buy:focus,
     .btn-buy:active {
       outline: none;
       box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
-      /* Focus box-shadow */
     }
 
     .card-body {
       padding-top: 20px;
-      /* Add space above the card body */
       padding-bottom: 10px;
-      /* Add space below the card body */
     }
 
     .card-body p.card-text {
       margin-top: 20px;
-      /* Add space between the image and the price */
     }
 
     .form-group {
       margin-bottom: 15px;
-      /* Add space between quantity and buy button */
     }
 
     .card-img-top {
       object-fit: contain;
-      /* Ensures the image fits without distortion */
       max-height: 300px;
-      /* Adjust to limit the height */
       width: 100%;
       cursor: pointer;
     }
@@ -77,29 +65,28 @@
     .carousel-inner img {
       object-fit: contain;
       height: 300px;
-      /* Ensures the images in carousel are appropriately sized */
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 1;
+      z-index: 1000; /* Increased z-index for better layering */
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.9); /* Slightly darker background */
       justify-content: center;
       align-items: center;
     }
 
     .modal-content {
       max-width: 90%;
-      max-height: 90%;
+      max-height: 90vh; /* Limit height to viewport height */
       margin: auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
+      background-color: transparent; /* No background for image-only modal */
+      padding: 0; /* Remove padding */
+      border-radius: 0; /* Remove border radius */
       overflow: hidden;
       position: relative;
     }
@@ -107,20 +94,26 @@
     .modal img {
       width: 100%;
       height: auto;
+      max-height: 90vh; /* Ensure image fits vertically */
       transition: transform 0.3s ease;
     }
 
     .close {
       color: white;
-      font-size: 2rem;
+      font-size: 2.5rem;
       position: absolute;
-      top: 10px;
-      right: 20px;
+      top: 15px;
+      right: 25px;
       cursor: pointer;
+      z-index: 1001; /* Ensure close button is above image */
     }
 
     .zoom {
       cursor: zoom-in;
+    }
+
+    .out-of-stock {
+      color: red;
     }
   </style>
 </head>
@@ -158,20 +151,15 @@
       <div class="row mb-4">
         <div class="col-12">
           <div class="row g-2 row-cols-1 row-cols-md-5 align-items-center">
-            <!-- Name Filter -->
             <div class="col mb-2 mb-md-0">
               <input type="text" id="filter-name" placeholder="Name" class="form-control">
             </div>
-
-            <!-- Price Filters -->
             <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
             </div>
             <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
             </div>
-
-            <!-- Stock Filter -->
             <div class="col mb-2 mb-md-0">
               <select id="filter-stock" class="form-select">
                 <option value="all">All Stock</option>
@@ -179,8 +167,6 @@
                 <option value="out-of-stock">Out of Stock</option>
               </select>
             </div>
-
-            <!-- Apply Button -->
             <div class="col">
               <button class="btn btn-primary w-100" onclick="applyFilters()">
                 <span class="d-none d-md-inline">Apply</span>
@@ -199,7 +185,7 @@
 
   <!-- Full-Screen Image Modal -->
   <div id="fullScreenModal" class="modal">
-    <span class="close" onclick="closeFullScreen()">&times;</span>
+    <span class="close" onclick="closeFullScreen()">×</span>
     <div class="modal-content">
       <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
     </div>
@@ -208,7 +194,7 @@
   <!-- Footer -->
   <footer>
     <div class="container text-center">
-      <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
       <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a
           href="tel:+918275433068">+918275433068</a></p>
     </div>
@@ -218,20 +204,20 @@
   <script>
     // Fetch data from Google Sheet
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
-    let allData = []; // Store all fetched data for filtering
+    let allData = [];
 
     fetch(sheetUrl)
       .then(response => response.json())
       .then(async (data) => {
-        allData = data; // Store the fetched data
-        renderCards(data); // Render cards initially
+        allData = data;
+        renderCards(data);
       })
       .catch(error => console.error('Error fetching data:', error));
 
-    // Function to render cards based on filtered data
+    // Function to render cards
     function renderCards(data) {
       const container = document.getElementById('graphics-cards-container');
-      container.innerHTML = ''; // Clear existing cards
+      container.innerHTML = '';
 
       data.forEach(async (item, index) => {
         const folderName = item.PhotoFolder;
@@ -240,12 +226,12 @@
         let carouselHtml = '';
         if (photos.length > 1) {
           const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`);
-          carouselHtml = ` 
+          carouselHtml = `
             <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
                 ${photos.map((photo, photoIndex) => `
                   <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreen(${JSON.stringify(photos)}, ${photoIndex})">
                   </div>
                 `).join('')}
               </div>
@@ -260,25 +246,26 @@
             </div>
           `;
         } else if (photos.length === 1) {
-          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
+          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreen(${JSON.stringify(photos)}, 0)">`;
         }
 
         const stockStatus = item.Quantity > 0 ? 'In Stock' : 'Out of Stock';
+        const stockClass = item.Quantity === 0 ? 'out-of-stock' : '';
         const cardHtml = `
           <div class="col-md-4 mb-4">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">${item.Name}</h5>
+                <h5 class="card-title ${stockClass}">${item.Name}</h5>
                 ${carouselHtml}
-                <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
-                <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
+                <p class="card-text ${stockClass}"><strong>Price:</strong> ₹${item.Price}</p>
+                <p class="card-text ${stockClass}"><strong>Stock:</strong> ${stockStatus}</p>
                 <div class="form-group">
                   <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
                   <select class="form-control" id="quantity-${index}">
                     ${generateQuantityOptions(item.Quantity)}
                   </select>
                 </div>
-                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
+                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${index})">Buy It</button>
               </div>
             </div>
           </div>
@@ -303,10 +290,10 @@
         return matchesName && matchesPrice && matchesStock;
       });
 
-      renderCards(filteredData); // Render filtered cards
+      renderCards(filteredData);
     }
 
-    // Helper functions for image paths and buying items
+    // Helper functions
     async function getLocalImagePaths(folderName) {
       const imagePaths = [];
       for (let i = 1; i <= 5; i++) {
@@ -328,25 +315,29 @@
       for (let i = 1; i <= maxQuantity; i++) {
         options += `<option value="${i}">${i}</option>`;
       }
-      return options;
+      return options || `<option value="0">0</option>`;
     }
 
-    // Open full-screen modal with selected image
-    function openFullScreenCarousel(photos, index) {
+    // Full-screen image functionality
+    let currentPhotos = [];
+    let currentIndex = 0;
+
+    function openFullScreen(photos, index) {
       const modal = document.getElementById('fullScreenModal');
       const modalImage = document.getElementById('fullScreenImage');
+      currentPhotos = photos;
+      currentIndex = index;
+
       modal.style.display = 'flex';
       modalImage.src = photos[index];
       modalImage.style.transform = 'scale(1)';
     }
 
-    // Close full-screen modal
     function closeFullScreen() {
       const modal = document.getElementById('fullScreenModal');
       modal.style.display = 'none';
     }
 
-    // Zoom image functionality
     function zoomImage(event) {
       const img = document.getElementById('fullScreenImage');
       const scale = event.deltaY < 0 ? 1.1 : 0.9;
@@ -355,12 +346,29 @@
       img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
     }
 
+    // Add keyboard navigation for full-screen modal
+    document.addEventListener('keydown', (event) => {
+      const modal = document.getElementById('fullScreenModal');
+      if (modal.style.display === 'flex') {
+        if (event.key === 'ArrowLeft' && currentIndex > 0) {
+          currentIndex--;
+          document.getElementById('fullScreenImage').src = currentPhotos[currentIndex];
+        } else if (event.key === 'ArrowRight' && currentIndex < currentPhotos.length - 1) {
+          currentIndex++;
+          document.getElementById('fullScreenImage').src = currentPhotos[currentIndex];
+        } else if (event.key === 'Escape') {
+          closeFullScreen();
+        }
+      }
+    });
+
     // Send details to WhatsApp
-    function buyItem(name, price, quantity, index) {
+    function buyItem(name, price, index) {
+      const selectedQuantity = document.getElementById(`quantity-${index}`).value;
       const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
         `Item: ${name}\n` +
         `Price: ₹${price}\n` +
-        `Quantity: ${quantity}\n\n` +
+        `Quantity: ${selectedQuantity}\n\n` +
         `Please confirm your order and shipping details.`;
       const phoneNumber = "+918275433068";
       const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
