@@ -70,23 +70,23 @@
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000; /* Increased z-index for better layering */
+      z-index: 1000;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.9); /* Slightly darker background */
+      background-color: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
     }
 
     .modal-content {
       max-width: 90%;
-      max-height: 90vh; /* Limit height to viewport height */
+      max-height: 90vh;
       margin: auto;
-      background-color: transparent; /* No background for image-only modal */
-      padding: 0; /* Remove padding */
-      border-radius: 0; /* Remove border radius */
+      background-color: transparent;
+      padding: 0;
+      border-radius: 0;
       overflow: hidden;
       position: relative;
     }
@@ -94,7 +94,7 @@
     .modal img {
       width: 100%;
       height: auto;
-      max-height: 90vh; /* Ensure image fits vertically */
+      max-height: 90vh;
       transition: transform 0.3s ease;
     }
 
@@ -105,15 +105,16 @@
       top: 15px;
       right: 25px;
       cursor: pointer;
-      z-index: 1001; /* Ensure close button is above image */
+      z-index: 1001;
     }
 
     .zoom {
       cursor: zoom-in;
     }
 
-    .out-of-stock {
-      color: red;
+    /* Increased specificity for out-of-stock class */
+    .card .out-of-stock {
+      color: red !important; /* Override Bootstrap defaults */
     }
   </style>
 </head>
@@ -249,8 +250,10 @@
           carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreen(${JSON.stringify(photos)}, 0)">`;
         }
 
-        const stockStatus = item.Quantity > 0 ? 'In Stock' : 'Out of Stock';
-        const stockClass = item.Quantity === 0 ? 'out-of-stock' : '';
+        // Ensure Quantity is treated as a number
+        const quantity = parseInt(item.Quantity, 10) || 0;
+        const stockStatus = quantity > 0 ? 'In Stock' : 'Out of Stock';
+        const stockClass = quantity === 0 ? 'out-of-stock' : '';
         const cardHtml = `
           <div class="col-md-4 mb-4">
             <div class="card">
@@ -262,7 +265,7 @@
                 <div class="form-group">
                   <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
                   <select class="form-control" id="quantity-${index}">
-                    ${generateQuantityOptions(item.Quantity)}
+                    ${generateQuantityOptions(quantity)}
                   </select>
                 </div>
                 <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${index})">Buy It</button>
@@ -282,11 +285,12 @@
       const stockFilter = document.getElementById('filter-stock').value;
 
       const filteredData = allData.filter(item => {
+        const quantity = parseInt(item.Quantity, 10) || 0;
         const matchesName = item.Name.toLowerCase().includes(nameFilter);
-        const matchesPrice = item.Price >= minPrice && item.Price <= maxPrice;
+        const matchesPrice = parseFloat(item.Price) >= minPrice && parseFloat(item.Price) <= maxPrice;
         const matchesStock = stockFilter === 'all' ||
-          (stockFilter === 'in-stock' && item.Quantity > 0) ||
-          (stockFilter === 'out-of-stock' && item.Quantity === 0);
+          (stockFilter === 'in-stock' && quantity > 0) ||
+          (stockFilter === 'out-of-stock' && quantity === 0);
         return matchesName && matchesPrice && matchesStock;
       });
 
@@ -346,7 +350,6 @@
       img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
     }
 
-    // Add keyboard navigation for full-screen modal
     document.addEventListener('keydown', (event) => {
       const modal = document.getElementById('fullScreenModal');
       if (modal.style.display === 'flex') {
