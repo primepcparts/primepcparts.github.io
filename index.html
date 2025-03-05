@@ -11,67 +11,294 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
   <style>
-    /* Mobile-first Media Queries */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand img {
+      max-height: 40px;
+    }
+
+    .navbar-brand span {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #007bff;
+    }
+
+    .nav-link {
+      font-weight: 600;
+      color: #555;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #007bff;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #007bff 0%, #00c4cc 100%);
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+      opacity: 0.5;
+    }
+
+    .hero-section h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+
+    .btn-hero {
+      font-size: 1rem;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn-hero-primary {
+      background-color: #fff;
+      color: #007bff;
+      border: none;
+    }
+
+    .btn-hero-primary:hover {
+      background-color: #f0f0f0;
+      transform: translateY(-3px);
+    }
+
+    .btn-hero-secondary {
+      background-color: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+
+    .btn-hero-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Products Section */
+    #products {
+      padding: 60px 0;
+      background-color: #fff;
+    }
+
+    #products h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #222;
+    }
+
+    .product-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      object-fit: cover;
+      height: 200px;
+    }
+
+    .product-card .card-body {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .product-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .product-card p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .product-card .btn {
+      background-color: #007bff;
+      color: white;
+      border-radius: 20px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .product-card .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Contact Section */
+    #contact {
+      padding: 60px 0;
+      background-color: #f5f7fa;
+    }
+
+    #contact h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #222;
+    }
+
+    .contact-card {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-wrapper iframe {
+      border-radius: 10px;
+      width: 100%;
+      height: 250px;
+    }
+
+    .contact-card p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .contact-card a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      outline: none;
+    }
+
+    .btn-contact {
+      background-color: #007bff;
+      color: white;
+      border-radius: 20px;
+      padding: 10px 25px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-contact:hover {
+      background-color: #0056b3;
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #fff;
+      padding: 20px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      margin: 5px 0;
+      color: #666;
+    }
+
+    footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
       .hero-section {
-        padding: 80px 10px;
+        padding: 80px 15px;
       }
-      
+
       .hero-section h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
-  
+
       .hero-section p {
         font-size: 1rem;
       }
 
-      /* Button fix for mobile view */
-      .hero-section .button-group {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-  
-      .btn-custom {
-        padding: 10px 20px;
-      }
-  
-      .map-wrapper iframe {
+      .btn-hero {
+        display: block;
         width: 100%;
+        max-width: 200px;
+        margin: 10px auto;
+      }
+
+      #products, #contact {
+        padding: 40px 15px;
+      }
+
+      .product-card img {
+        height: 150px;
+      }
+
+      .map-wrapper iframe {
         height: 200px;
       }
-  
-      .navbar {
-        padding: 0.5rem;
-      }
-  
-      #contact {
-        padding: 50px 10px;
-      }
     }
-    
-    @media (max-width: 768px) {
-  #contact {
-    padding: 50px 10px;
-  }
 
-  .address-wrapper {
-    margin-bottom: 20px;
-  }
-}
-
-
-    /* Desktop view enhancements */
     @media (min-width: 769px) {
       .hero-section {
         padding: 150px 0;
-      }
-
-      /* Buttons aligned horizontally on wider screens */
-      .hero-section .button-group {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
       }
     }
   </style>
@@ -107,11 +334,11 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="container text-center">
-      <h1>Build Your Perfect PC with PrimePcParts</h1>
-      <p>Your trusted destination for high-quality PC components, custom builds, and expert hardware solutions.</p>
-      <div class="button-group">
-        <a href="#products" class="btn btn-custom">Shop Components</a>
-        <a href="#contact" class="btn btn-custom">Get a Custom Build</a>
+      <h1>Build Your Dream PC</h1>
+      <p>Discover premium PC components and custom builds tailored to your needs at PrimePcParts.</p>
+      <div>
+        <a href="#products" class="btn btn-hero btn-hero-primary">Shop Now</a>
+        <a href="#contact" class="btn btn-hero btn-hero-secondary">Get a Quote</a>
       </div>
     </div>
   </section>
@@ -119,45 +346,45 @@
   <!-- Featured Products Section -->
   <section id="products" class="py-5">
     <div class="container">
-      <h2 class="text-center mb-4">Featured Products</h2>
+      <h2 class="text-center">Featured Products</h2>
       <div class="row">
         <div class="col-12 col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top img-fluid">
+          <div class="product-card">
+            <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top">
             <div class="card-body">
-              <h3 class="card-title">High-Performance GPUs</h3>
-              <p class="card-text">Dedicated graphics cards for gaming and professional use.</p>
-              <a href="gpu.html" class="btn btn-custom">Shop Now</a>
+              <h3>High-Performance GPUs</h3>
+              <p>Boost your gaming and creative projects with top-tier graphics cards.</p>
+              <a href="gpu.html" class="btn">Shop Now</a>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top img-fluid">
+          <div class="product-card">
+            <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top">
             <div class="card-body">
-              <h3 class="card-title">Latest CPUs</h3>
-              <p class="card-text">Powerful processors for gaming, streaming, and productivity.</p>
-              <a href="cpu.html" class="btn btn-custom">Shop Now</a>
+              <h3>Latest CPUs</h3>
+              <p>Power your system with cutting-edge processors.</p>
+              <a href="cpu.html" class="btn">Shop Now</a>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top img-fluid">
+          <div class="product-card">
+            <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top">
             <div class="card-body">
-              <h3 class="card-title">High-Speed RAM</h3>
-              <p class="card-text">Fast memory solutions for seamless multitasking.</p>
-              <a href="ram.html" class="btn btn-custom">Shop Now</a>
+              <h3>High-Speed RAM</h3>
+              <p>Enhance multitasking with fast memory solutions.</p>
+              <a href="ram.html" class="btn">Shop Now</a>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="assets/img/products/psu.jpg" alt="Power Supplies" class="card-img-top img-fluid">
+          <div class="product-card">
+            <img src="assets/img/products/psu.jpg" alt="Power Supplies" class="card-img-top">
             <div class="card-body">
-              <h3 class="card-title">Reliable PSUs</h3>
-              <p class="card-text">Power supply units for all your PC builds.</p>
-              <a href="psu.html" class="btn btn-custom">Shop Now</a>
+              <h3>Reliable PSUs</h3>
+              <p>Stable power for your custom builds.</p>
+              <a href="psu.html" class="btn">Shop Now</a>
             </div>
           </div>
         </div>
@@ -165,51 +392,52 @@
     </div>
   </section>
 
-<!-- Contact Section -->
-<section id="contact">
-  <div class="container">
-    <h2 class="text-center mb-4">Contact Us</h2>
-    <div class="row gy-4"> <!-- Added gy-4 for vertical spacing -->
-      <div class="col-12 col-md-6">
-        <div class="address-wrapper">
-          <div class="map-wrapper mb-3">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6263.597181893861!2d73.8795679!3d18.448750399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eb6db23b3843%3A0xed0ffdee0cbf4509!2sPrime%20PC%20Parts!5e1!3m2!1sen!2sin!4v1738492906202!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="text-center">Get in Touch</h2>
+      <div class="row gy-4">
+        <div class="col-12 col-md-6">
+          <div class="contact-card">
+            <div class="map-wrapper mb-3">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6263.597181893861!2d73.8795679!3d18.448750399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eb6db23b3843%3A0xed0ffdee0cbf4509!2sPrime%20PC%20Parts!5e1!3m2!1sen!2sin!4v1738492906202!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p>
+              <strong>PrimePcParts: <a href="tel:+918275433068">+918275433068</a></strong><br>
+              Flat No 106, Pratibha Housing Soc,<br>
+              Katraj - Kondhwa Rd, behind Iskon Temple,<br>
+              Phase 1, Tilekar Nagar, Kondhwa Budruk,<br>
+              Pune, Maharashtra 411048
+            </p>
           </div>
-          <p>
-            <strong>PrimePcParts :&nbsp; 
-            <a href="tel:+918275433068">+918275433068</a></strong><br>
-            Flat No 106, Pratibha Housing Soc,<br>
-            Katraj - Kondhwa Rd, behind Iskon Temple,<br>
-            Phase 1, Tilekar Nagar, Kondhwa Budruk,<br>
-            Pune, Maharashtra 411048
-          </p>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="contact-card">
+            <form id="contactForm">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+              </div>
+              <div class="mb-3">
+                <input type="tel" class="form-control" id="phone" placeholder="Your Contact Number" required>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-contact">Send Message</button>
+            </form>
+          </div>
         </div>
       </div>
-      <div class="col-12 col-md-6">
-        <form id="contactForm">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-          </div>
-          <div class="mb-3">
-            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
-          </div>
-          <div class="mb-3">
-            <input type="tel" class="form-control" id="phone" placeholder="Your Contact Number" required>
-          </div>
-          <div class="mb-3">
-            <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-custom">Send Message</button>
-        </form>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Footer -->
   <footer>
     <div class="container text-center">
-      <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
       <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
     </div>
   </footer>
@@ -218,28 +446,22 @@
   <script>
     // Handle form submission
     document.getElementById('contactForm').addEventListener('submit', function (e) {
-      e.preventDefault(); // Prevent default form submission
+      e.preventDefault();
 
-      // Get form values
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const phone = document.getElementById('phone').value;
       const message = document.getElementById('message').value;
 
-      // Validate form fields
       if (!name || !email || !phone || !message) {
         alert('Please fill all the fields before submitting.');
         return;
       }
 
-      // Construct WhatsApp message
       const whatsappMessage = `Hello, I would like to contact PrimePcParts.%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Message:* ${message}`;
-
-      // Redirect to WhatsApp
       const whatsappUrl = `https://wa.me/+918275433068?text=${whatsappMessage}`;
       window.open(whatsappUrl, '_blank');
     });
   </script>
 </body>
-
 </html>
