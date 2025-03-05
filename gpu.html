@@ -14,8 +14,8 @@
 
   <style>
     .btn-buy {
-      font-size: 0.9rem;
-      padding: 8px 15px;
+      font-size: 1rem;
+      padding: 10px 20px;
       background-color: #f59e0b;
       color: white;
       border: none;
@@ -29,8 +29,8 @@
     }
 
     .btn-inquiry {
-      font-size: 0.9rem;
-      padding: 8px 15px;
+      font-size: 1rem;
+      padding: 10px 20px;
       background-color: #007bff;
       color: white;
       border: none;
@@ -129,54 +129,57 @@
     .filter-container {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 0;
+      justify-content: center; /* Center horizontally */
+      gap: 10px; /* Slightly larger gap */
+      padding: 10px 0;
+      flex-wrap: wrap; /* Allow wrapping */
+      max-width: 100%; /* Ensure it fits container */
     }
 
-    .filter-container .form-control-sm,
-    .filter-container .form-select-sm {
-      font-size: 0.85rem;
-      padding: 4px 8px;
-      height: 32px;
+    .filter-container .form-control,
+    .filter-container .form-select {
+      font-size: 0.95rem; /* Slightly larger text */
+      padding: 6px 10px; /* Slightly larger padding */
+      height: 38px; /* Slightly taller inputs */
     }
 
-    .filter-container .btn-sm {
-      font-size: 0.85rem;
-      padding: 4px 10px;
-      height: 32px;
+    .filter-container .btn {
+      font-size: 0.95rem;
+      padding: 6px 12px; /* Slightly larger button */
+      height: 38px;
     }
 
     /* Mobile Adjustments */
     @media (max-width: 767.98px) {
       .filter-container {
-        flex-wrap: wrap;
-        gap: 6px;
+        gap: 8px;
+        padding: 8px 10px; /* Add some horizontal padding */
       }
 
-      .filter-container .form-control-sm,
-      .filter-container .form-select-sm,
-      .filter-container .btn-sm {
+      .filter-container .form-control,
+      .filter-container .form-select,
+      .filter-container .btn {
         width: 100%;
-        max-width: 140px;
+        max-width: 160px; /* Slightly wider for mobile */
       }
     }
 
     /* Desktop Layout */
     @media (min-width: 768px) {
-      .filter-container .form-control-sm:nth-child(1) {
-        width: 180px; /* Search bar */
+      .filter-container .form-control:nth-child(1) {
+        width: 220px; /* Search bar */
       }
 
-      .filter-container .form-control-sm:nth-child(2),
-      .filter-container .form-control-sm:nth-child(3) {
-        width: 100px; /* Price inputs */
+      .filter-container .form-control:nth-child(2),
+      .filter-container .form-control:nth-child(3) {
+        width: 120px; /* Price inputs */
       }
 
-      .filter-container .form-select-sm {
-        width: 120px; /* Stock dropdown */
+      .filter-container .form-select {
+        width: 140px; /* Stock dropdown */
       }
 
-      .filter-container .btn-sm {
+      .filter-container .btn {
         width: auto;
       }
     }
@@ -215,16 +218,16 @@
       <!-- Filter Section -->
       <div class="row mb-3">
         <div class="col-12">
-          <div class="filter-container d-flex align-items-center gap-2">
-            <input type="text" id="filter-name" placeholder="Search GPU" class="form-control form-control-sm">
-            <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control form-control-sm">
-            <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control form-control-sm">
-            <select id="filter-stock" class="form-select form-select-sm">
+          <div class="filter-container">
+            <input type="text" id="filter-name" placeholder="Search GPU" class="form-control">
+            <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
+            <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
+            <select id="filter-stock" class="form-select">
               <option value="all">Stock</option>
               <option value="in-stock">In Stock</option>
               <option value="out-of-stock">Out</option>
             </select>
-            <button class="btn btn-primary btn-sm" onclick="applyFilters()">Go</button>
+            <button class="btn btn-primary" onclick="applyFilters()">Go</button>
           </div>
         </div>
       </div>
