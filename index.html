@@ -8,137 +8,140 @@
   <meta name="keywords" content="PC components, computer hardware, gaming PC, custom builds, refurbished parts, high-performance PCs">
   <link rel="canonical" href="https://www.primepcparts.com">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
+      font-family: 'Roboto', sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
     }
 
     /* Navbar */
     .navbar {
-      background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: #252525;
+      padding: 15px 0;
+      border-bottom: 1px solid #333;
     }
 
     .navbar-brand img {
-      max-height: 40px;
+      max-height: 45px;
+      filter: brightness(1.5);
     }
 
     .navbar-brand span {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: #007bff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #00d4ff;
+      margin-left: 10px;
+      text-transform: uppercase;
     }
 
     .nav-link {
-      font-weight: 600;
-      color: #555;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: #b0b0b0;
+      padding: 10px 20px;
       transition: color 0.3s ease;
     }
 
     .nav-link:hover,
     .nav-link.active {
-      color: #007bff;
+      color: #00d4ff;
     }
 
     /* Hero Section */
     .hero-section {
-      background: linear-gradient(135deg, #007bff 0%, #00c4cc 100%);
-      color: white;
-      padding: 100px 20px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      padding: 120px 20px;
       text-align: center;
       position: relative;
-      overflow: hidden;
-    }
-
-    .hero-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
-      opacity: 0.5;
+      border-bottom: 1px solid #333;
     }
 
     .hero-section h1 {
-      font-size: 2.8rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
       font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
       margin-bottom: 20px;
-      position: relative;
     }
 
     .hero-section p {
       font-size: 1.2rem;
-      max-width: 600px;
+      color: #b0b0b0;
+      max-width: 700px;
       margin: 0 auto 30px;
-      position: relative;
     }
 
     .btn-hero {
+      font-family: 'Orbitron', sans-serif;
       font-size: 1rem;
-      padding: 12px 25px;
-      border-radius: 25px;
-      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 30px;
       text-transform: uppercase;
       transition: all 0.3s ease;
     }
 
     .btn-hero-primary {
-      background-color: #fff;
-      color: #007bff;
+      background-color: #00d4ff;
+      color: #1a1a1a;
       border: none;
     }
 
     .btn-hero-primary:hover {
-      background-color: #f0f0f0;
-      transform: translateY(-3px);
+      background-color: #00b8e6;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
     }
 
     .btn-hero-secondary {
       background-color: transparent;
-      color: #fff;
-      border: 2px solid #fff;
+      color: #00d4ff;
+      border: 2px solid #00d4ff;
     }
 
     .btn-hero-secondary:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      transform: translateY(-3px);
+      background-color: rgba(0, 212, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
     }
 
     /* Products Section */
     #products {
       padding: 60px 0;
-      background-color: #fff;
+      background-color: #1a1a1a;
     }
 
     #products h2 {
-      font-size: 2.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
       font-weight: 700;
+      color: #fff;
+      text-align: center;
       margin-bottom: 40px;
-      color: #222;
+      text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
     }
 
     .product-card {
+      background-color: #252525;
       border: none;
-      border-radius: 15px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .product-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
     }
 
     .product-card img {
       object-fit: cover;
-      height: 200px;
+      height: 180px;
+      width: 100%;
+      filter: brightness(0.9);
     }
 
     .product-card .card-body {
@@ -147,66 +150,73 @@
     }
 
     .product-card h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e0e0e0;
       margin-bottom: 10px;
-      color: #333;
     }
 
     .product-card p {
-      font-size: 1rem;
-      color: #666;
+      font-size: 0.95rem;
+      color: #b0b0b0;
     }
 
     .product-card .btn {
-      background-color: #007bff;
-      color: white;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #00d4ff;
+      color: #1a1a1a;
       border-radius: 20px;
       padding: 8px 20px;
-      font-weight: 600;
+      font-weight: 500;
       transition: background-color 0.3s ease;
     }
 
     .product-card .btn:hover {
-      background-color: #0056b3;
+      background-color: #00b8e6;
     }
 
     /* Contact Section */
     #contact {
       padding: 60px 0;
-      background-color: #f5f7fa;
+      background-color: #252525;
+      border-top: 1px solid #333;
     }
 
     #contact h2 {
-      font-size: 2.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
       font-weight: 700;
+      color: #fff;
+      text-align: center;
       margin-bottom: 40px;
-      color: #222;
+      text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
     }
 
     .contact-card {
-      background-color: #fff;
-      border-radius: 15px;
+      background-color: #1a1a1a;
+      border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .map-wrapper iframe {
-      border-radius: 10px;
+      border-radius: 8px;
       width: 100%;
       height: 250px;
+      border: 1px solid #333;
     }
 
     .contact-card p {
       font-size: 1rem;
-      color: #555;
+      color: #b0b0b0;
       line-height: 1.6;
     }
 
     .contact-card a {
-      color: #007bff;
+      color: #00d4ff;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .contact-card a:hover {
@@ -214,47 +224,54 @@
     }
 
     .form-control {
-      border-radius: 10px;
-      border: 1px solid #ddd;
+      background-color: #333;
+      border: 1px solid #444;
+      border-radius: 8px;
       padding: 10px;
       font-size: 1rem;
+      color: #e0e0e0;
       transition: border-color 0.3s ease;
     }
 
     .form-control:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      border-color: #00d4ff;
+      box-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
       outline: none;
     }
 
+    .form-control::placeholder {
+      color: #888;
+    }
+
     .btn-contact {
-      background-color: #007bff;
-      color: white;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #00d4ff;
+      color: #1a1a1a;
       border-radius: 20px;
       padding: 10px 25px;
-      font-weight: 600;
-      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-weight: 500;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .btn-contact:hover {
-      background-color: #0056b3;
-      transform: translateY(-3px);
+      background-color: #00b8e6;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
     }
 
     /* Footer */
     footer {
-      background-color: #fff;
+      background-color: #252525;
       padding: 20px 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      border-top: 1px solid #333;
     }
 
     footer p {
       margin: 5px 0;
-      color: #666;
+      color: #b0b0b0;
     }
 
     footer a {
-      color: #007bff;
+      color: #00d4ff;
       text-decoration: none;
     }
 
@@ -269,7 +286,7 @@
       }
 
       .hero-section h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .hero-section p {
@@ -279,7 +296,7 @@
       .btn-hero {
         display: block;
         width: 100%;
-        max-width: 200px;
+        max-width: 220px;
         margin: 10px auto;
       }
 
@@ -308,7 +325,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="https://primepcparts.github.io/">
         <img src="assets/img/logo.png" alt="PrimePcParts Logo">
         <span>PrimePcParts</span>
       </a>
@@ -334,11 +351,11 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="container text-center">
-      <h1>Build Your Dream PC</h1>
-      <p>Discover premium PC components and custom builds tailored to your needs at PrimePcParts.</p>
+      <h1>Power Up Your PC</h1>
+      <p>Top-tier components and custom builds designed for performance enthusiasts.</p>
       <div>
-        <a href="#products" class="btn btn-hero btn-hero-primary">Shop Now</a>
-        <a href="#contact" class="btn btn-hero btn-hero-secondary">Get a Quote</a>
+        <a href="#products" class="btn btn-hero btn-hero-primary">Explore Products</a>
+        <a href="#contact" class="btn btn-hero btn-hero-secondary">Contact Us</a>
       </div>
     </div>
   </section>
@@ -346,14 +363,14 @@
   <!-- Featured Products Section -->
   <section id="products" class="py-5">
     <div class="container">
-      <h2 class="text-center">Featured Products</h2>
+      <h2>Our Top Picks</h2>
       <div class="row">
         <div class="col-12 col-md-4 mb-4">
           <div class="product-card">
             <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top">
             <div class="card-body">
-              <h3>High-Performance GPUs</h3>
-              <p>Boost your gaming and creative projects with top-tier graphics cards.</p>
+              <h3>GPU Powerhouses</h3>
+              <p>Unleash stunning visuals with high-performance graphics cards.</p>
               <a href="gpu.html" class="btn">Shop Now</a>
             </div>
           </div>
@@ -362,8 +379,8 @@
           <div class="product-card">
             <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top">
             <div class="card-body">
-              <h3>Latest CPUs</h3>
-              <p>Power your system with cutting-edge processors.</p>
+              <h3>Next-Gen CPUs</h3>
+              <p>Fast, reliable processors for any workload.</p>
               <a href="cpu.html" class="btn">Shop Now</a>
             </div>
           </div>
@@ -372,8 +389,8 @@
           <div class="product-card">
             <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top">
             <div class="card-body">
-              <h3>High-Speed RAM</h3>
-              <p>Enhance multitasking with fast memory solutions.</p>
+              <h3>Speedy RAM</h3>
+              <p>Boost your system with high-speed memory.</p>
               <a href="ram.html" class="btn">Shop Now</a>
             </div>
           </div>
@@ -382,8 +399,8 @@
           <div class="product-card">
             <img src="assets/img/products/psu.jpg" alt="Power Supplies" class="card-img-top">
             <div class="card-body">
-              <h3>Reliable PSUs</h3>
-              <p>Stable power for your custom builds.</p>
+              <h3>Stable PSUs</h3>
+              <p>Reliable power for your dream build.</p>
               <a href="psu.html" class="btn">Shop Now</a>
             </div>
           </div>
@@ -395,7 +412,7 @@
   <!-- Contact Section -->
   <section id="contact">
     <div class="container">
-      <h2 class="text-center">Get in Touch</h2>
+      <h2>Contact Us</h2>
       <div class="row gy-4">
         <div class="col-12 col-md-6">
           <div class="contact-card">
@@ -444,7 +461,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Handle form submission
     document.getElementById('contactForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
