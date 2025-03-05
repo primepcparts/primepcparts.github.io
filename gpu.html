@@ -212,13 +212,30 @@
       }
     }
 
-    /* Override card hover for image click */
-    .card:hover .card-img-top {
-      transform: none; /* Prevent image from inheriting card hover */
+    /* Prevent card hover when clicking image */
+    .card {
+      position: relative; /* Ensure proper stacking context */
     }
 
-    .card-img-top:hover {
-      transform: scale(1.05); /* Optional: slight zoom on hover for feedback */
+    .card-img-top,
+    .carousel-inner img {
+      position: relative; /* Ensure images are clickable */
+      z-index: 1; /* Place above card hover effect */
+    }
+
+    .card:hover {
+      transform: translateY(-8px); /* Default hover from styles.css */
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card:hover .card-img-top,
+    .card:hover .carousel-inner img {
+      transform: none !important; /* Prevent image from moving with card */
+    }
+
+    .card-img-top:hover,
+    .carousel-inner img:hover {
+      transform: scale(1.05); /* Slight hover feedback on image only */
       transition: transform 0.3s ease;
     }
   </style>
@@ -468,7 +485,8 @@
     }
 
     function openFullScreenCarousel(photos, index, event) {
-      event.stopPropagation(); // Prevent card hover effect
+      event.preventDefault(); // Prevent any default behavior
+      event.stopPropagation(); // Stop event from bubbling to card
       const modal = document.getElementById('fullScreenModal');
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
