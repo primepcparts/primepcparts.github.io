@@ -1,7 +1,7 @@
 :root {
   --primary-color: #2563eb;
   --secondary-color: #4f46e5;
-  --dark-color: #1e293b;
+  --dark-color: #1 cardinality293b;
   --light-color: #f8fafc;
   --accent-color: #f59e0b;
 }
@@ -89,7 +89,7 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   background-color: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative; /* For z-index context */
+  position: relative;
 }
 
 .card:hover {
@@ -101,13 +101,12 @@ body {
 .carousel-inner img {
   width: 100%;
   object-fit: contain;
-  max-height: 250px;
+  max-height: 250px; /* Original size */
   border-radius: 8px 8px 0 0;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
-/* Prevent card hover from affecting image */
 .card:hover .card-img-top,
 .card:hover .carousel-inner img {
   transform: none;
@@ -115,7 +114,7 @@ body {
 
 .card-img-top:hover,
 .carousel-inner img:hover {
-  transform: scale(1.05); /* Slight hover feedback */
+  transform: scale(1.05);
 }
 
 .card-body {
