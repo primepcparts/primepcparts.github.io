@@ -125,61 +125,88 @@
       margin-top: 15px;
     }
 
-    /* Filter Section Styles */
-    .filter-container {
+    /* Modern Filter Section Styles */
+    .filter-bar {
       display: flex;
       align-items: center;
       justify-content: center; /* Center horizontally */
-      gap: 10px; /* Slightly larger gap */
-      padding: 10px 0;
-      flex-wrap: wrap; /* Allow wrapping */
-      max-width: 100%; /* Ensure it fits container */
+      gap: 12px;
+      padding: 10px 15px;
+      background-color: #f8f9fa; /* Light gray background */
+      border-radius: 50px; /* Pill-shaped */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      max-width: 900px; /* Limit width on large screens */
+      margin: 0 auto; /* Center within container */
+      flex-wrap: wrap; /* Allow wrapping on small screens */
     }
 
-    .filter-container .form-control,
-    .filter-container .form-select {
-      font-size: 0.95rem; /* Slightly larger text */
-      padding: 6px 10px; /* Slightly larger padding */
-      height: 38px; /* Slightly taller inputs */
-    }
-
-    .filter-container .btn {
+    .filter-bar input,
+    .filter-bar select {
       font-size: 0.95rem;
-      padding: 6px 12px; /* Slightly larger button */
-      height: 38px;
+      padding: 8px 12px;
+      height: 40px;
+      border: 1px solid #ddd;
+      border-radius: 20px; /* Rounded edges */
+      background-color: white;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .filter-bar input:focus,
+    .filter-bar select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      outline: none;
+    }
+
+    .filter-bar .btn {
+      font-size: 0.95rem;
+      padding: 8px 20px;
+      height: 40px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .filter-bar .btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px); /* Slight lift on hover */
     }
 
     /* Mobile Adjustments */
     @media (max-width: 767.98px) {
-      .filter-container {
+      .filter-bar {
         gap: 8px;
-        padding: 8px 10px; /* Add some horizontal padding */
+        padding: 10px;
+        border-radius: 30px;
       }
 
-      .filter-container .form-control,
-      .filter-container .form-select,
-      .filter-container .btn {
+      .filter-bar input,
+      .filter-bar select,
+      .filter-bar .btn {
         width: 100%;
-        max-width: 160px; /* Slightly wider for mobile */
+        max-width: 180px; /* Slightly wider for mobile */
       }
     }
 
     /* Desktop Layout */
     @media (min-width: 768px) {
-      .filter-container .form-control:nth-child(1) {
-        width: 220px; /* Search bar */
+      .filter-bar input:nth-child(1) {
+        width: 240px; /* Search bar */
       }
 
-      .filter-container .form-control:nth-child(2),
-      .filter-container .form-control:nth-child(3) {
-        width: 120px; /* Price inputs */
+      .filter-bar input:nth-child(2),
+      .filter-bar input:nth-child(3) {
+        width: 130px; /* Price inputs */
       }
 
-      .filter-container .form-select {
-        width: 140px; /* Stock dropdown */
+      .filter-bar select {
+        width: 150px; /* Stock dropdown */
       }
 
-      .filter-container .btn {
+      .filter-bar .btn {
         width: auto;
       }
     }
@@ -218,16 +245,16 @@
       <!-- Filter Section -->
       <div class="row mb-3">
         <div class="col-12">
-          <div class="filter-container">
-            <input type="text" id="filter-name" placeholder="Search GPU" class="form-control">
-            <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
-            <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
-            <select id="filter-stock" class="form-select">
-              <option value="all">Stock</option>
+          <div class="filter-bar">
+            <input type="text" id="filter-name" placeholder="Search GPU">
+            <input type="number" id="filter-price-min" placeholder="Min Price">
+            <input type="number" id="filter-price-max" placeholder="Max Price">
+            <select id="filter-stock">
+              <option value="all">All Stock</option>
               <option value="in-stock">In Stock</option>
-              <option value="out-of-stock">Out</option>
+              <option value="out-of-stock">Out of Stock</option>
             </select>
-            <button class="btn btn-primary" onclick="applyFilters()">Go</button>
+            <button class="btn" onclick="applyFilters()">Filter</button>
           </div>
         </div>
       </div>
