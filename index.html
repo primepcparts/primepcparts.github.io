@@ -13,41 +13,64 @@
   <style>
     /* Base styles with mobile-first approach */
     .hero-section {
-      padding: 80px 15px; /* Default for mobile */
+      padding: 80px 15px;
       text-align: center;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); /* Dark blue gradient */
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Circuit board effect */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.1"%3E%3Cdefs%3E%3ClinearGradient id="circuitGradient" x1="0" y1="0" x2="1" y2="1"%3E%3Cstop offset="0%" stop-color="%2300d4ff"/%3E%3Cstop offset="100%" stop-color="%2300d4ff" stop-opacity="0"/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill="none" stroke="url(%23circuitGradient)" stroke-width="2"%3E%3Cpath d="M100 100h600M100 200h600M100 300h600M100 400h600M100 500h600M100 600h600M100 700h600M200 100v600M300 100v600M400 100v600M500 100v600M600 100v600M700 100v600"/%3E%3C/g%3E%3C/svg%3E') repeat;
+      animation: circuitFlow 20s linear infinite;
+    }
+
+    @keyframes circuitFlow {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
     }
 
     .hero-section h1 {
       font-size: 2.5rem;
       font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     .hero-section p {
       font-size: 1rem;
       margin-bottom: 20px;
+      color: #e0e0e0;
     }
 
     .button-group {
       display: flex;
-      flex-direction: column; /* Default for mobile */
+      flex-direction: column;
       gap: 10px;
     }
 
     .btn-custom {
       padding: 10px 20px;
-      transition: transform 0.3s ease; /* Add subtle hover effect */
+      transition: transform 0.3s ease;
     }
 
     .btn-custom:hover {
-      transform: translateY(-2px); /* Slight lift on hover */
+      transform: translateY(-2px);
     }
 
     .navbar {
-      padding: 0.5rem; /* Default for mobile */
+      padding: 0.5rem;
     }
 
     #contact {
-      padding: 50px 15px; /* Default for mobile */
+      padding: 50px 15px;
     }
 
     .address-wrapper {
@@ -56,7 +79,7 @@
 
     .map-wrapper iframe {
       width: 100%;
-      height: 200px; /* Default for mobile */
+      height: 200px;
       border: none;
     }
 
