@@ -13,7 +13,6 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style>
-    /* Modal styles for full-screen image */
     .btn-buy {
       display: inline-block;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
@@ -37,15 +36,35 @@
       background-color: #f79c42;
     }
 
-    .btn-buy:focus,
-    .btn-buy:active {
-      outline: none;
-      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
+    .btn-inquiry {
+      display: inline-block;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: center;
+      text-decoration: none;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
     }
 
-    .btn-buy:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
+    .btn-inquiry:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-buy:focus,
+    .btn-buy:active,
+    .btn-inquiry:focus,
+    .btn-inquiry:active {
+      outline: none;
+      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
     }
 
     .card-body {
@@ -218,12 +237,11 @@
       .then(response => response.json())
       .then(async (data) => {
         allData = data;
-        // Sort by stock (in stock first) and then price low to high
         allData.sort((a, b) => {
           const stockA = a.Quantity > 0 ? 1 : 0;
           const stockB = b.Quantity > 0 ? 1 : 0;
-          if (stockA !== stockB) return stockB - stockA; // In stock first
-          return parseFloat(a.Price) - parseFloat(b.Price); // Then price low to high
+          if (stockA !== stockB) return stockB - stockA;
+          return parseFloat(a.Price) - parseFloat(b.Price);
         });
         renderCards(allData);
       })
@@ -266,7 +284,21 @@
         const stockStatus = item.Quantity > 0 
           ? `<span class="stock-in">In Stock</span>` 
           : `<span class="stock-out">Out of Stock</span>`;
-        
+
+        const actionHtml = item.Quantity > 0 
+          ? `
+            <div class="form-group">
+              <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
+              <select class="form-control" id="quantity-${index}">
+                ${generateQuantityOptions(item.Quantity)}
+              </select>
+            </div>
+            <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${index})">Buy It</button>
+          `
+          : `
+            <button class="btn-inquiry" onclick="placeInquiry('${item.Name}', '${item.Price}')">Place Inquiry</button>
+          `;
+
         const cardHtml = `
           <div class="col-md-4 mb-4">
             <div class="card">
@@ -275,13 +307,7 @@
                 ${carouselHtml}
                 <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
                 <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
-                <div class="form-group">
-                  <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-                  <select class="form-control" id="quantity-${index}" ${item.Quantity === 0 ? 'disabled' : ''}>
-                    ${generateQuantityOptions(item.Quantity)}
-                  </select>
-                </div>
-                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})" ${item.Quantity === 0 ? 'disabled' : ''}>Buy It</button>
+                ${actionHtml}
               </div>
             </div>
           </div>
@@ -305,7 +331,6 @@
         return matchesName && matchesPrice && matchesStock;
       });
 
-      // Apply same sorting to filtered results
       filteredData.sort((a, b) => {
         const stockA = a.Quantity > 0 ? 1 : 0;
         const stockB = b.Quantity > 0 ? 1 : 0;
@@ -333,7 +358,6 @@
     }
 
     function generateQuantityOptions(maxQuantity) {
-      if (maxQuantity === 0) return '<option value="0">0</option>';
       let options = '';
       for (let i = 1; i <= maxQuantity; i++) {
         options += `<option value="${i}">${i}</option>`;
@@ -362,14 +386,23 @@
       img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
     }
 
-    function buyItem(name, price, quantity, index) {
-      if (quantity === 0) return; // Prevent buying out of stock items
+    function buyItem(name, price, index) {
       const selectedQuantity = document.getElementById(`quantity-${index}`).value;
       const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
         `Item: ${name}\n` +
         `Price: ₹${price}\n` +
         `Quantity: ${selectedQuantity}\n\n` +
         `Please confirm your order and shipping details.`;
+      const phoneNumber = "+918275433068";
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, '_blank');
+    }
+
+    function placeInquiry(name, price) {
+      const message = `*Prime PC Parts - Stock Inquiry*\n\n` +
+        `Item: ${name}\n` +
+        `Price: ₹${price}\n\n` +
+        `This item is currently out of stock. Please help me find a similar GPU that's available.`;
       const phoneNumber = "+918275433068";
       const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       window.open(whatsappLink, '_blank');
