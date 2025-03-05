@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <!-- Homepage -->
   <url>
     <loc>https://primepcparts.github.io/</loc>
     <lastmod>2025-03-05</lastmod>
@@ -23,24 +22,18 @@
       <image:title>High-Speed RAM</image:title>
     </image:image>
   </url>
-
-  <!-- Graphics Cards Page -->
   <url>
     <loc>https://primepcparts.github.io/gpu.html</loc>
     <lastmod>2025-03-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Processors Page -->
   <url>
     <loc>https://primepcparts.github.io/cpu.html</loc>
     <lastmod>2025-03-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Memory (RAM) Page -->
   <url>
     <loc>https://primepcparts.github.io/ram.html</loc>
     <lastmod>2025-03-05</lastmod>
