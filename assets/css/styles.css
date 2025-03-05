@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #2563eb; /* Updated primary color */
-  --secondary-color: #4f46e5; /* Updated secondary color */
-  --dark-color: #1e293b; /* Updated dark color */
-  --light-color: #f8fafc; /* Updated light color */
-  --accent-color: #f59e0b; /* Accent color for highlights */
+  --primary-color: #2563eb;
+  --secondary-color: #4f46e5;
+  --dark-color: #1e293b;
+  --light-color: #f8fafc;
+  --accent-color: #f59e0b;
 }
 
 body {
@@ -89,6 +89,7 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   background-color: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* For z-index context */
 }
 
 .card:hover {
@@ -96,27 +97,25 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Prevent card hover when interacting with image */
 .card-img-top,
 .carousel-inner img {
   width: 100%;
-  object-fit: contain; /* Changed from cover to match your inline style */
-  max-height: 250px; /* Match your inline style */
+  object-fit: contain;
+  max-height: 250px;
   border-radius: 8px 8px 0 0;
   cursor: pointer;
-  position: relative;
-  z-index: 1; /* Ensure image is clickable */
+  transition: transform 0.3s ease;
 }
 
+/* Prevent card hover from affecting image */
 .card:hover .card-img-top,
 .card:hover .carousel-inner img {
-  transform: none; /* Prevent image from moving with card hover */
+  transform: none;
 }
 
 .card-img-top:hover,
 .carousel-inner img:hover {
-  transform: scale(1.05); /* Slight hover feedback on image only */
-  transition: transform 0.3s ease;
+  transform: scale(1.05); /* Slight hover feedback */
 }
 
 .card-body {
