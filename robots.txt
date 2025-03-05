@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://primepcparts.github.io/sitemap.xml
