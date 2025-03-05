@@ -14,8 +14,6 @@
 
   <style>
     /* Modal styles for full-screen image */
-
-    /* Updated button CSS */
     .btn-buy {
       display: inline-block;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
@@ -27,7 +25,6 @@
       cursor: pointer;
       user-select: none;
       background-color: #f59e0b;
-      /* Accent color */
       color: white;
       border: none;
       padding: 12px 25px;
@@ -38,38 +35,35 @@
 
     .btn-buy:hover {
       background-color: #f79c42;
-      /* Darker shade on hover */
     }
 
     .btn-buy:focus,
     .btn-buy:active {
       outline: none;
       box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
-      /* Focus box-shadow */
+    }
+
+    .btn-buy:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
     }
 
     .card-body {
       padding-top: 20px;
-      /* Add space above the card body */
       padding-bottom: 10px;
-      /* Add space below the card body */
     }
 
     .card-body p.card-text {
       margin-top: 20px;
-      /* Add space between the image and the price */
     }
 
     .form-group {
       margin-bottom: 15px;
-      /* Add space between quantity and buy button */
     }
 
     .card-img-top {
       object-fit: contain;
-      /* Ensures the image fits without distortion */
       max-height: 300px;
-      /* Adjust to limit the height */
       width: 100%;
       cursor: pointer;
     }
@@ -77,7 +71,6 @@
     .carousel-inner img {
       object-fit: contain;
       height: 300px;
-      /* Ensures the images in carousel are appropriately sized */
     }
 
     .modal {
@@ -122,6 +115,16 @@
     .zoom {
       cursor: zoom-in;
     }
+
+    .stock-out {
+      color: red;
+      font-weight: bold;
+    }
+
+    .stock-in {
+      color: green;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -158,20 +161,15 @@
       <div class="row mb-4">
         <div class="col-12">
           <div class="row g-2 row-cols-1 row-cols-md-5 align-items-center">
-            <!-- Name Filter -->
             <div class="col mb-2 mb-md-0">
               <input type="text" id="filter-name" placeholder="Name" class="form-control">
             </div>
-
-            <!-- Price Filters -->
             <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
             </div>
             <div class="col mb-2 mb-md-0">
               <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
             </div>
-
-            <!-- Stock Filter -->
             <div class="col mb-2 mb-md-0">
               <select id="filter-stock" class="form-select">
                 <option value="all">All Stock</option>
@@ -179,8 +177,6 @@
                 <option value="out-of-stock">Out of Stock</option>
               </select>
             </div>
-
-            <!-- Apply Button -->
             <div class="col">
               <button class="btn btn-primary w-100" onclick="applyFilters()">
                 <span class="d-none d-md-inline">Apply</span>
@@ -199,7 +195,7 @@
 
   <!-- Full-Screen Image Modal -->
   <div id="fullScreenModal" class="modal">
-    <span class="close" onclick="closeFullScreen()">&times;</span>
+    <span class="close" onclick="closeFullScreen()">×</span>
     <div class="modal-content">
       <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
     </div>
@@ -208,30 +204,34 @@
   <!-- Footer -->
   <footer>
     <div class="container text-center">
-      <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
-      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a
-          href="tel:+918275433068">+918275433068</a></p>
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Fetch data from Google Sheet
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
-    let allData = []; // Store all fetched data for filtering
+    let allData = [];
 
     fetch(sheetUrl)
       .then(response => response.json())
       .then(async (data) => {
-        allData = data; // Store the fetched data
-        renderCards(data); // Render cards initially
+        allData = data;
+        // Sort by stock (in stock first) and then price low to high
+        allData.sort((a, b) => {
+          const stockA = a.Quantity > 0 ? 1 : 0;
+          const stockB = b.Quantity > 0 ? 1 : 0;
+          if (stockA !== stockB) return stockB - stockA; // In stock first
+          return parseFloat(a.Price) - parseFloat(b.Price); // Then price low to high
+        });
+        renderCards(allData);
       })
       .catch(error => console.error('Error fetching data:', error));
 
-    // Function to render cards based on filtered data
     function renderCards(data) {
       const container = document.getElementById('graphics-cards-container');
-      container.innerHTML = ''; // Clear existing cards
+      container.innerHTML = '';
 
       data.forEach(async (item, index) => {
         const folderName = item.PhotoFolder;
@@ -263,7 +263,10 @@
           carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
         }
 
-        const stockStatus = item.Quantity > 0 ? 'In Stock' : 'Out of Stock';
+        const stockStatus = item.Quantity > 0 
+          ? `<span class="stock-in">In Stock</span>` 
+          : `<span class="stock-out">Out of Stock</span>`;
+        
         const cardHtml = `
           <div class="col-md-4 mb-4">
             <div class="card">
@@ -274,11 +277,11 @@
                 <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
                 <div class="form-group">
                   <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-                  <select class="form-control" id="quantity-${index}">
+                  <select class="form-control" id="quantity-${index}" ${item.Quantity === 0 ? 'disabled' : ''}>
                     ${generateQuantityOptions(item.Quantity)}
                   </select>
                 </div>
-                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
+                <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})" ${item.Quantity === 0 ? 'disabled' : ''}>Buy It</button>
               </div>
             </div>
           </div>
@@ -287,14 +290,13 @@
       });
     }
 
-    // Function to apply filters
     function applyFilters() {
       const nameFilter = document.getElementById('filter-name').value.toLowerCase();
       const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
       const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
       const stockFilter = document.getElementById('filter-stock').value;
 
-      const filteredData = allData.filter(item => {
+      let filteredData = allData.filter(item => {
         const matchesName = item.Name.toLowerCase().includes(nameFilter);
         const matchesPrice = item.Price >= minPrice && item.Price <= maxPrice;
         const matchesStock = stockFilter === 'all' ||
@@ -303,10 +305,17 @@
         return matchesName && matchesPrice && matchesStock;
       });
 
-      renderCards(filteredData); // Render filtered cards
+      // Apply same sorting to filtered results
+      filteredData.sort((a, b) => {
+        const stockA = a.Quantity > 0 ? 1 : 0;
+        const stockB = b.Quantity > 0 ? 1 : 0;
+        if (stockA !== stockB) return stockB - stockA;
+        return parseFloat(a.Price) - parseFloat(b.Price);
+      });
+
+      renderCards(filteredData);
     }
 
-    // Helper functions for image paths and buying items
     async function getLocalImagePaths(folderName) {
       const imagePaths = [];
       for (let i = 1; i <= 5; i++) {
@@ -324,6 +333,7 @@
     }
 
     function generateQuantityOptions(maxQuantity) {
+      if (maxQuantity === 0) return '<option value="0">0</option>';
       let options = '';
       for (let i = 1; i <= maxQuantity; i++) {
         options += `<option value="${i}">${i}</option>`;
@@ -331,7 +341,6 @@
       return options;
     }
 
-    // Open full-screen modal with selected image
     function openFullScreenCarousel(photos, index) {
       const modal = document.getElementById('fullScreenModal');
       const modalImage = document.getElementById('fullScreenImage');
@@ -340,13 +349,11 @@
       modalImage.style.transform = 'scale(1)';
     }
 
-    // Close full-screen modal
     function closeFullScreen() {
       const modal = document.getElementById('fullScreenModal');
       modal.style.display = 'none';
     }
 
-    // Zoom image functionality
     function zoomImage(event) {
       const img = document.getElementById('fullScreenImage');
       const scale = event.deltaY < 0 ? 1.1 : 0.9;
@@ -355,12 +362,13 @@
       img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
     }
 
-    // Send details to WhatsApp
     function buyItem(name, price, quantity, index) {
+      if (quantity === 0) return; // Prevent buying out of stock items
+      const selectedQuantity = document.getElementById(`quantity-${index}`).value;
       const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
         `Item: ${name}\n` +
         `Price: ₹${price}\n` +
-        `Quantity: ${quantity}\n\n` +
+        `Quantity: ${selectedQuantity}\n\n` +
         `Please confirm your order and shipping details.`;
       const phoneNumber = "+918275433068";
       const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
