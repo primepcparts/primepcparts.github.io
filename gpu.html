@@ -43,6 +43,73 @@
       background-color: #0056b3;
     }
 
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-body p.card-text {
+      margin-top: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .card-img-top {
+      object-fit: contain;
+      max-height: 250px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .carousel-inner img {
+      object-fit: contain;
+      height: 250px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      margin: auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .modal img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .close {
+      color: white;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+    }
+
+    .zoom {
+      cursor: zoom-in;
+    }
+
     .stock-out {
       color: red;
       font-weight: bold;
@@ -58,23 +125,19 @@
       margin-top: 15px;
     }
 
-    .form-group {
-      margin-bottom: 15px; /* Add padding between Qty and Buy Now */
-    }
-
     /* Modern Filter Section Styles */
     .filter-bar {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: center; /* Center horizontally */
       gap: 12px;
       padding: 10px 15px;
-      background-color: #f8f9fa;
-      border-radius: 50px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      max-width: 900px;
-      margin: 0 auto;
-      flex-wrap: wrap;
+      background-color: #f8f9fa; /* Light gray background */
+      border-radius: 50px; /* Pill-shaped */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      max-width: 900px; /* Limit width on large screens */
+      margin: 0 auto; /* Center within container */
+      flex-wrap: wrap; /* Allow wrapping on small screens */
     }
 
     .filter-bar input,
@@ -83,7 +146,7 @@
       padding: 8px 12px;
       height: 40px;
       border: 1px solid #ddd;
-      border-radius: 20px;
+      border-radius: 20px; /* Rounded edges */
       background-color: white;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -109,44 +172,7 @@
 
     .filter-bar .btn:hover {
       background-color: #0056b3;
-      transform: translateY(-2px);
-    }
-
-    /* Zoom Modal */
-    .zoom-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .zoom-modal.active {
-      display: flex;
-    }
-
-    .zoom-modal .carousel {
-      max-width: 90%;
-      max-height: 90%;
-    }
-
-    .zoom-modal .carousel-inner img {
-      max-height: 80vh; /* Ensure it fits within viewport */
-      object-fit: contain;
-    }
-
-    .zoom-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
+      transform: translateY(-2px); /* Slight lift on hover */
     }
 
     /* Mobile Adjustments */
@@ -161,23 +187,23 @@
       .filter-bar select,
       .filter-bar .btn {
         width: 100%;
-        max-width: 180px;
+        max-width: 180px; /* Slightly wider for mobile */
       }
     }
 
     /* Desktop Layout */
     @media (min-width: 768px) {
       .filter-bar input:nth-child(1) {
-        width: 240px;
+        width: 240px; /* Search bar */
       }
 
       .filter-bar input:nth-child(2),
       .filter-bar input:nth-child(3) {
-        width: 130px;
+        width: 130px; /* Price inputs */
       }
 
       .filter-bar select {
-        width: 150px;
+        width: 150px; /* Stock dropdown */
       }
 
       .filter-bar .btn {
@@ -214,6 +240,8 @@
   <!-- Graphics Cards Section -->
   <section id="graphics-cards" class="py-4">
     <div class="container">
+      <!--<h2 class="text-center mb-3">Browse Graphics Cards</h2>-->
+
       <!-- Filter Section -->
       <div class="row mb-3">
         <div class="col-12">
@@ -244,19 +272,11 @@
     </div>
   </section>
 
-  <!-- Zoom Modal -->
-  <div id="zoomModal" class="zoom-modal">
-    <span class="zoom-close" onclick="closeZoomModal()">×</span>
-    <div id="zoomCarousel" class="carousel slide">
-      <div class="carousel-inner" id="zoomCarouselInner"></div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#zoomCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#zoomCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+  <!-- Full-Screen Image Modal -->
+  <div id="fullScreenModal" class="modal">
+    <span class="close" onclick="closeFullScreen()">×</span>
+    <div class="modal-content">
+      <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
     </div>
   </div>
 
@@ -307,7 +327,7 @@
               <div class="carousel-inner">
                 ${photos.map((photo, photoIndex) => `
                   <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openZoomModal(${JSON.stringify(photos)}, ${photoIndex})">
+                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
                   </div>
                 `).join('')}
               </div>
@@ -322,7 +342,7 @@
             </div>
           `;
         } else if (photos.length === 1) {
-          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openZoomModal(${JSON.stringify(photos)}, 0)">`;
+          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
         }
 
         const stockStatus = item.Quantity > 0 
@@ -438,20 +458,25 @@
       return options;
     }
 
-    function openZoomModal(photos, index) {
-      const modal = document.getElementById('zoomModal');
-      const carouselInner = document.getElementById('zoomCarouselInner');
-      carouselInner.innerHTML = photos.map((photo, photoIndex) => `
-        <div class="carousel-item ${photoIndex === index ? 'active' : ''}">
-          <img src="${photo}" class="d-block w-100" alt="Zoomed GPU Photo ${photoIndex + 1}">
-        </div>
-      `).join('');
-      modal.classList.add('active');
+    function openFullScreenCarousel(photos, index) {
+      const modal = document.getElementById('fullScreenModal');
+      const modalImage = document.getElementById('fullScreenImage');
+      modal.style.display = 'flex';
+      modalImage.src = photos[index];
+      modalImage.style.transform = 'scale(1)';
     }
 
-    function closeZoomModal() {
-      const modal = document.getElementById('zoomModal');
-      modal.classList.remove('active');
+    function closeFullScreen() {
+      const modal = document.getElementById('fullScreenModal');
+      modal.style.display = 'none';
+    }
+
+    function zoomImage(event) {
+      const img = document.getElementById('fullScreenImage');
+      const scale = event.deltaY < 0 ? 1.1 : 0.9;
+      const currentTransform = img.style.transform || 'scale(1)';
+      const newScale = parseFloat(currentTransform.replace('scale(', '').replace(')', '')) * scale;
+      img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
     }
 
     function buyItem(name, price, index) {
