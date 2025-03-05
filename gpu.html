@@ -59,19 +59,19 @@
       object-fit: contain;
       max-height: 250px;
       width: 100%;
-      cursor: pointer; /* Indicates clickable image */
+      cursor: pointer;
     }
 
     .carousel-inner img {
       object-fit: contain;
       height: 250px;
-      cursor: pointer; /* Ensure carousel images are clickable */
+      cursor: pointer;
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000; /* High z-index to stay above all content */
+      z-index: 1000;
       left: 0;
       top: 0;
       width: 100%;
@@ -212,14 +212,14 @@
       }
     }
 
-    /* Override card hover to prevent zooming */
-    .card {
-      transition: none; /* Remove card-level transform if present */
+    /* Override card hover for image click */
+    .card:hover .card-img-top {
+      transform: none; /* Prevent image from inheriting card hover */
     }
 
-    .card:hover {
-      transform: none; /* Ensure card doesn't zoom */
-      box-shadow: none; /* Optional: remove shadow if interfering */
+    .card-img-top:hover {
+      transform: scale(1.05); /* Optional: slight zoom on hover for feedback */
+      transition: transform 0.3s ease;
     }
   </style>
 </head>
@@ -336,7 +336,7 @@
               <div class="carousel-inner">
                 ${photos.map((photo, photoIndex) => `
                   <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex}, event)">
                   </div>
                 `).join('')}
               </div>
@@ -351,7 +351,7 @@
             </div>
           `;
         } else if (photos.length === 1) {
-          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
+          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0, event)">`;
         }
 
         const stockStatus = item.Quantity > 0 
@@ -467,13 +467,13 @@
       return options;
     }
 
-    function openFullScreenCarousel(photos, index) {
+    function openFullScreenCarousel(photos, index, event) {
+      event.stopPropagation(); // Prevent card hover effect
       const modal = document.getElementById('fullScreenModal');
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
       modalImage.src = photos[index];
       modalImage.style.transform = 'scale(1)';
-      event.stopPropagation(); // Prevent card hover from interfering
     }
 
     function closeFullScreen() {
