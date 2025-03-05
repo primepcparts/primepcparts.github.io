@@ -14,20 +14,12 @@
 
   <style>
     .btn-buy {
-      display: inline-block;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      text-align: center;
-      text-decoration: none;
-      vertical-align: middle;
-      cursor: pointer;
-      user-select: none;
+      font-size: 0.9rem;
+      padding: 8px 15px;
       background-color: #f59e0b;
       color: white;
       border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
+      border-radius: 6px;
       font-weight: 600;
       transition: background-color 0.3s ease;
     }
@@ -37,20 +29,12 @@
     }
 
     .btn-inquiry {
-      display: inline-block;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      text-align: center;
-      text-decoration: none;
-      vertical-align: middle;
-      cursor: pointer;
-      user-select: none;
+      font-size: 0.9rem;
+      padding: 8px 15px;
       background-color: #007bff;
       color: white;
       border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
+      border-radius: 6px;
       font-weight: 600;
       transition: background-color 0.3s ease;
     }
@@ -59,37 +43,28 @@
       background-color: #0056b3;
     }
 
-    .btn-buy:focus,
-    .btn-buy:active,
-    .btn-inquiry:focus,
-    .btn-inquiry:active {
-      outline: none;
-      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
-    }
-
     .card-body {
-      padding-top: 20px;
-      padding-bottom: 10px;
+      padding: 15px;
     }
 
     .card-body p.card-text {
-      margin-top: 20px;
+      margin-top: 15px;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .card-img-top {
       object-fit: contain;
-      max-height: 300px;
+      max-height: 250px;
       width: 100%;
       cursor: pointer;
     }
 
     .carousel-inner img {
       object-fit: contain;
-      height: 300px;
+      height: 250px;
     }
 
     .modal {
@@ -110,8 +85,8 @@
       max-height: 90%;
       margin: auto;
       background-color: white;
-      padding: 20px;
-      border-radius: 8px;
+      padding: 15px;
+      border-radius: 6px;
       overflow: hidden;
       position: relative;
     }
@@ -124,10 +99,10 @@
 
     .close {
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       position: absolute;
-      top: 10px;
-      right: 20px;
+      top: 5px;
+      right: 15px;
       cursor: pointer;
     }
 
@@ -147,7 +122,63 @@
 
     .pagination {
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 15px;
+    }
+
+    /* Filter Section Styles */
+    .filter-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+    }
+
+    .filter-container .form-control-sm,
+    .filter-container .form-select-sm {
+      font-size: 0.85rem;
+      padding: 4px 8px;
+      height: 32px;
+    }
+
+    .filter-container .btn-sm {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      height: 32px;
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 767.98px) {
+      .filter-container {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .filter-container .form-control-sm,
+      .filter-container .form-select-sm,
+      .filter-container .btn-sm {
+        width: 100%;
+        max-width: 140px;
+      }
+    }
+
+    /* Desktop Layout */
+    @media (min-width: 768px) {
+      .filter-container .form-control-sm:nth-child(1) {
+        width: 180px; /* Search bar */
+      }
+
+      .filter-container .form-control-sm:nth-child(2),
+      .filter-container .form-control-sm:nth-child(3) {
+        width: 100px; /* Price inputs */
+      }
+
+      .filter-container .form-select-sm {
+        width: 120px; /* Stock dropdown */
+      }
+
+      .filter-container .btn-sm {
+        width: auto;
+      }
     }
   </style>
 </head>
@@ -177,36 +208,23 @@
   </nav>
 
   <!-- Graphics Cards Section -->
-  <section id="graphics-cards" class="py-5">
+  <section id="graphics-cards" class="py-4">
     <div class="container">
-      <h2 class="text-center mb-4">Browse Graphics Cards</h2>
+      <h2 class="text-center mb-3">Browse Graphics Cards</h2>
 
       <!-- Filter Section -->
-      <div class="row mb-4">
+      <div class="row mb-3">
         <div class="col-12">
-          <div class="row g-2 row-cols-1 row-cols-md-5 align-items-center">
-            <div class="col mb-2 mb-md-0">
-              <input type="text" id="filter-name" placeholder="Name" class="form-control">
-            </div>
-            <div class="col mb-2 mb-md-0">
-              <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control">
-            </div>
-            <div class="col mb-2 mb-md-0">
-              <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control">
-            </div>
-            <div class="col mb-2 mb-md-0">
-              <select id="filter-stock" class="form-select">
-                <option value="all">All Stock</option>
-                <option value="in-stock">In Stock</option>
-                <option value="out-of-stock">Out of Stock</option>
-              </select>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary w-100" onclick="applyFilters()">
-                <span class="d-none d-md-inline">Apply</span>
-                <span class="d-md-none">Filter</span>
-              </button>
-            </div>
+          <div class="filter-container d-flex align-items-center gap-2">
+            <input type="text" id="filter-name" placeholder="Search GPU" class="form-control form-control-sm">
+            <input type="number" id="filter-price-min" placeholder="Min Price" class="form-control form-control-sm">
+            <input type="number" id="filter-price-max" placeholder="Max Price" class="form-control form-control-sm">
+            <select id="filter-stock" class="form-select form-select-sm">
+              <option value="all">Stock</option>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out</option>
+            </select>
+            <button class="btn btn-primary btn-sm" onclick="applyFilters()">Go</button>
           </div>
         </div>
       </div>
@@ -304,8 +322,8 @@
         const actionHtml = item.Quantity > 0 
           ? `
             <div class="form-group">
-              <label for="quantity-${globalIndex}"><strong>Select Quantity:</strong></label>
-              <select class="form-control" id="quantity-${globalIndex}">
+              <label for="quantity-${globalIndex}"><strong>Qty:</strong></label>
+              <select class="form-control form-control-sm" id="quantity-${globalIndex}">
                 ${generateQuantityOptions(item.Quantity)}
               </select>
             </div>
