@@ -1,168 +1,172 @@
 :root {
-    --primary-color: #2563eb; /* Updated primary color */
-    --secondary-color: #4f46e5; /* Updated secondary color */
-    --dark-color: #1e293b; /* Updated dark color */
-    --light-color: #f8fafc; /* Updated light color */
-    --accent-color: #f59e0b; /* Accent color for highlights */
-  }
+  --primary-color: #2563eb; /* Updated primary color */
+  --secondary-color: #4f46e5; /* Updated secondary color */
+  --dark-color: #1e293b; /* Updated dark color */
+  --light-color: #f8fafc; /* Updated light color */
+  --accent-color: #f59e0b; /* Accent color for highlights */
+}
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--light-color);
-    color: var(--dark-color);
-  }
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+}
 
-  /* Navbar */
-  .navbar {
-    background-color: var(--dark-color);
-    padding: 1rem;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+/* Navbar */
+.navbar {
+  background-color: var(--dark-color);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .navbar-brand {
-    font-weight: 700;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.navbar-brand {
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .navbar-brand img {
-    height: 50px;
-    width: auto;
-  }
+.navbar-brand img {
+  height: 50px;
+  width: auto;
+}
 
-  .navbar-brand span {
-    font-size: 1.5rem;
-    color: white;
-  }
+.navbar-brand span {
+  font-size: 1.5rem;
+  color: white;
+}
 
-  .nav-link {
-    color: white !important;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s ease;
-  }
+.nav-link {
+  color: white !important;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
 
-  .nav-link:hover {
-    color: var(--accent-color) !important;
-  }
+.nav-link:hover {
+  color: var(--accent-color) !important;
+}
 
-  /* Hero Section */
-  .hero-section {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 150px 0;
-    text-align: center;
-  }
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 150px 0;
+  text-align: center;
+}
 
-  .hero-section h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
 
-  .hero-section p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-  }
+.hero-section p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
 
-  .btn-custom {
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-  }
+.btn-custom {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
 
-  .btn-custom:hover {
-    background-color: var(--primary-color);
-  }
+.btn-custom:hover {
+  background-color: var(--primary-color);
+}
 
-  /* Cards */
-  .card {
-    border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: white;
-  }
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  }
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
-  .card-img-top {
-    width: 100%; /* Ensure the image takes full width of the card */
-    object-fit: cover; /* Keeps the image aspect ratio intact */
-    border-radius: 8px 8px 0 0; /* Maintain rounded corners */
-  }
+/* Prevent card hover when interacting with image */
+.card-img-top,
+.carousel-inner img {
+  width: 100%;
+  object-fit: contain; /* Changed from cover to match your inline style */
+  max-height: 250px; /* Match your inline style */
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 1; /* Ensure image is clickable */
+}
 
-  .card:nth-child(1) .card-img-top { /* GPU image */
-    height: 250px;
-  }
+.card:hover .card-img-top,
+.card:hover .carousel-inner img {
+  transform: none; /* Prevent image from moving with card hover */
+}
 
-  .card:nth-child(2) .card-img-top { /* CPU image */
-    height: 250px;
-  }
+.card-img-top:hover,
+.carousel-inner img:hover {
+  transform: scale(1.05); /* Slight hover feedback on image only */
+  transition: transform 0.3s ease;
+}
 
-  .card:nth-child(3) .card-img-top { /* RAM image */
-    height: 300px;
-    object-position: center; /* Centers the image in case it's not perfectly square */
-  }
+.card-body {
+  padding: 1.5rem;
+}
 
-  .card-body {
-    padding: 1.5rem;
-  }
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
 
-  .card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
+.card-text {
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
 
-  .card-text {
-    font-size: 1rem;
-    color: var(--secondary-color);
-  }
+/* Contact Section */
+#contact {
+  padding: 80px 0;
+  background-color: white;
+}
 
-  /* Contact Section */
-  #contact {
-    padding: 80px 0;
-    background-color: white;
-  }
+#contact .address-wrapper {
+  background: var(--light-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-  #contact .address-wrapper {
-    background: var(--light-color);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
+#contact .map-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
 
-  #contact .map-wrapper {
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
+/* Footer */
+footer {
+  background-color: var(--dark-color);
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+}
 
-  /* Footer */
-  footer {
-    background-color: var(--dark-color);
-    color: white;
-    padding: 40px 0;
-    text-align: center;
-  }
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
 
-  footer a {
-    color: var(--accent-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  footer a:hover {
-    color: var(--primary-color);
-  }
+footer a:hover {
+  color: var(--primary-color);
+}
