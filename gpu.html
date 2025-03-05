@@ -144,6 +144,11 @@
       color: green;
       font-weight: bold;
     }
+
+    .pagination {
+      justify-content: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -209,6 +214,13 @@
       <div class="row" id="graphics-cards-container">
         <!-- Data from Google Sheet will be inserted here -->
       </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination">
+          <!-- Pagination tabs will be inserted here -->
+        </ul>
+      </nav>
     </div>
   </section>
 
@@ -232,6 +244,8 @@
   <script>
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
     let allData = [];
+    const itemsPerPage = 6;
+    let currentPage = 1;
 
     fetch(sheetUrl)
       .then(response => response.json())
@@ -243,21 +257,23 @@
           if (stockA !== stockB) return stockB - stockA;
           return parseFloat(a.Price) - parseFloat(b.Price);
         });
-        renderCards(allData);
+        renderPage(1);
       })
       .catch(error => console.error('Error fetching data:', error));
 
-    function renderCards(data) {
+    function renderCards(data, startIndex, endIndex) {
       const container = document.getElementById('graphics-cards-container');
       container.innerHTML = '';
 
-      data.forEach(async (item, index) => {
+      const slicedData = data.slice(startIndex, endIndex);
+      slicedData.forEach(async (item, index) => {
+        const globalIndex = startIndex + index;
         const folderName = item.PhotoFolder;
         const photos = await getLocalImagePaths(folderName);
 
         let carouselHtml = '';
         if (photos.length > 1) {
-          const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`);
+          const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${globalIndex}`);
           carouselHtml = ` 
             <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -288,12 +304,12 @@
         const actionHtml = item.Quantity > 0 
           ? `
             <div class="form-group">
-              <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-              <select class="form-control" id="quantity-${index}">
+              <label for="quantity-${globalIndex}"><strong>Select Quantity:</strong></label>
+              <select class="form-control" id="quantity-${globalIndex}">
                 ${generateQuantityOptions(item.Quantity)}
               </select>
             </div>
-            <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${index})">Buy It</button>
+            <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${globalIndex})">Buy It</button>
           `
           : `
             <button class="btn-inquiry" onclick="placeInquiry('${item.Name}', '${item.Price}')">Place Inquiry</button>
@@ -316,7 +332,32 @@
       });
     }
 
-    function applyFilters() {
+    function renderPagination(totalItems) {
+      const pageCount = Math.ceil(totalItems / itemsPerPage);
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (let i = 1; i <= pageCount; i++) {
+        const liClass = i === currentPage ? 'page-item active' : 'page-item';
+        const pageHtml = `
+          <li class="${liClass}">
+            <a class="page-link" href="#" onclick="renderPage(${i}); return false;">${i}</a>
+          </li>
+        `;
+        pagination.insertAdjacentHTML('beforeend', pageHtml);
+      }
+    }
+
+    function renderPage(page) {
+      currentPage = page;
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      let filteredData = applyFiltersLogic();
+      renderCards(filteredData, startIndex, endIndex);
+      renderPagination(filteredData.length);
+    }
+
+    function applyFiltersLogic() {
       const nameFilter = document.getElementById('filter-name').value.toLowerCase();
       const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
       const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
@@ -338,7 +379,11 @@
         return parseFloat(a.Price) - parseFloat(b.Price);
       });
 
-      renderCards(filteredData);
+      return filteredData;
+    }
+
+    function applyFilters() {
+      renderPage(1);
     }
 
     async function getLocalImagePaths(folderName) {
