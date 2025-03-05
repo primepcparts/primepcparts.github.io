@@ -59,18 +59,19 @@
       object-fit: contain;
       max-height: 250px;
       width: 100%;
-      cursor: pointer;
+      cursor: pointer; /* Indicates clickable image */
     }
 
     .carousel-inner img {
       object-fit: contain;
       height: 250px;
+      cursor: pointer; /* Ensure carousel images are clickable */
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 1;
+      z-index: 1000; /* High z-index to stay above all content */
       left: 0;
       top: 0;
       width: 100%;
@@ -129,15 +130,15 @@
     .filter-bar {
       display: flex;
       align-items: center;
-      justify-content: center; /* Center horizontally */
+      justify-content: center;
       gap: 12px;
       padding: 10px 15px;
-      background-color: #f8f9fa; /* Light gray background */
-      border-radius: 50px; /* Pill-shaped */
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      max-width: 900px; /* Limit width on large screens */
-      margin: 0 auto; /* Center within container */
-      flex-wrap: wrap; /* Allow wrapping on small screens */
+      background-color: #f8f9fa;
+      border-radius: 50px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
     }
 
     .filter-bar input,
@@ -146,7 +147,7 @@
       padding: 8px 12px;
       height: 40px;
       border: 1px solid #ddd;
-      border-radius: 20px; /* Rounded edges */
+      border-radius: 20px;
       background-color: white;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -172,7 +173,7 @@
 
     .filter-bar .btn:hover {
       background-color: #0056b3;
-      transform: translateY(-2px); /* Slight lift on hover */
+      transform: translateY(-2px);
     }
 
     /* Mobile Adjustments */
@@ -187,28 +188,38 @@
       .filter-bar select,
       .filter-bar .btn {
         width: 100%;
-        max-width: 180px; /* Slightly wider for mobile */
+        max-width: 180px;
       }
     }
 
     /* Desktop Layout */
     @media (min-width: 768px) {
       .filter-bar input:nth-child(1) {
-        width: 240px; /* Search bar */
+        width: 240px;
       }
 
       .filter-bar input:nth-child(2),
       .filter-bar input:nth-child(3) {
-        width: 130px; /* Price inputs */
+        width: 130px;
       }
 
       .filter-bar select {
-        width: 150px; /* Stock dropdown */
+        width: 150px;
       }
 
       .filter-bar .btn {
         width: auto;
       }
+    }
+
+    /* Override card hover to prevent zooming */
+    .card {
+      transition: none; /* Remove card-level transform if present */
+    }
+
+    .card:hover {
+      transform: none; /* Ensure card doesn't zoom */
+      box-shadow: none; /* Optional: remove shadow if interfering */
     }
   </style>
 </head>
@@ -240,8 +251,6 @@
   <!-- Graphics Cards Section -->
   <section id="graphics-cards" class="py-4">
     <div class="container">
-      <!--<h2 class="text-center mb-3">Browse Graphics Cards</h2>-->
-
       <!-- Filter Section -->
       <div class="row mb-3">
         <div class="col-12">
@@ -464,6 +473,7 @@
       modal.style.display = 'flex';
       modalImage.src = photos[index];
       modalImage.style.transform = 'scale(1)';
+      event.stopPropagation(); // Prevent card hover from interfering
     }
 
     function closeFullScreen() {
