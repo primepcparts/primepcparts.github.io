@@ -43,31 +43,6 @@
       background-color: #0056b3;
     }
 
-    .card-body {
-      padding: 15px;
-    }
-
-    .card-body p.card-text {
-      margin-top: 15px;
-    }
-
-    .form-group {
-      margin-bottom: 10px;
-    }
-
-    .card-img-top {
-      object-fit: contain;
-      max-height: 250px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .carousel-inner img {
-      object-fit: contain;
-      height: 250px;
-      cursor: pointer;
-    }
-
     .modal {
       display: none;
       position: fixed;
@@ -210,33 +185,6 @@
       .filter-bar .btn {
         width: auto;
       }
-    }
-
-    /* Prevent card hover when clicking image */
-    .card {
-      position: relative; /* Ensure proper stacking context */
-    }
-
-    .card-img-top,
-    .carousel-inner img {
-      position: relative; /* Ensure images are clickable */
-      z-index: 1; /* Place above card hover effect */
-    }
-
-    .card:hover {
-      transform: translateY(-8px); /* Default hover from styles.css */
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .card:hover .card-img-top,
-    .card:hover .carousel-inner img {
-      transform: none !important; /* Prevent image from moving with card */
-    }
-
-    .card-img-top:hover,
-    .carousel-inner img:hover {
-      transform: scale(1.05); /* Slight hover feedback on image only */
-      transition: transform 0.3s ease;
     }
   </style>
 </head>
@@ -485,8 +433,8 @@
     }
 
     function openFullScreenCarousel(photos, index, event) {
-      event.preventDefault(); // Prevent any default behavior
-      event.stopPropagation(); // Stop event from bubbling to card
+      event.preventDefault();
+      event.stopPropagation();
       const modal = document.getElementById('fullScreenModal');
       const modalImage = document.getElementById('fullScreenImage');
       modal.style.display = 'flex';
