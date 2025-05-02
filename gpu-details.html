@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimePcParts | GPU Details</title>
+  <meta name="description" content="View detailed information about high-performance graphics cards at PrimePcParts.">
+  <meta name="keywords" content="graphics cards, GPU details, gaming GPU, professional GPU">
+  <link rel="canonical" href="https://www.primepcparts.com/gpu-details.html">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <style>
+    .btn-buy {
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #f59e0b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .btn-buy:hover {
+      background-color: #f79c42;
+    }
+    .btn-inquiry {
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .btn-inquiry:hover {
+      background-color: #0056b3;
+    }
+    .btn-back {
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .btn-back:hover {
+      background-color: #5a6268;
+    }
+    .card-img-top {
+      object-fit: contain;
+      max-height: 400px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .carousel-inner img {
+      object-fit: contain;
+      height: 400px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      margin: auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .modal img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+    .close {
+      color: white;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+    }
+    .zoom {
+      cursor: zoom-in;
+    }
+    .stock-out {
+      color: red;
+      font-weight: bold;
+    }
+    .stock-in {
+      color: green;
+      font-weight: bold;
+    }
+    .gpu-details {
+      padding: 20px 0;
+    }
+    .gpu-details .card {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .gpu-details .card-body {
+      padding: 20px;
+    }
+    .description {
+      margin-top: 20px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="https://primepcparts.github.io/">
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span>PrimePcParts</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://primepcparts.github.io/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="https://primepcparts.github.io/gpu.html">Graphics Cards</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- GPU Details Section -->
+  <section id="gpu-details" class="gpu-details">
+    <div class="container">
+      <div id="gpu-details-container">
+        <!-- GPU details will be inserted here -->
+      </div>
+      <div class="text-center mt-4">
+        <a href="gpu.html" class="btn btn-back">Back to Graphics Cards</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full-Screen Image Modal -->
+  <div id="fullScreenModal" class="modal">
+    <span class="close" onclick="closeFullScreen()">×</span>
+    <div class="modal-content">
+      <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
+
+    // Get GPU name from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const gpuName = urlParams.get('name') ? decodeURIComponent(urlParams.get('name')) : null;
+
+    if (!gpuName) {
+      document.getElementById('gpu-details-container').innerHTML = '<p>No GPU specified.</p>';
+    } else {
+      fetch(sheetUrl)
+        .then(response => response.json())
+        .then(async (data) => {
+          // Find the GPU by name
+          const gpu = data.find(item => item.Name === gpuName);
+          if (!gpu) {
+            document.getElementById('gpu-details-container').innerHTML = '<p>GPU not found.</p>';
+            return;
+          }
+
+          // Validate GPU data
+          const isValid = gpu.Name && typeof gpu.Name === 'string' &&
+                         gpu.Price && !isNaN(parseFloat(gpu.Price)) &&
+                         gpu.Quantity !== undefined && !isNaN(parseInt(gpu.Quantity)) &&
+                         gpu.PhotoFolder && typeof gpu.PhotoFolder === 'string';
+          if (!isValid) {
+            console.warn('Invalid GPU data:', gpu);
+            document.getElementById('gpu-details-container').innerHTML = '<p>Invalid GPU data.</p>';
+            return;
+          }
+
+          // Get images
+          const photos = await getLocalImagePaths(gpu.PhotoFolder);
+
+          // Generate carousel or single image
+          let imageHtml = '';
+          if (photos.length > 1) {
+            const carouselId = sanitizeId(`carousel-${gpu.Name.replace(/\s+/g, '-')}`);
+            imageHtml = `
+              <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  ${photos.map((photo, photoIndex) => `
+                    <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
+                      <img src="${photo}" class="d-block w-100 card-img-top" alt="${gpu.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            `;
+          } else {
+            imageHtml = `<img src="${photos[0]}" class="card-img-top" alt="${gpu.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
+          }
+
+          // Stock status
+          const stockStatus = gpu.Quantity > 0 
+            ? `<span class="stock-in">In Stock</span>` 
+            : `<span class="stock-out">Out of Stock</span>`;
+
+          // Action buttons
+          const actionHtml = gpu.Quantity > 0 
+            ? `
+              <div class="form-group">
+                <label for="quantity"><strong>Qty:</strong></label>
+                <select class="form-control form-control-sm" id="quantity">
+                  ${generateQuantityOptions(gpu.Quantity)}
+                </select>
+              </div>
+              <button class="btn-buy" onclick="buyItem('${gpu.Name}', '${gpu.Price}')">Buy It</button>
+            `
+            : `
+              <button class="btn-inquiry" onclick="placeInquiry('${gpu.Name}', '${gpu.Price}')">Place Inquiry</button>
+            `;
+
+          // Description (fallback if missing)
+          const description = gpu.Description && typeof gpu.Description === 'string' 
+            ? gpu.Description 
+            : 'No description available.';
+
+          // Render GPU details
+          const gpuHtml = `
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">${gpu.Name}</h2>
+                ${imageHtml}
+                <p class="card-text mt-3"><strong>Price:</strong> ₹${gpu.Price}</p>
+                <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
+                <p class="card-text description"><strong>Description:</strong> ${description}</p>
+                ${actionHtml}
+              </div>
+            </div>
+          `;
+          document.getElementById('gpu-details-container').innerHTML = gpuHtml;
+        })
+        .catch(error => {
+          console.error('Error fetching GPU data:', error);
+          document.getElementById('gpu-details-container').innerHTML = '<p>Error loading GPU details. Please try again later.</p>';
+        });
+    }
+
+    async function getLocalImagePaths(folderName) {
+      const imagePaths = [];
+      for (let i = 1; i <= 5; i++) {
+        const imagePath = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
+        try {
+          const response = await fetch(imagePath);
+          if (response.ok) {
+            imagePaths.push(imagePath);
+          }
+        } catch (error) {
+          console.warn(`Image not found: ${imagePath}`);
+        }
+      }
+      return imagePaths.length > 0 ? imagePaths : ['assets/img/placeholder.jpg'];
+    }
+
+    function sanitizeId(id) {
+      return id.replace(/[^\w-]/g, '_');
+    }
+
+    function generateQuantityOptions(maxQuantity) {
+      let options = '';
+      for (let i = 1; i <= maxQuantity && i <= 10; i++) {
+        options += `<option value="${i}">${i}</option>`;
+      }
+      return options;
+    }
+
+    function openFullScreenCarousel(photos, index) {
+      const modal = document.getElementById('fullScreenModal');
+      const modalImage = document.getElementById('fullScreenImage');
+      if (!modal || !modalImage) {
+        console.error('Modal or modal image element not found');
+        return;
+      }
+      modal.style.display = 'flex';
+      modalImage.src = photos[index] || 'assets/img/placeholder.jpg';
+      modalImage.style.transform = 'scale(1)';
+    }
+
+    function closeFullScreen() {
+      const modal = document.getElementById('fullScreenModal');
+      if (!modal) {
+        console.error('Modal element not found');
+        return;
+      }
+      modal.style.display = 'none';
+    }
+
+    function zoomImage(event) {
+      const img = document.getElementById('fullScreenImage');
+      const scale = event.deltaY < 0 ? 1.1 : 0.9;
+      const currentTransform = img.style.transform || 'scale(1)';
+      const newScale = parseFloat(currentTransform.replace('scale(', '').replace(')', '')) * scale;
+      img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
+    }
+
+    function buyItem(name, price) {
+      const selectedQuantity = document.getElementById('quantity').value;
+      const message = `*Prime PC Parts - Purchase Inquiry*\n\n` +
+        `Item: ${name}\n` +
+        `Price: ₹${price}\n` +
+        `Quantity: ${selectedQuantity}\n\n` +
+        `Please confirm your order and shipping details.`;
+      const phoneNumber = "+918275433068";
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, '_blank');
+    }
+
+    function placeInquiry(name, price) {
+      const message = `*Prime PC Parts - Stock Inquiry*\n\n` +
+        `Item: ${name}\n` +
+        `Price: ₹${price}\n\n` +
+        `This item is currently out of stock. Please help me find a similar GPU that's available.`;
+      const phoneNumber = "+918275433068";
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, '_blank');
+    }
+  </script>
+</body>
+</html>
