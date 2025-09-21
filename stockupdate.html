@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimePcParts | Buy Graphics Cards</title>
+  <meta name="description" content="Browse and buy high-performance graphics cards at PrimePcParts.">
+  <meta name="keywords" content="graphics cards, buy GPU, gaming GPU, professional GPU">
+  <link rel="canonical" href="https://www.primepcparts.com/">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <style>
+    /* Existing styles unchanged */
+    .btn-buy {
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #f59e0b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .btn-buy:hover {
+      background-color: #f79c42;
+    }
+    .btn-inquiry {
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .btn-inquiry:hover {
+      background-color: #0056b3;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-body p.card-text {
+      margin-top: 15px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .card-img-top {
+      object-fit: contain;
+      max-height: 250px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .carousel-inner img {
+      object-fit: contain;
+      height: 250px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      margin: auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .modal img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+    .close {
+      color: white;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+    }
+    .zoom {
+      cursor: zoom-in;
+    }
+    .stock-out {
+      color: red;
+      font-weight: bold;
+    }
+    .stock-in {
+      color: green;
+      font-weight: bold;
+    }
+    .pagination {
+      justify-content: center;
+      margin-top: 15px;
+    }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border-radius: 50px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .filter-bar input,
+    .filter-bar select {
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      height: 40px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      background-color: white;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .filter-bar input:focus,
+    .filter-bar select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0,123,255,0.3);
+      outline: none;
+    }
+    .filter-bar .btn {
+      font-size: 0.95rem;
+      padding: 8px 20px;
+      height: 40px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .filter-bar .btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 767.98px) {
+      .filter-bar {
+        gap: 8px;
+        padding: 10px;
+        border-radius: 30px;
+      }
+      .filter-bar input,
+      .filter-bar select,
+      .filter-bar .btn {
+        width: 100%;
+        max-width: 180px;
+      }
+    }
+    @media (min-width: 768px) {
+      .filter-bar input:nth-child(1) {
+        width: 240px;
+      }
+      .filter-bar input:nth-child(2),
+      .filter-bar input:nth-child(3) {
+        width: 130px;
+      }
+      .filter-bar select {
+        width: 150px;
+      }
+      .filter-bar .btn {
+        width: auto;
+      }
+    }
+    /* New style for clickable card title */
+    .card-title {
+      cursor: pointer;
+      color: #007bff;
+      transition: color 0.3s ease;
+    }
+    .card-title:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="https://primepcparts.github.io/">
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span>PrimePcParts</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://primepcparts.github.io/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="https://primepcparts.github.io/gpu.html">Graphics Cards</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Graphics Cards Section -->
+  <section id="graphics-cards" class="py-4">
+    <div class="container">
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="filter-bar">
+            <input type="text" id="filter-name" placeholder="Search GPU">
+            <input type="number" id="filter-price-min" placeholder="Min Price">
+            <input type="number" id="filter-price-max" placeholder="Max Price">
+            <select id="filter-stock">
+              <option value="all">All Stock</option>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out of Stock</option>
+            </select>
+            <button class="btn" onclick="applyFilters()">Filter</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="graphics-cards-container">
+        <!-- Data from Google Sheet will be inserted here -->
+      </div>
+
+      <!-- Stock Update Button -->
+      <div class="text-center my-4">
+        <button class="btn-inquiry" onclick="sendStockUpdate()">Send Stock Update (WhatsApp)</button>
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination">
+          <!-- Pagination tabs will be inserted here -->
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Full-Screen Image Modal -->
+  <div id="fullScreenModal" class="modal">
+    <span class="close" onclick="closeFullScreen()">×</span>
+    <div class="modal-content">
+      <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
+    let allData = [];
+    const itemsPerPage = 6;
+    let currentPage = 1;
+
+    fetch(sheetUrl)
+      .then(response => response.json())
+      .then(async (data) => {
+        // Validate and clean data
+        allData = data.filter(item => {
+          const isValid = item.Name && typeof item.Name === 'string' &&
+                          item.Price && !isNaN(parseFloat(item.Price)) &&
+                          item.Quantity !== undefined && !isNaN(parseInt(item.Quantity)) &&
+                          item.PhotoFolder && typeof item.PhotoFolder === 'string';
+          if (!isValid) {
+            console.warn('Invalid data entry:', item);
+          }
+          return isValid;
+        });
+
+        if (allData.length === 0) {
+          console.error('No valid data fetched from Google Sheet');
+          document.getElementById('graphics-cards-container').innerHTML = '<p>No graphics cards available.</p>';
+          return;
+        }
+
+        allData.sort((a, b) => {
+          const stockA = a.Quantity > 0 ? 1 : 0;
+          const stockB = b.Quantity > 0 ? 1 : 0;
+          if (stockA !== stockB) return stockB - stockA;
+          return parseFloat(a.Price) - parseFloat(b.Price);
+        });
+        renderPage(1);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        document.getElementById('graphics-cards-container').innerHTML = '<p>Error loading graphics cards. Please try again later.</p>';
+      });
+
+    function renderCards(data, startIndex, endIndex) {
+      const container = document.getElementById('graphics-cards-container');
+      container.innerHTML = '';
+      if (data.length === 0) {
+        container.innerHTML = '<p>No graphics cards match your filters.</p>';
+        return;
+      }
+
+      const slicedData = data.slice(startIndex, endIndex);
+      slicedData.forEach(async (item, index) => {
+        const globalIndex = startIndex + index;
+        const folderName = item.PhotoFolder;
+        const photos = await getLocalImagePaths(folderName);
+
+        let carouselHtml = '';
+        if (photos.length > 1) {
+          const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${globalIndex}`);
+          carouselHtml = ` 
+            <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                ${photos.map((photo, photoIndex) => `
+                  <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}"> 
+                    <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
+                  </div>
+                `).join('')}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          `;
+        } else if (photos.length === 1) {
+          carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
+        }
+
+        const stockStatus = item.Quantity > 0 
+          ? `<span class="stock-in">In Stock</span>` 
+          : `<span class="stock-out">Out of Stock</span>`;
+
+        const actionHtml = item.Quantity > 0 
+          ? `
+            <div class="form-group">
+              <label for="quantity-${globalIndex}"><strong>Qty:</strong></label>
+              <select class="form-control form-control-sm" id="quantity-${globalIndex}">
+                ${generateQuantityOptions(item.Quantity)}
+              </select>
+            </div>
+            <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${globalIndex})">Buy It</button>
+          `
+          : `
+            <button class="btn-inquiry" onclick="placeInquiry('${item.Name}', '${item.Price}')">Place Inquiry</button>
+          `;
+
+        const cardHtml = `
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title" onclick="viewGpuDetails('${encodeURIComponent(item.Name)}')">${item.Name}</h5>
+                ${carouselHtml}
+                <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
+                <p class="card-text"><strong>Stock:</strong> ${stockStatus}</p>
+                ${actionHtml}
+              </div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    function renderPagination(totalItems) {
+      const pageCount = Math.ceil(totalItems / itemsPerPage);
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (let i = 1; i <= pageCount; i++) {
+        const liClass = i === currentPage ? 'page-item active' : 'page-item';
+        const pageHtml = `
+          <li class="${liClass}">
+            <a class="page-link" href="#" onclick="renderPage(${i}); return false;">${i}</a>
+          </li>
+        `;
+        pagination.insertAdjacentHTML('beforeend', pageHtml);
+      }
+    }
+
+    function renderPage(page) {
+      currentPage = page;
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      let filteredData = applyFiltersLogic();
+      renderCards(filteredData, startIndex, endIndex);
+      renderPagination(filteredData.length);
+    }
+
+    function applyFiltersLogic() {
+      const nameFilter = document.getElementById('filter-name').value.toLowerCase();
+      const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
+      const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
+      const stockFilter = document.getElementById('filter-stock').value;
+
+      let filteredData = allData.filter(item => {
+        const itemName = (item.Name && typeof item.Name === 'string') ? item.Name.toLowerCase() : '';
+        const matchesName = itemName.includes(nameFilter);
+        const itemPrice = parseFloat(item.Price) || 0;
+        const matchesPrice = itemPrice >= minPrice && itemPrice <= maxPrice;
+        const matchesStock = stockFilter === 'all' ||
+          (stockFilter === 'in-stock' && item.Quantity > 0) ||
+          (stockFilter === 'out-of-stock' && item.Quantity === 0);
+        return matchesName && matchesPrice && matchesStock;
+      });
+
+      filteredData.sort((a, b) => {
+        const stockA = a.Quantity > 0 ? 1 : 0;
+        const stockB = b.Quantity > 0 ? 1 : 0;
+        if (stockA !== stockB) return stockB - stockA;
+        return parseFloat(a.Price) - parseFloat(b.Price);
+      });
+
+      return filteredData;
+    }
+
+    function applyFilters() {
+      renderPage(1);
+    }
+
+    async function getLocalImagePaths(folderName) {
+      const imagePaths = [];
+      for (let i = 1; i <= 5; i++) {
+        const imagePath = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
+        try {
+          const response = await fetch(imagePath);
+          if (response.ok) {
+            imagePaths.push(imagePath);
+          }
+        } catch (error) {
+          console.warn(`Image not found: ${imagePath}`);
+        }
+      }
+      return imagePaths.length > 0 ? imagePaths : ['assets/img/placeholder.jpg'];
+    }
+
+    function sanitizeId(id) {
+      return id.replace(/[^\w-]/g, '_');
+    }
+
+    function generateQuantityOptions(maxQuantity) {
+      let options = '';
+      for (let i = 1; i <= maxQuantity && i <= 10; i++) { // Limit to 10 for safety
+        options += `<option value="${i}">${i}</option>`;
+      }
+      return options;
+    }
+
+    function openFullScreenCarousel(photos, startIndex) {
+      const modal = document.getElementById('fullScreenModal');
+      const imgElement = document.getElementById('fullScreenImage');
+      let currentIndex = startIndex;
+
+      imgElement.src = photos[currentIndex];
+      modal.style.display = 'flex';
+
+      modal.onclick = function(event) {
+        if (event.target === modal) {
+          closeFullScreen();
+        }
+      };
+
+      document.onkeydown = function(event) {
+        if (event.key === 'ArrowRight') {
+          currentIndex = (currentIndex + 1) % photos.length;
+          imgElement.src = photos[currentIndex];
+        } else if (event.key === 'ArrowLeft') {
+          currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+          imgElement.src = photos[currentIndex];
+        } else if (event.key === 'Escape') {
+          closeFullScreen();
+        }
+      };
+    }
+
+    function closeFullScreen() {
+      document.getElementById('fullScreenModal').style.display = 'none';
+    }
+
+    function zoomImage(event) {
+      const img = document.getElementById('fullScreenImage');
+      event.preventDefault();
+      let scale = img.style.transform ? parseFloat(img.style.transform.replace('scale(', '').replace(')', '')) : 1;
+      if (event.deltaY < 0) {
+        scale *= 1.1;
+      } else {
+        scale /= 1.1;
+      }
+      scale = Math.min(Math.max(1, scale), 5);
+      img.style.transform = `scale(${scale})`;
+    }
+
+    function buyItem(name, price, index) {
+      const quantity = document.getElementById(`quantity-${index}`).value;
+      const message = `Hello, I want to buy:\n\n${name}\nPrice: ₹${price}\nQuantity: ${quantity}\n\nPlease confirm availability.`;
+      const whatsappUrl = `https://wa.me/918275433068?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function placeInquiry(name, price) {
+      const message = `Hello, I am interested in:\n\n${name}\nPrice: ₹${price}\n\nPlease notify me when available.`;
+      const whatsappUrl = `https://wa.me/918275433068?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function viewGpuDetails(encodedName) {
+      const gpuName = decodeURIComponent(encodedName);
+      window.location.href = `gpu-details.html?name=${gpuName}`;
+    }
+
+    function sendStockUpdate() {
+      if (allData.length === 0) {
+        alert("No stock data available.");
+        return;
+      }
+      let stockMessage = "📦 *Current GPU Stock Update:*\n\n";
+      allData.forEach(item => {
+        stockMessage += `• ${item.Name} - ₹${item.Price} (${item.Quantity} pcs)\n`;
+      });
+      stockMessage += `\nSent from PrimePcParts`;
+
+      const whatsappUrl = `https://wa.me/918275433068?text=${encodeURIComponent(stockMessage)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
