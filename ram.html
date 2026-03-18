@@ -1,114 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PrimePcParts | Buy RAM</title>
-  <meta name="description" content="Browse and buy high-performance RAM at PrimePcParts.">
-  <meta name="keywords" content="RAM, buy memory, gaming RAM, professional RAM">
-  <link rel="canonical" href="https://www.primepcparts.com/ram.html">
+  <meta name="description" content="Browse and buy high-performance high-speed RAM at PrimePcParts. DDR4 & DDR5 memory for gaming and workstations.">
+  <meta name="keywords" content="graphics cards, buy GPU, RAM, DDR4, DDR5, gaming memory, Pune PC parts">
+  <link rel="canonical" href="gpu.html">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
-
   <style>
-    /* Modal styles for full-screen image */
-    .btn-buy {
-      display: inline-block;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      text-align: center;
-      text-decoration: none;
-      vertical-align: middle;
-      cursor: pointer;
-      user-select: none;
-      background-color: #f59e0b;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
+    :root {
+      --primary-dark: #0d1b2a;
+      --secondary-dark: #1b263b;
+      --accent: #00d4ff;
+      --accent-hover: #00b8d9;
+      --text-light: #e0e0e0;
+      --card-bg: #162032;
+      --border-color: rgba(0,212,255,0.15);
     }
+    body { font-family: 'Poppins', sans-serif; background: var(--primary-dark); color: var(--text-light); }
 
-    .btn-buy:hover {
-      background-color: #f79c42;
-    }
+    /* Offer Banner */
+    .offer-banner { background: linear-gradient(90deg,#003d52,#005f7a,#003d52); background-size:200% 100%; animation:bannerShift 4s linear infinite; color:#fff; text-align:center; padding:8px 15px; font-size:0.82rem; letter-spacing:0.03em; }
+    @keyframes bannerShift { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+    .offer-banner a { color:var(--accent); text-decoration:none; font-weight:600; }
 
-    .btn-buy:focus,
-    .btn-buy:active {
-      outline: none;
-      box-shadow: 0 0 0 0.25rem rgba(255, 94, 0, 0.5);
-    }
+    /* Navbar */
+    .navbar { padding:0.5rem 1rem; background:rgba(13,27,42,0.97); border-bottom:1px solid var(--border-color); backdrop-filter:blur(8px); position:sticky; top:0; z-index:1030; }
+    .navbar-brand img { height:38px; margin-right:8px; }
+    .navbar-brand span { font-weight:700; font-size:1.1rem; color:var(--accent); }
+    .nav-link { color:var(--text-light) !important; font-size:0.9rem; padding:0.4rem 0.8rem !important; border-radius:5px; transition:color 0.2s,background 0.2s; }
+    .nav-link:hover, .nav-link.active { color:var(--accent) !important; background:rgba(0,212,255,0.08); }
+    .navbar-toggler { border-color:var(--border-color); }
+    .navbar-toggler-icon { filter:invert(1); }
 
-    .card-body {
-      padding-bottom: 10px;
-    }
+    /* Page header */
+    .page-header { background:linear-gradient(135deg,#0d1b2a 0%,#1b263b 100%); padding:40px 15px 30px; border-bottom:1px solid var(--border-color); }
+    .page-header h1 { font-size:1.8rem; font-weight:700; color:#fff; margin-bottom:6px; }
+    .page-header p { color:#aaa; font-size:0.88rem; margin:0; }
 
-    .form-group {
-      margin-bottom: 15px;
+    /* Filter Bar */
+    .filter-bar { background:var(--secondary-dark); border:1px solid var(--border-color); border-radius:12px; padding:16px 20px; margin-bottom:24px; }
+    .filter-bar input, .filter-bar select {
+      background:rgba(255,255,255,0.06); border:1px solid var(--border-color); color:#fff;
+      border-radius:8px; padding:8px 12px; font-size:0.85rem; width:100%;
+      transition:border-color 0.2s;
     }
+    .filter-bar input:focus, .filter-bar select:focus { outline:none; border-color:var(--accent); background:rgba(255,255,255,0.09); color:#fff; box-shadow:none; }
+    .filter-bar input::placeholder { color:#666; }
+    .filter-bar select option { background:var(--secondary-dark); color:#fff; }
+    .filter-bar .btn-filter {
+      background:linear-gradient(135deg,var(--accent),var(--accent-hover)); color:#0d1b2a;
+      border:none; border-radius:8px; padding:8px 20px; font-weight:700; font-size:0.85rem;
+      width:100%; cursor:pointer; transition:transform 0.2s,box-shadow 0.2s;
+    }
+    .filter-bar .btn-filter:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,212,255,0.3); }
 
-    .card-img-top {
-      object-fit: contain;
-      max-height: 300px;
-      width: 100%;
-      cursor: pointer;
-    }
+    /* Cards */
+    .card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; overflow:hidden; height:100%; transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s; }
+    .card:hover { transform:translateY(-4px); border-color:var(--accent); box-shadow:0 8px 28px rgba(0,212,255,0.15); }
+    .card-body { padding:16px; }
+    .card-title { font-size:0.95rem; font-weight:600; color:var(--accent); cursor:pointer; transition:color 0.2s; margin-bottom:8px; }
+    .card-title:hover { color:#fff; }
+    .card-text { font-size:0.83rem; color:#ccc; margin-bottom:6px; }
+    .card-img-top { object-fit:contain; max-height:220px; width:100%; cursor:pointer; background:rgba(0,0,0,0.2); }
+    .carousel-inner img { object-fit:contain; height:220px; background:rgba(0,0,0,0.2); }
 
-    .carousel-inner img {
-      object-fit: contain;
-      height: 300px;
-    }
+    /* Stock */
+    .stock-in { color:#4ade80; font-weight:600; }
+    .stock-out { color:#f87171; font-weight:600; }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-    }
+    /* Buttons */
+    .btn-buy { background:linear-gradient(135deg,#f59e0b,#f79c42); color:#fff; border:none; border-radius:8px; padding:9px 20px; font-weight:700; font-size:0.85rem; width:100%; cursor:pointer; transition:transform 0.2s,box-shadow 0.2s; margin-top:8px; }
+    .btn-buy:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(245,158,11,0.35); }
+    .btn-inquiry { background:rgba(0,212,255,0.1); color:var(--accent); border:1px solid rgba(0,212,255,0.3); border-radius:8px; padding:9px 20px; font-weight:700; font-size:0.85rem; width:100%; cursor:pointer; transition:background 0.2s; margin-top:8px; }
+    .btn-inquiry:hover { background:rgba(0,212,255,0.18); }
 
-    .modal-content {
-      max-width: 90%;
-      max-height: 90%;
-      margin: auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-    }
+    /* Form */
+    .form-control { background:rgba(255,255,255,0.06); border:1px solid var(--border-color); color:#fff; border-radius:6px; font-size:0.83rem; }
+    .form-control:focus { background:rgba(255,255,255,0.09); border-color:var(--accent); color:#fff; box-shadow:none; }
+    .form-group { margin-bottom:10px; }
+    .form-group label { font-size:0.8rem; color:#aaa; margin-bottom:4px; display:block; }
 
-    .modal img {
-      width: 100%;
-      height: auto;
-      transition: transform 0.3s ease;
-    }
+    /* Pagination */
+    .pagination { justify-content:center; margin-top:24px; gap:4px; }
+    .page-link { background:var(--card-bg); border-color:var(--border-color); color:var(--text-light); border-radius:6px !important; font-size:0.85rem; padding:6px 12px; }
+    .page-item.active .page-link { background:var(--accent); border-color:var(--accent); color:#0d1b2a; font-weight:700; }
+    .page-link:hover { background:rgba(0,212,255,0.1); border-color:var(--accent); color:var(--accent); }
 
-    .close {
-      color: white;
-      font-size: 2rem;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      cursor: pointer;
-    }
+    /* Modal */
+    .modal { display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.88); justify-content:center; align-items:center; }
+    .modal-content { max-width:90%; max-height:90%; background:#0d1b2a; border:1px solid var(--border-color); padding:15px; border-radius:10px; overflow:hidden; position:relative; }
+    .modal img { width:100%; height:auto; transition:transform 0.3s ease; }
+    .close { color:#fff; font-size:1.6rem; position:absolute; top:6px; right:14px; cursor:pointer; z-index:1; line-height:1; }
+    .zoom { cursor:zoom-in; }
 
-    .zoom {
-      cursor: zoom-in;
-    }
+    /* Footer */
+    footer { background:#091521; border-top:1px solid var(--border-color); padding:40px 15px 20px; }
+    .footer-brand { font-weight:700; font-size:1.05rem; color:var(--accent); margin-bottom:6px; }
+    .footer-tagline { font-size:0.78rem; color:#555; }
+    .footer-heading { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#888; margin-bottom:10px; }
+    .footer-links { list-style:none; padding:0; margin:0; }
+    .footer-links li { margin-bottom:6px; }
+    .footer-links a { color:#666; font-size:0.8rem; text-decoration:none; transition:color 0.2s; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-divider { border-color:var(--border-color); margin:24px 0 16px; }
+    .footer-bottom { font-size:0.76rem; color:#444; text-align:center; }
+    .social-links { display:flex; gap:8px; margin-top:10px; }
+    .social-link { width:34px; height:34px; border-radius:50%; border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; color:#666; font-size:0.82rem; text-decoration:none; transition:color 0.2s,border-color 0.2s; }
+    .social-link:hover { color:var(--accent); border-color:var(--accent); }
+
+    /* WhatsApp Float */
+    .whatsapp-float { position:fixed; bottom:28px; right:22px; z-index:9999; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+    .whatsapp-btn { width:56px; height:56px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 18px rgba(37,211,102,0.45); text-decoration:none; color:#fff; font-size:1.5rem; transition:transform 0.2s; }
+    .whatsapp-btn:hover { transform:scale(1.08); color:#fff; }
+    .whatsapp-label { background:#1a1a2e; color:#fff; font-size:0.72rem; font-weight:600; padding:4px 10px; border-radius:20px; border:1px solid var(--border-color); white-space:nowrap; opacity:0; transform:translateX(10px); transition:opacity 0.25s,transform 0.25s; pointer-events:none; }
+    .whatsapp-float:hover .whatsapp-label { opacity:1; transform:translateX(0); }
+
+    /* Back to top */
+    #backToTop { position:fixed; bottom:94px; right:24px; z-index:999; width:38px; height:38px; background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); color:var(--accent); border-radius:50%; display:none; align-items:center; justify-content:center; cursor:pointer; font-size:0.85rem; }
+    #backToTop:hover { background:rgba(0,212,255,0.22); }
   </style>
 </head>
-
 <body>
+
+  <!-- Offer Banner -->
+  <div class="offer-banner">
+    🎉 Free delivery on orders above ₹5,000 in Pune &nbsp;|&nbsp;
+    💬 <a href="https://wa.me/918275433068">WhatsApp us</a> for custom builds &nbsp;|&nbsp;
+    ✅ New &amp; refurbished RAM available
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
@@ -121,29 +146,70 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="https://primepcparts.github.io/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="ram.html">RAM</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="https://primepcparts.github.io/">Home</a></li>
+          <li class="nav-item"><a class="nav-link href="gpu.html"><i class="fas fa-memory me-1"></i>Graphics Cards</a></li>
+          <li class="nav-item"><a class="nav-link" href="cpu.html">CPUs</a></li>
+          <li class="nav-item"><a class="nav-link" active" href="ram.html">RAM</a></li>
+          <li class="nav-item"><a class="nav-link" href="psu.html">PSUs</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- RAM Section -->
-  <section id="ram" class="py-5">
+  <!-- Page Header -->
+  <div class="page-header">
     <div class="container">
-      <div class="row" id="ram-container">
-        <!-- Data from Google Sheet will be inserted here -->
+      <h1><i class="fas fa-memory me-2" style="color:var(--accent);"></i>RAM &amp; Memory</h1>
+      <p>DDR4 &amp; DDR5 memory for gaming, multitasking, and professional workloads</p>
+    </div>
+  </div>
+
+  <!-- Graphics Cards Section -->
+  <section id="graphics-cards" class="py-4">
+    <div class="container">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="row g-2 align-items-end">
+          <div class="col-12 col-md-3">
+            <label style="font-size:0.75rem;color:#888;margin-bottom:4px;display:block;">Search</label>
+            <input type="text" id="filter-name" placeholder="Search RAM name…">
+          </div>
+          <div class="col-6 col-md-2">
+            <label style="font-size:0.75rem;color:#888;margin-bottom:4px;display:block;">Min Price (₹)</label>
+            <input type="number" id="filter-price-min" placeholder="0">
+          </div>
+          <div class="col-6 col-md-2">
+            <label style="font-size:0.75rem;color:#888;margin-bottom:4px;display:block;">Max Price (₹)</label>
+            <input type="number" id="filter-price-max" placeholder="Any">
+          </div>
+          <div class="col-6 col-md-3">
+            <label style="font-size:0.75rem;color:#888;margin-bottom:4px;display:block;">Stock</label>
+            <select id="filter-stock">
+              <option value="all">All Stock</option>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out of Stock</option>
+            </select>
+          </div>
+          <div class="col-6 col-md-2">
+            <button class="btn-filter" onclick="applyFilters()"><i class="fas fa-search me-1"></i>Filter</button>
+          </div>
+        </div>
       </div>
+
+      <div class="row g-3" id="ram-container">
+        <!-- Cards loaded here -->
+      </div>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination"></ul>
+      </nav>
     </div>
   </section>
 
   <!-- Full-Screen Image Modal -->
   <div id="fullScreenModal" class="modal">
-    <span class="close" onclick="closeFullScreen()">&times;</span>
+    <span class="close" onclick="closeFullScreen()">×</span>
     <div class="modal-content">
       <img id="fullScreenImage" src="" alt="Full Screen Image" class="zoom" onwheel="zoomImage(event)">
     </div>
@@ -151,137 +217,205 @@
 
   <!-- Footer -->
   <footer>
-    <div class="container text-center">
-      <p>&copy; 2025 PrimePcParts. All rights reserved.</p>
-      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-12 col-md-4">
+          <div class="footer-brand">🖥️ PrimePcParts</div>
+          <p class="footer-tagline">Pune's trusted PC component store.<br>New, refurbished &amp; custom builds.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/918275433068" class="social-link"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:primepcpartspune@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <p class="footer-heading">Products</p>
+          <ul class="footer-links">
+            <li><a href="gpu.html">GPUs</a></li>
+            <li><a href="cpu.html">CPUs</a></li>
+            <li><a active" href="ram.html">RAM</a></li>
+            <li><a href="psu.html">PSUs</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-2">
+          <p class="footer-heading">Quick Links</p>
+          <ul class="footer-links">
+            <li><a href="https://primepcparts.github.io/">Home</a></li>
+            <li><a href="https://primepcparts.github.io/#contact">Contact</a></li>
+            <li><a href="https://primepcparts.github.io/#why-us">Why Us</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4">
+          <p class="footer-heading">Contact</p>
+          <ul class="footer-links">
+            <li><a href="tel:+918275433068"><i class="fas fa-phone me-2" style="color:var(--accent);"></i>+91 82754 33068</a></li>
+            <li><a href="mailto:primepcpartspune@gmail.com"><i class="fas fa-envelope me-2" style="color:var(--accent);"></i>primepcpartspune@gmail.com</a></li>
+            <li><a href="https://wa.me/918275433068"><i class="fab fa-whatsapp me-2" style="color:#25d366;"></i>Chat on WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom">© 2025 PrimePcParts. All rights reserved. | Made with ❤️ in Pune</div>
     </div>
   </footer>
 
+  <!-- WhatsApp Float -->
+  <div class="whatsapp-float">
+    <span class="whatsapp-label">Chat with us!</span>
+    <a href="https://wa.me/918275433068?text=Hi!%20I%20need%20help%20with%20RAM." class="whatsapp-btn" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+  <div id="backToTop"><i class="fas fa-chevron-up"></i></div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Fetch data from Google Sheet
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/RAMs';
+    let allData = [];
+    const itemsPerPage = 6;
+    let currentPage = 1;
 
     fetch(sheetUrl)
-      .then(response => response.json())
-      .then(async (data) => {
-        const container = document.getElementById('ram-container');
+      .then(r => r.json())
+      .then(data => {
+        allData = data.filter(item =>
+          item.Name && typeof item.Name === 'string' &&
+          item.Price && !isNaN(parseFloat(item.Price)) &&
+          item.Quantity !== undefined && !isNaN(parseInt(item.Quantity)) &&
+          item.PhotoFolder && typeof item.PhotoFolder === 'string'
+        );
+        if (!allData.length) {
+          document.getElementById('ram-container').innerHTML = '<p class="text-center py-4" style="color:#aaa;">No graphics cards available right now.</p>';
+          return;
+        }
+        allData.sort((a,b) => {
+          const sa = a.Quantity > 0 ? 1 : 0, sb = b.Quantity > 0 ? 1 : 0;
+          if (sa !== sb) return sb - sa;
+          return parseFloat(a.Price) - parseFloat(b.Price);
+        });
+        renderPage(1);
+      })
+      .catch(() => document.getElementById('ram-container').innerHTML = '<p class="text-center py-4" style="color:#f87171;">Error loading data. Please try again later.</p>');
 
-        // Loop through each item in the data
-        for (let index = 0; index < data.length; index++) {
-          const item = data[index];
-
-          // Get the folder name from the Google Sheet
-          const folderName = item.PhotoFolder;
-
-          // Construct local image paths based on the folder name
-          const photos = await getLocalImagePaths(folderName); // Wait for image paths to be resolved
-
-          let carouselHtml = '';
-          if (photos.length > 1) {
-            const carouselId = sanitizeId(`carousel-${item.Name.replace(/\s+/g, '-')}-${index}`); // Sanitize the ID
-            carouselHtml = ` 
-              <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  ${photos.map((photo, photoIndex) => ` 
-                    <div class="carousel-item ${photoIndex === 0 ? 'active' : ''}">
-                      <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name} Photo ${photoIndex + 1}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${photoIndex})">
-                    </div>
-                  `).join('')}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            `;
-          } else if (photos.length === 1) {
-            carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
-          }
-
-          const cardHtml = `
-            <div class="col-md-4 mb-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">${item.Name}</h5>
-                  ${carouselHtml}
-                  <p class="card-text"><strong>Price:</strong> ₹${item.Price}</p>
-                  <div class="form-group">
-                    <label for="quantity-${index}"><strong>Select Quantity:</strong></label>
-                    <select class="form-control" id="quantity-${index}">
-                      ${generateQuantityOptions(item.Quantity)}
-                    </select>
-                  </div>
-                  <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${item.Quantity}, ${index})">Buy It</button>
-                </div>
+    function renderCards(data, start, end) {
+      const container = document.getElementById('ram-container');
+      container.innerHTML = '';
+      if (!data.length) { container.innerHTML = '<p class="text-center py-4" style="color:#aaa;">No items match your filters.</p>'; return; }
+      data.slice(start, end).forEach(async (item, idx) => {
+        const gi = start + idx;
+        const photos = await getLocalImagePaths(item.PhotoFolder);
+        let imgHtml = '';
+        if (photos.length > 1) {
+          const cid = sanitizeId(`c-${item.Name.replace(/\s+/g,'-')}-${gi}`);
+          imgHtml = `<div id="${cid}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">${photos.map((p,pi)=>`<div class="carousel-item${pi===0?' active':''}"><img src="${p}" class="d-block w-100 card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)},${pi})"></div>`).join('')}</div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          </div>`;
+        } else if (photos.length === 1) {
+          imgHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)},0)">`;
+        }
+        const inStock = parseInt(item.Quantity) > 0;
+        const actionHtml = inStock
+          ? `<div class="form-group"><label>Qty:</label><select class="form-control" id="qty-${gi}">${genQtyOpts(item.Quantity)}</select></div>
+             <button class="btn-buy" onclick="buyItem('${item.Name}','${item.Price}',${gi})"><i class="fab fa-whatsapp me-1"></i>Buy It</button>`
+          : `<button class="btn-inquiry" onclick="placeInquiry('${item.Name}','${item.Price}')"><i class="fas fa-bell me-1"></i>Notify Me</button>`;
+        container.insertAdjacentHTML('beforeend', `
+          <div class="col-6 col-md-4">
+            <div class="card">
+              ${imgHtml}
+              <div class="card-body">
+                <h5 class="card-title" style="cursor:default;color:#fff;">${item.Name}</h5>
+                <p class="card-text"><i class="fas fa-tag me-1" style="color:var(--accent);font-size:0.75rem;"></i><strong>₹${item.Price}</strong></p>
+                <p class="card-text"><i class="fas fa-circle me-1" style="font-size:0.55rem;color:${inStock?'#4ade80':'#f87171'};"></i><span class="${inStock?'stock-in':'stock-out'}">${inStock?'In Stock':'Out of Stock'}</span></p>
+                ${actionHtml}
               </div>
             </div>
-          `;
-          container.insertAdjacentHTML('beforeend', cardHtml);
-        }
-      })
-      .catch(error => console.error('Error fetching data:', error));
+          </div>`);
+      });
+    }
 
-    // Helper functions for image paths and buying items
-    async function getLocalImagePaths(folderName) {
-      const imagePaths = [];
-      for (let i = 1; i <= 5; i++) {
-        const imagePath = `assets/img/ram/${folderName}/photo${i}.jpeg`;
-        const response = await fetch(imagePath, { method: 'HEAD' });
-        if (response.ok) {
-          imagePaths.push(imagePath);
-        }
+    function renderPagination(total) {
+      const pages = Math.ceil(total / itemsPerPage);
+      const pg = document.getElementById('pagination');
+      pg.innerHTML = '';
+      for (let i = 1; i <= pages; i++) {
+        pg.insertAdjacentHTML('beforeend', `<li class="page-item${i===currentPage?' active':''}"><a class="page-link" href="#" onclick="renderPage(${i});return false;">${i}</a></li>`);
       }
-      return imagePaths;
     }
 
-    function sanitizeId(id) {
-      return id.replace(/[^\w-]/g, '_');
+    function renderPage(page) {
+      currentPage = page;
+      const fd = applyFiltersLogic();
+      const start = (page-1)*itemsPerPage;
+      renderCards(fd, start, start+itemsPerPage);
+      renderPagination(fd.length);
     }
 
-    function generateQuantityOptions(maxQuantity) {
-      let options = '';
-      for (let i = 1; i <= maxQuantity; i++) {
-        options += `<option value="${i}">${i}</option>`;
+    function applyFiltersLogic() {
+      const nm = document.getElementById('filter-name').value.toLowerCase();
+      const mn = parseFloat(document.getElementById('filter-price-min').value)||0;
+      const mx = parseFloat(document.getElementById('filter-price-max').value)||Infinity;
+      const st = document.getElementById('filter-stock').value;
+      return allData.filter(item => {
+        const n = (item.Name||'').toLowerCase();
+        const p = parseFloat(item.Price)||0;
+        const q = parseInt(item.Quantity)||0;
+        return n.includes(nm) && p>=mn && p<=mx &&
+          (st==='all'||(st==='in-stock'&&q>0)||(st==='out-of-stock'&&q===0));
+      }).sort((a,b)=>{ const sa=a.Quantity>0?1:0,sb=b.Quantity>0?1:0; return sa!==sb?sb-sa:parseFloat(a.Price)-parseFloat(b.Price); });
+    }
+
+    function applyFilters() { renderPage(1); }
+
+    async function getLocalImagePaths(folder) {
+      const paths = [];
+      for (let i=1;i<=5;i++) {
+        const p = `assets/img/ram/${folder}/photo${i}.jpeg`;
+        try { const r=await fetch(p); if(r.ok) paths.push(p); } catch(e){}
       }
-      return options;
+      return paths.length ? paths : ['assets/img/placeholder.jpg'];
     }
 
-    // Open full-screen modal with selected image
-    function openFullScreenCarousel(photos, index) {
+    function sanitizeId(id) { return id.replace(/[^\w-]/g,'_'); }
+    function genQtyOpts(max) { let o=''; for(let i=1;i<=Math.min(max,10);i++) o+=`<option value="${i}">${i}</option>`; return o; }
+
+    function openFS(photos, idx) {
       const modal = document.getElementById('fullScreenModal');
-      const modalImage = document.getElementById('fullScreenImage');
-      modal.style.display = 'flex';
-      modalImage.src = photos[index];
-      modalImage.style.transform = 'scale(1)';
-    }
-
-    // Close full-screen modal
-    function closeFullScreen() {
-      const modal = document.getElementById('fullScreenModal');
-      modal.style.display = 'none';
-    }
-
-    // Zoom image functionality
-    function zoomImage(event) {
       const img = document.getElementById('fullScreenImage');
-      const scale = event.deltaY < 0 ? 1.1 : 0.9;
-      const currentTransform = img.style.transform || 'scale(1)';
-      const newScale = parseFloat(currentTransform.replace('scale(', '').replace(')', '')) * scale;
-      img.style.transform = `scale(${Math.min(Math.max(newScale, 1), 3)})`;
+      let ci = idx;
+      img.src = photos[ci]; img.style.transform='scale(1)';
+      modal.style.display='flex';
+      modal.onclick = e => { if(e.target===modal) closeFullScreen(); };
+      document.onkeydown = e => {
+        if(e.key==='ArrowRight') { ci=(ci+1)%photos.length; img.src=photos[ci]; }
+        else if(e.key==='ArrowLeft') { ci=(ci-1+photos.length)%photos.length; img.src=photos[ci]; }
+        else if(e.key==='Escape') closeFullScreen();
+      };
     }
+    function closeFullScreen() { document.getElementById('fullScreenModal').style.display='none'; document.onkeydown=null; }
+    function zoomImage(e) {
+      const img=document.getElementById('fullScreenImage'); e.preventDefault();
+      let s=parseFloat((img.style.transform||'scale(1)').replace('scale(','').replace(')','')); 
+      s=Math.min(Math.max(e.deltaY<0?s*1.1:s/1.1,1),5); img.style.transform=`scale(${s})`;
+    }
+    function buyItem(name,price,idx) {
+      const qty=document.getElementById(`qty-${idx}`).value;
+      const msg=`*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price*qty}\n\nPlease confirm my order.`;
+      window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`,'_blank');
+    }
+    function placeInquiry(name,price) {
+      const msg=`*PrimePcParts - Stock Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\n\nThis item is out of stock. Please notify me when available.`;
+      window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`,'_blank');
+    }
+    function viewDetails(encoded) { window.location.href=`gpu-details.html?name=${encoded}`; }
 
-    // Send details to WhatsApp
-    function buyItem(name, price, quantity, index) {
-      const message = `*PrimePcParts*%0A%0A*Item*: ${name}%0A*Price*: ₹${price}%0A*Quantity*: ${quantity}%0A%0A*Total*: ₹${price * quantity}%0A%0A%0A`;
-      const url = `https://wa.me/918275433068?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    }
+    // Back to top
+    window.addEventListener('scroll', () => {
+      document.getElementById('backToTop').style.display = window.scrollY>300?'flex':'none';
+    });
+    document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
   </script>
 </body>
-
 </html>
