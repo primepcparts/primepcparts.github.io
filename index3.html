@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimePcParts | PC Components & Custom Builds</title>
+  <meta name="description" content="PrimePcParts specializes in building and selling PC parts, both used and new, offering custom builds and hardware consultation services.">
+  <meta name="keywords" content="PC components, computer hardware, gaming PC, custom builds, refurbished parts, high-performance PCs">
+  <link rel="canonical" href="https://www.primepcparts.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <style>
+    /* Base styles with mobile-first approach */
+    .hero-section {
+      padding: 80px 15px;
+      text-align: center;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Circuit board effect */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.1"%3E%3Cdefs%3E%3ClinearGradient id="circuitGradient" x1="0" y1="0" x2="1" y2="1"%3E%3Cstop offset="0%" stop-color="%2300d4ff"/%3E%3Cstop offset="100%" stop-color="%2300d4ff" stop-opacity="0"/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill="none" stroke="url(%23circuitGradient)" stroke-width="2"%3E%3Cpath d="M100 100h600M100 200h600M100 300h600M100 400h600M100 500h600M100 600h600M100 700h600M200 100v600M300 100v600M400 100v600M500 100v600M600 100v600M700 100v600"/%3E%3C/g%3E%3C/svg%3E') repeat;
+      animation: circuitFlow 20s linear infinite;
+      z-index: 0; /* Place pseudo-element behind content */
+    }
+
+    @keyframes circuitFlow {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
+    }
+
+    .hero-section .container {
+      position: relative;
+      z-index: 1; /* Ensure content is above pseudo-element */
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-section p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      color: #e0e0e0;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-custom {
+      padding: 10px 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-2px);
+    }
+
+    .navbar {
+      padding: 0.5rem;
+    }
+
+    #contact {
+      padding: 50px 15px;
+    }
+
+    .address-wrapper {
+      margin-bottom: 20px;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    /* Desktop enhancements */
+    @media (min-width: 769px) {
+      .hero-section {
+        padding: 150px 0;
+      }
+
+      .hero-section h1 {
+        font-size: 3.5rem;
+      }
+
+      .hero-section p {
+        font-size: 1.25rem;
+      }
+
+      .button-group {
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .btn-custom {
+        padding: 12px 25px;
+      }
+
+      .navbar {
+        padding: 1rem;
+      }
+
+      #contact {
+        padding: 80px 0;
+      }
+
+      .map-wrapper iframe {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="https://primepcparts.github.io/">
+        <img src="assets/img/logo.png" alt="PrimePcParts Logo">
+        <span>PrimePcParts</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container text-center">
+      <h1>Build Your Perfect PC with PrimePcParts</h1>
+      <p>Your trusted destination for high-quality PC components, custom builds, and expert hardware solutions.</p>
+      <div class="button-group">
+        <a href="#products" class="btn btn-custom">Shop Components</a>
+        <a href="#contact" class="btn btn-custom">Get a Custom Build</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section id="products" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Featured Products</h2>
+      <div class="row">
+        <div class="col-12 col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="assets/img/products/gpu.jpg" alt="Graphics Cards" class="card-img-top img-fluid">
+            <div class="card-body">
+              <h3 class="card-title">High-Performance GPUs</h3>
+              <p class="card-text">Dedicated graphics cards for gaming and professional use.</p>
+              <a href="gpu.html" class="btn btn-custom">Shop Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="assets/img/products/cpu.jpg" alt="Processors" class="card-img-top img-fluid">
+            <div class="card-body">
+              <h3 class="card-title">Latest CPUs</h3>
+              <p class="card-text">Powerful processors for gaming, streaming, and productivity.</p>
+              <a href="cpu.html" class="btn btn-custom">Shop Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="assets/img/products/ram.jpg" alt="Memory (RAM)" class="card-img-top img-fluid">
+            <div class="card-body">
+              <h3 class="card-title">High-Speed RAM</h3>
+              <p class="card-text">Fast memory solutions for seamless multitasking.</p>
+              <a href="ram.html" class="btn btn-custom">Shop Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="assets/img/products/psu.jpg" alt="Power Supplies" class="card-img-top img-fluid">
+            <div class="card-body">
+              <h3 class="card-title">Reliable PSUs</h3>
+              <p class="card-text">Power supply units for all your PC builds.</p>
+              <a href="psu.html" class="btn btn-custom">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="text-center mb-4">Contact Us</h2>
+      <div class="row gy-4">
+        <div class="col-12 col-md-6">
+          <div class="address-wrapper">
+            <div class="map-wrapper mb-3">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6263.597181893861!2d73.8795679!3d18.448750399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eb6db23b3843%3A0xed0ffdee0cbf4509!2sPrime%20PC%20Parts!5e1!3m2!1sen!2sin!4v1738492906202!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p>
+              <strong>PrimePcParts: <a href="tel:+918275433068">+918275433068</a></strong><br>
+              Flat No 106, Pratibha Housing Soc,<br>
+              Katraj - Kondhwa Rd, behind Iskon Temple,<br>
+              Phase 1, Tilekar Nagar, Kondhwa Budruk,<br>
+              Pune, Maharashtra 411048
+            </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <form id="contactForm">
+            <div class="mb-3">
+              <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+              <input type="tel" class="form-control" id="phone" placeholder="Your Contact Number" required>
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-custom">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>© 2025 PrimePcParts. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:primepcpartspune@gmail.com">primepcpartspune@gmail.com</a> | <a href="tel:+918275433068">+918275433068</a></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+
+      if (!name || !email || !phone || !message) {
+        alert('Please fill all the fields before submitting.');
+        return;
+      }
+
+      const whatsappMessage = `Hello, I would like to contact PrimePcParts.%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Message:* ${message}`;
+      const whatsappUrl = `https://wa.me/+918275433068?text=${whatsappMessage}`;
+      window.open(whatsappUrl, '_blank');
+    });
+  </script>
+</body>
+</html>
