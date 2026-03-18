@@ -170,3 +170,14 @@ footer a {
 footer a:hover {
   color: var(--primary-color);
 }
+
+/* Footer Alignment Fix */
+footer .row {
+  align-items: flex-start;
+}
+
+footer .col-12,
+footer .col-6 {
+  display: flex;
+  flex-direction: column;
+}
