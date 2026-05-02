@@ -36,7 +36,7 @@ async function initGPUPage() {
     renderPage(1);
   } catch (error) {
     console.error('Error fetching data:', error);
-    document.getElementById('graphics-cards-container').innerHTML = '<p class="text-center py-4" style="color:#f87171;">Error loading data. Please try again later.</p>';
+    //document.getElementById('graphics-cards-container').innerHTML = '<p class="text-center py-4" style="color:#f87171;">Error loading data. Please try again later.</p>';
   }
 }
 
