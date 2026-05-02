@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +9,75 @@
   <link rel="canonical" href="https://primepcparts.github.io/gpu-details.html">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <style>
+    .detail-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .detail-card .card-img-top,
+    .carousel-inner img {
+      object-fit: contain;
+      max-height: 420px;
+      width: 100%;
+      cursor: pointer;
+      background: rgba(0,0,0,0.2);
+    }
+    .detail-body { padding: 28px; }
+    .detail-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .meta-badge {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+    }
+    .meta-badge strong {
+      color: var(--accent);
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+    .description-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .btn-buy, .btn-inquiry {
+      padding: 12px 28px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
   <!-- Offer Banner -->
   <div class="offer-banner">
     🎉 Free delivery on orders above ₹5,000 in Pune &nbsp;|&nbsp;
-    💬 <a href="https://wa.me/918275433068">WhatsApp us</a> for custom builds &nbsp;|&nbsp;
-    ✅ New &amp; refurbished parts available
+    💬 <a href="https://wa.me/918275433068">WhatsApp us</a> for custom builds
   </div>
 
   <!-- Navbar -->
@@ -36,11 +93,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="https://primepcparts.github.io/">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="gpu.html"><i class="fas fa-microchip me-1"></i>Graphics
-              Cards</a></li>
-          <li class="nav-item"><a class="nav-link" href="cpu.html">CPUs</a></li>
-          <li class="nav-item"><a class="nav-link" href="ram.html">RAM</a></li>
-          <li class="nav-item"><a class="nav-link" href="psu.html">PSUs</a></li>
+          <li class="nav-item"><a class="nav-link active" href="gpu.html">Graphics Cards</a></li>
         </ul>
       </div>
     </div>
@@ -50,7 +103,7 @@
   <section class="py-4">
     <div class="container">
       <div class="mb-3">
-        <a href="gpu.html" class="btn-back"><i class="fas fa-arrow-left me-2"></i>Back to Graphics Cards</a>
+        <a href="gpu.html" class="btn btn-back"><i class="fas fa-arrow-left me-2"></i>Back to Graphics Cards</a>
       </div>
       <div id="gpu-details-container">
         <div class="text-center py-5">
@@ -71,94 +124,24 @@
 
   <!-- Footer -->
   <footer>
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-12 col-md-4">
-          <div class="footer-brand">🖥️ PrimePcParts</div>
-          <p class="footer-tagline">Pune's trusted PC component store.</p>
-          <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/918275433068" class="social-link"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:primepcpartspune@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
-          </div>
-        </div>
-        <div class="col-6 col-md-2">
-          <p class="footer-heading">Products</p>
-          <ul class="footer-links">
-            <li><a href="gpu.html">GPUs</a></li>
-            <li><a href="cpu.html">CPUs</a></li>
-            <li><a href="ram.html">RAM</a></li>
-            <li><a href="psu.html">PSUs</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md-2">
-          <p class="footer-heading">Quick Links</p>
-          <ul class="footer-links">
-            <li><a href="https://primepcparts.github.io/">Home</a></li>
-            <li><a href="https://primepcparts.github.io/#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="col-12 col-md-4">
-          <p class="footer-heading">Contact</p>
-          <ul class="footer-links">
-            <li><a href="tel:+918275433068"><i class="fas fa-phone me-2" style="color:var(--accent);"></i>+91 82754
-                33068</a></li>
-            <li><a href="mailto:primepcpartspune@gmail.com"><i class="fas fa-envelope me-2"
-                  style="color:var(--accent);"></i>primepcpartspune@gmail.com</a></li>
-            <li><a href="https://wa.me/918275433068"><i class="fab fa-whatsapp me-2" style="color:#25d366;"></i>Chat on
-                WhatsApp</a></li>
-          </ul>
-        </div>
-      </div>
-      <hr class="footer-divider">
-      <div class="footer-bottom">© 2025 PrimePcParts. All rights reserved. | Made with ❤️ in Pune</div>
+    <div class="container text-center">
+      <p>© 2025 PrimePcParts. All rights reserved. | Made with ❤️ in Pune</p>
     </div>
   </footer>
-
-  <!-- WhatsApp Float -->
-  <div class="whatsapp-float">
-    <span class="whatsapp-label">Chat with us!</span>
-    <a href="https://wa.me/918275433068?text=Hi!%20I%20need%20help%20with%20a%20GPU." class="whatsapp-btn"
-      target="_blank">
-      <i class="fab fa-whatsapp"></i>
-    </a>
-  </div>
-  <div id="backToTop"><i class="fas fa-chevron-up"></i></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
-    // ==================== FULL GPU DETAILS PAGE ====================
+    // GPU Details Page Logic
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
     const urlParams = new URLSearchParams(window.location.search);
     const gpuName = urlParams.get('name') ? decodeURIComponent(urlParams.get('name')) : null;
 
-    async function getLocalImagePaths(folder) {
-      const paths = [];
-      for (let i = 1; i <= 5; i++) {
-        const p = `assets/img/gpu/${folder}/photo${i}.jpeg`;
-        try {
-          const r = await fetch(p);
-          if (r.ok) paths.push(p);
-        } catch (e) { }
-      }
-      return paths.length ? paths : ['assets/img/placeholder.jpg'];
-    }
-
-    function genQtyOpts(max) {
-      let o = '';
-      for (let i = 1; i <= Math.min(max, 10); i++) o += `<option value="${i}">${i}</option>`;
-      return o;
-    }
-
-    function sanitizeId(id) { return id.replace(/[^\w-]/g, '_'); }
-
     async function loadGPUDetails() {
       const container = document.getElementById('gpu-details-container');
-
+      
       if (!gpuName) {
-        container.innerHTML = '<p style="color:#aaa;text-align:center;padding:40px 0;">No GPU specified. <a href="gpu.html" style="color:var(--accent);">Browse all GPUs</a></p>';
+        container.innerHTML = '<p style="color:#aaa;text-align:center;padding:40px 0;">No GPU specified.</p>';
         return;
       }
 
@@ -168,85 +151,83 @@
         const gpu = data.find(item => item.Name === gpuName);
 
         if (!gpu) {
-          container.innerHTML = '<p style="color:#f87171;text-align:center;padding:40px 0;">GPU not found. <a href="gpu.html" style="color:var(--accent);">Go back</a></p>';
+          container.innerHTML = '<p style="color:#f87171;text-align:center;padding:40px 0;">GPU not found.</p>';
           return;
         }
 
-        const photos = await getLocalImagePaths(gpu.PhotoFolder);
+        const photos = await getLocalImagePaths(gpu.PhotoFolder, 'gpu');
         let imgHtml = '';
 
         if (photos.length > 1) {
-          const cid = sanitizeId(`detail-carousel-${gpu.Name}`);
+          const cid = `detail-carousel-${Date.now()}`;
           imgHtml = `<div id="${cid}" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            ${photos.map((p, i) => `
-              <div class="carousel-item ${i === 0 ? 'active' : ''}">
-                <img src="${p}" class="d-block w-100" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)}, ${i})">
-              </div>`).join('')}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-          <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-        </div>`;
+            <div class="carousel-inner">
+              ${photos.map((p, i) => `<div class="carousel-item ${i===0?'active':''}"><img src="${p}" class="d-block w-100" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)},${i})"></div>`).join('')}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+          </div>`;
         } else if (photos.length === 1) {
           imgHtml = `<img src="${photos[0]}" class="card-img-top d-block w-100" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)},0)">`;
         }
 
         const inStock = parseInt(gpu.Quantity) > 0;
-        const stockHtml = inStock
-          ? `<span class="stock-in"><i class="fas fa-circle me-1" style="font-size:0.55rem;"></i>In Stock (${gpu.Quantity} available)</span>`
-          : `<span class="stock-out"><i class="fas fa-circle me-1" style="font-size:0.55rem;"></i>Out of Stock</span>`;
+        const stockHtml = inStock ? `<span class="stock-in">In Stock (${gpu.Quantity})</span>` : `<span class="stock-out">Out of Stock</span>`;
 
-        const actionHtml = inStock
-          ? `<div class="d-flex align-items-center gap-3 flex-wrap mt-3">
-            <div>
-              <label style="font-size:0.78rem;color:#aaa;display:block;margin-bottom:4px;">Quantity</label>
-              <select class="form-control" id="qty" style="width:80px;">${genQtyOpts(gpu.Quantity)}</select>
-            </div>
-            <button class="btn-buy" onclick="buyDetailItem('${gpu.Name}','${gpu.Price}')">
-              <i class="fab fa-whatsapp me-2"></i>Buy on WhatsApp
-            </button>
-           </div>`
-          : `<div class="mt-3"><button class="btn-inquiry" onclick="placeInquiry('${gpu.Name}','${gpu.Price}')">
-             <i class="fas fa-bell me-2"></i>Notify Me When Available
-           </button></div>`;
-
-        const description = (gpu.Description && typeof gpu.Description === 'string' && gpu.Description.trim())
-          ? `<div class="description-block"><p>${gpu.Description}</p></div>` : '';
+        const actionHtml = inStock ? `
+          <div class="d-flex gap-3 mt-3">
+            <select class="form-control" id="detail-qty" style="width:90px;">
+              ${genQtyOpts(gpu.Quantity)}
+            </select>
+            <button class="btn-buy" onclick="buyDetail('${gpu.Name}','${gpu.Price}')">Buy on WhatsApp</button>
+          </div>` : `
+          <button class="btn-inquiry mt-3" onclick="placeInquiry('${gpu.Name}','${gpu.Price}')">Notify Me</button>`;
 
         container.innerHTML = `
-        <div class="detail-card">
-          ${imgHtml}
-          <div class="detail-body">
-            <h1 class="detail-title">${gpu.Name}</h1>
-            <div class="detail-meta">
-              <div class="meta-badge"><strong>Price</strong><span>₹${gpu.Price}</span></div>
-              <div class="meta-badge"><strong>Stock Status</strong>${stockHtml}</div>
+          <div class="detail-card">
+            ${imgHtml}
+            <div class="detail-body">
+              <h1 class="detail-title">${gpu.Name}</h1>
+              <div class="detail-meta">
+                <div class="meta-badge"><strong>Price</strong><span>₹${gpu.Price}</span></div>
+                <div class="meta-badge"><strong>Stock</strong>${stockHtml}</div>
+              </div>
+              ${actionHtml}
             </div>
-            ${description}
-            ${actionHtml}
-          </div>
-        </div>`;
-      } catch (err) {
-        console.error(err);
-        container.innerHTML = '<p style="color:#f87171;text-align:center;padding:40px 0;">Error loading details. Please try again later.</p>';
+          </div>`;
+      } catch (e) {
+        console.error(e);
+        container.innerHTML = '<p style="color:#f87171;text-align:center;padding:40px 0;">Error loading details.</p>';
       }
     }
 
-    function buyDetailItem(name, price) {
-      const qty = document.getElementById('qty').value;
-      const msg = `*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price * qty}\n\nPlease confirm my order.`;
-      window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`, '_blank');
+    // Helper functions
+    async function getLocalImagePaths(folder) {
+      const paths = [];
+      for (let i=1; i<=5; i++) {
+        const p = `assets/img/gpu/${folder}/photo${i}.jpeg`;
+        try {
+          const r = await fetch(p);
+          if (r.ok) paths.push(p);
+        } catch(e){}
+      }
+      return paths.length ? paths : ['assets/img/placeholder.jpg'];
     }
 
-    // Make sure modal functions are available
-    window.openFS = openFS;
-    window.closeFullScreen = closeFullScreen;
-    window.zoomImage = zoomImage;
-    window.placeInquiry = placeInquiry;
+    function genQtyOpts(max) {
+      let o = '';
+      for (let i=1; i<=Math.min(max,10); i++) o += `<option value="${i}">${i}</option>`;
+      return o;
+    }
+
+    function buyDetail(name, price) {
+      const qty = document.getElementById('detail-qty').value;
+      const msg = `*Purchase*\nItem: ${name}\nPrice: ₹${price}\nQty: ${qty}`;
+      window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
     // Initialize
     document.addEventListener('DOMContentLoaded', loadGPUDetails);
   </script>
 </body>
-
 </html>
