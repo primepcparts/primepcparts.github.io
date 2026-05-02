@@ -1,7 +1,4 @@
-// ================================================
-// assets/js/main.js - FIXED VERSION
-// ================================================
-
+// assets/js/main.js - ROBUST VERSION (Handles empty rows)
 const CONFIG = {
   whatsappNumber: "918275433068"
 };
@@ -15,9 +12,11 @@ function initProductPage(sheetName, containerId, imageFolder, detailsPage = fals
 
   fetch(sheetUrl)
     .then(r => r.json())
-    .then(data => {
-      allData = data.filter(item => 
+    .then(rawData => {
+      allData = rawData.filter(item => 
+        item && 
         item.Name && 
+        item.Name.trim() !== "" &&
         item.Price && 
         !isNaN(parseFloat(item.Price))
       );
@@ -28,14 +27,14 @@ function initProductPage(sheetName, containerId, imageFolder, detailsPage = fals
       }
 
       allData.sort((a, b) => {
-        const sa = (a.Quantity > 0) ? 1 : 0;
-        const sb = (b.Quantity > 0) ? 1 : 0;
+        const sa = parseInt(a.Quantity || 0) > 0 ? 1 : 0;
+        const sb = parseInt(b.Quantity || 0) > 0 ? 1 : 0;
         return sb - sa || parseFloat(a.Price) - parseFloat(b.Price);
       });
 
       renderPage(1, containerId, imageFolder, detailsPage);
     })
-    .catch(err => console.error("Data load error:", err));
+    .catch(err => console.error("Failed to load sheet:", err));
 }
 
 async function renderCards(data, start, end, containerId, imageFolder, detailsPage) {
@@ -50,25 +49,15 @@ async function renderCards(data, start, end, containerId, imageFolder, detailsPa
 
   for (let i = start; i < end; i++) {
     const item = data[i];
-    if (!item.PhotoFolder) continue; // Skip items without folder
+    if (!item || !item.Name) continue;
 
-    const photos = await getLocalImagePaths(item.PhotoFolder, imageFolder);
+    const photos = item.PhotoFolder ? await getLocalImagePaths(item.PhotoFolder, imageFolder) : [];
 
     let imgHtml = '';
-    if (photos.length > 1) {
-      const cid = `c-${i}`;
-      imgHtml = `<div id="${cid}" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          ${photos.map((p, pi) => `
-            <div class="carousel-item ${pi === 0 ? 'active' : ''}">
-              <img src="${p}" class="d-block w-100 card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)}, ${pi})">
-            </div>`).join('')}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-        <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-      </div>`;
-    } else if (photos.length === 1) {
+    if (photos.length > 0) {
       imgHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)}, 0)">`;
+    } else {
+      imgHtml = `<div class="card-icon-placeholder" style="height:180px;background:#1e2a44;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image fa-3x" style="color:#555"></i></div>`;
     }
 
     const inStock = parseInt(item.Quantity || 0) > 0;
@@ -82,8 +71,7 @@ async function renderCards(data, start, end, containerId, imageFolder, detailsPa
         <div class="card">
           ${imgHtml}
           <div class="card-body">
-            <h5 class="card-title" 
-                onclick="${detailsPage ? `viewDetails('${encodeURIComponent(item.Name)}')` : ''}"
+            <h5 class="card-title" onclick="${detailsPage ? `viewDetails('${encodeURIComponent(item.Name)}')` : ''}" 
                 style="${detailsPage ? 'cursor:pointer;' : 'cursor:default;color:#fff;'}">
               ${item.Name}
             </h5>
@@ -100,7 +88,7 @@ async function renderCards(data, start, end, containerId, imageFolder, detailsPa
   }
 }
 
-// Rest of functions (applyFiltersLogic, renderPage, etc.)
+// Other functions (same as before)
 function renderPage(page, containerId, imageFolder, detailsPage) {
   currentPage = page;
   const filtered = applyFiltersLogic();
@@ -145,32 +133,31 @@ async function getLocalImagePaths(folder, baseFolder) {
       if (r.ok) paths.push(p);
     } catch(e) {}
   }
-  return paths.length ? paths : ['assets/img/placeholder.jpg'];
+  return paths;
 }
 
 function genQtyOpts(max) {
   let o = '';
-  for (let i = 1; i <= Math.min(max || 1, 10); i++) o += `<option value="${i}">${i}</option>`;
+  for (let i = 1; i <= Math.min(parseInt(max)||1, 10); i++) o += `<option value="${i}">${i}</option>`;
   return o;
 }
 
 function openFS(photos, idx) {
+  if (!photos || !photos.length) return;
   const modal = document.getElementById('fullScreenModal');
   const img = document.getElementById('fullScreenImage');
-  let ci = idx;
-  img.src = photos[ci]; 
-  img.style.transform = 'scale(1)';
+  img.src = photos[idx];
   modal.style.display = 'flex';
 }
 
 function buyItem(name, price, idx) {
   const qty = document.getElementById(`qty-${idx}`)?.value || 1;
-  const msg = `*PrimePcParts - Purchase Inquiry*\nItem: ${name}\nPrice: ₹${price}\nQty: ${qty}`;
+  const msg = `*PrimePcParts*\nItem: ${name}\nPrice: ₹${price}\nQty: ${qty}`;
   window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function placeInquiry(name, price) {
-  const msg = `*PrimePcParts - Stock Inquiry*\nItem: ${name}\nPrice: ₹${price}\nOut of stock.`;
+  const msg = `*PrimePcParts - Inquiry*\nItem: ${name}\nPrice: ₹${price}\nOut of stock.`;
   window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
@@ -178,8 +165,9 @@ function viewDetails(encodedName) {
   window.location.href = `gpu-details.html?name=${encodedName}`;
 }
 
-// Back to Top
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('backToTop');
-  if (btn) btn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+  if (btn) {
+    window.addEventListener('scroll', () => btn.style.display = window.scrollY > 300 ? 'flex' : 'none');
+  }
 });
