@@ -1,173 +1,161 @@
 // ================================================
-// assets/js/main.js - Based on your original working code
+// assets/js/main.js - FINAL WORKING VERSION
 // ================================================
 
-const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
+console.log("%c✅ PrimePcParts Main JS Loaded Successfully", "color: lime; font-weight: bold");
+
 let allData = [];
-const itemsPerPage = 6;
 let currentPage = 1;
+const itemsPerPage = 6;
 
-async function initGPUPage() {
-  try {
-    const response = await fetch(sheetUrl);
-    const data = await response.json();
+const CONFIG = {
+  whatsappNumber: "918275433068"
+};
 
-    allData = data.filter(item => {
-      const isValid = item.Name && typeof item.Name === 'string' &&
-                     item.Price && !isNaN(parseFloat(item.Price)) &&
-                     item.Quantity !== undefined && !isNaN(parseInt(item.Quantity)) &&
-                     item.PhotoFolder && typeof item.PhotoFolder === 'string';
-      if (!isValid) console.warn('Invalid row:', item);
-      return isValid;
+// Initialize any product page
+function initProductPage(sheetName, containerId, imageFolder = 'gpu', enableDetails = true) {
+  const sheetUrl = `https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/${sheetName}`;
+
+  fetch(sheetUrl)
+    .then(r => r.json())
+    .then(data => {
+      allData = data.filter(item => item && item.Name && item.Price && !isNaN(parseFloat(item.Price)));
+
+      if (allData.length === 0) {
+        document.getElementById(containerId).innerHTML = `<p class="text-center py-5" style="color:#aaa;">No products available at the moment.</p>`;
+        return;
+      }
+
+      allData.sort((a, b) => {
+        const stockA = parseInt(a.Quantity || 0) > 0 ? 1 : 0;
+        const stockB = parseInt(b.Quantity || 0) > 0 ? 1 : 0;
+        return stockB - stockA || parseFloat(a.Price) - parseFloat(b.Price);
+      });
+
+      renderPage(1, containerId, imageFolder, enableDetails);
+    })
+    .catch(err => {
+      console.error("Failed to load data:", err);
+      document.getElementById(containerId).innerHTML = `<p class="text-center py-5" style="color:#f87171;">Unable to load products. Please refresh.</p>`;
     });
-
-    if (allData.length === 0) {
-      document.getElementById('graphics-cards-container').innerHTML = '<p class="text-center py-4" style="color:#aaa;">No graphics cards available.</p>';
-      return;
-    }
-
-    allData.sort((a, b) => {
-      const stockA = a.Quantity > 0 ? 1 : 0;
-      const stockB = b.Quantity > 0 ? 1 : 0;
-      if (stockA !== stockB) return stockB - stockA;
-      return parseFloat(a.Price) - parseFloat(b.Price);
-    });
-
-    renderPage(1);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    //document.getElementById('graphics-cards-container').innerHTML = '<p class="text-center py-4" style="color:#f87171;">Error loading data. Please try again later.</p>';
-  }
 }
 
-function renderCards(data, startIndex, endIndex) {
-  const container = document.getElementById('graphics-cards-container');
+function renderPage(page, containerId, imageFolder, enableDetails) {
+  currentPage = page;
+  const filtered = applyFiltersLogic();
+  const start = (page - 1) * itemsPerPage;
+  renderCards(filtered, start, start + itemsPerPage, containerId, imageFolder, enableDetails);
+  renderPagination(filtered.length);
+}
+
+function applyFiltersLogic() {
+  const nameFilter = (document.getElementById('filter-name')?.value || '').toLowerCase();
+  const minPrice = parseFloat(document.getElementById('filter-price-min')?.value) || 0;
+  const maxPrice = parseFloat(document.getElementById('filter-price-max')?.value) || Infinity;
+  const stockFilter = document.getElementById('filter-stock')?.value || 'all';
+
+  return allData.filter(item => {
+    const nameMatch = (item.Name || '').toLowerCase().includes(nameFilter);
+    const price = parseFloat(item.Price) || 0;
+    const priceMatch = price >= minPrice && price <= maxPrice;
+    const stockMatch = stockFilter === 'all' || 
+                      (stockFilter === 'in-stock' && parseInt(item.Quantity) > 0) ||
+                      (stockFilter === 'out-of-stock' && parseInt(item.Quantity) === 0);
+    return nameMatch && priceMatch && stockMatch;
+  });
+}
+
+async function renderCards(data, start, end, containerId, imageFolder, enableDetails) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
   container.innerHTML = '';
 
-  const slicedData = data.slice(startIndex, endIndex);
+  if (data.length === 0) {
+    container.innerHTML = `<p class="text-center py-4" style="color:#aaa;">No items match your filters.</p>`;
+    return;
+  }
 
-  slicedData.forEach(async (item, index) => {
-    const globalIndex = startIndex + index;
-    const photos = await getLocalImagePaths(item.PhotoFolder);
+  for (let i = start; i < end && i < data.length; i++) {
+    const item = data[i];
+    const photos = item.PhotoFolder ? await getLocalImagePaths(item.PhotoFolder, imageFolder) : [];
 
-    let carouselHtml = '';
-    if (photos.length > 1) {
-      const carouselId = `carousel-${globalIndex}`;
-      carouselHtml = `
-        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            ${photos.map((photo, pi) => `
-              <div class="carousel-item ${pi === 0 ? 'active' : ''}">
-                <img src="${photo}" class="d-block w-100 card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, ${pi})">
-              </div>`).join('')}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-          <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-        </div>`;
-    } else if (photos.length === 1) {
-      carouselHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFullScreenCarousel(${JSON.stringify(photos)}, 0)">`;
-    }
+    let imgHtml = photos.length > 0 
+      ? `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)},0)">`
+      : `<div style="height:180px;background:#1e2a44;display:flex;align-items:center;justify-content:center;color:#555;"><i class="fas fa-image fa-3x"></i></div>`;
 
-    const stockStatus = item.Quantity > 0 ? `<span class="stock-in">In Stock</span>` : `<span class="stock-out">Out of Stock</span>`;
-    const actionHtml = item.Quantity > 0 ? `
-      <div class="form-group">
-        <label>Qty:</label>
-        <select class="form-control" id="quantity-${globalIndex}">${generateQuantityOptions(item.Quantity)}</select>
-      </div>
-      <button class="btn-buy" onclick="buyItem('${item.Name}', '${item.Price}', ${globalIndex})">Buy It</button>` : `
-      <button class="btn-inquiry" onclick="placeInquiry('${item.Name}', '${item.Price}')">Notify Me</button>`;
+    const inStock = parseInt(item.Quantity || 0) > 0;
+
+    const actionHtml = inStock 
+      ? `<button class="btn-buy w-100" onclick="buyItem('${item.Name}','${item.Price}',${i})">Buy on WhatsApp</button>`
+      : `<button class="btn-inquiry w-100" onclick="placeInquiry('${item.Name}','${item.Price}')">Notify Me</button>`;
 
     container.insertAdjacentHTML('beforeend', `
       <div class="col-6 col-md-4">
-        <div class="card">
-          ${carouselHtml}
+        <div class="card h-100">
+          ${imgHtml}
           <div class="card-body">
-            <h5 class="card-title" onclick="viewGpuDetails('${encodeURIComponent(item.Name)}')">${item.Name}</h5>
+            <h5 class="card-title" onclick="${enableDetails ? `viewDetails('${encodeURIComponent(item.Name)}')` : ''}" style="${enableDetails ? 'cursor:pointer' : 'cursor:default;color:#fff;'}">
+              ${item.Name}
+            </h5>
             <p class="card-text"><strong>₹${item.Price}</strong></p>
-            <p class="card-text">${stockStatus}</p>
+            <p class="card-text"><span class="${inStock ? 'stock-in' : 'stock-out'}">${inStock ? 'In Stock' : 'Out of Stock'}</span></p>
             ${actionHtml}
           </div>
         </div>
       </div>
     `);
-  });
+  }
 }
 
-function renderPage(page) {
-  currentPage = page;
-  const filteredData = applyFiltersLogic();
-  const start = (page - 1) * itemsPerPage;
-  renderCards(filteredData, start, start + itemsPerPage);
-  renderPagination(filteredData.length);
+function renderPagination(total) {
+  const pagination = document.getElementById('pagination');
+  if (!pagination) return;
+  pagination.innerHTML = '';
+  const totalPages = Math.ceil(total / itemsPerPage);
+  for (let i = 1; i <= totalPages; i++) {
+    pagination.innerHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="renderPage(${i});return false;">${i}</a></li>`;
+  }
 }
 
-function applyFiltersLogic() {
-  const nameFilter = document.getElementById('filter-name').value.toLowerCase();
-  const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
-  const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
-  const stockFilter = document.getElementById('filter-stock').value;
-
-  return allData.filter(item => {
-    const matchesName = (item.Name || '').toLowerCase().includes(nameFilter);
-    const price = parseFloat(item.Price) || 0;
-    const matchesPrice = price >= minPrice && price <= maxPrice;
-    const matchesStock = stockFilter === 'all' || 
-                        (stockFilter === 'in-stock' && item.Quantity > 0) ||
-                        (stockFilter === 'out-of-stock' && item.Quantity === 0);
-    return matchesName && matchesPrice && matchesStock;
-  });
-}
-
-function applyFilters() {
-  renderPage(1);
-}
-
-async function getLocalImagePaths(folderName) {
-  const imagePaths = [];
+async function getLocalImagePaths(folder, baseFolder) {
+  const paths = [];
   for (let i = 1; i <= 5; i++) {
-    const path = `assets/img/gpu/${folderName}/photo${i}.jpeg`;
+    const path = `assets/img/${baseFolder}/${folder}/photo${i}.jpeg`;
     try {
       const res = await fetch(path);
-      if (res.ok) imagePaths.push(path);
-    } catch (e) {}
+      if (res.ok) paths.push(path);
+    } catch(e) {}
   }
-  return imagePaths.length ? imagePaths : ['assets/img/placeholder.jpg'];
+  return paths;
 }
 
-function generateQuantityOptions(max) {
-  let options = '';
-  for (let i = 1; i <= Math.min(max, 10); i++) {
-    options += `<option value="${i}">${i}</option>`;
-  }
-  return options;
-}
-
-function openFullScreenCarousel(photos, index) {
-  const modal = document.getElementById('fullScreenModal');
-  const img = document.getElementById('fullScreenImage');
-  if (modal && img) {
-    modal.style.display = 'flex';
-    img.src = photos[index];
-  }
-}
-
-function buyItem(name, price, index) {
-  const qty = document.getElementById(`quantity-${index}`).value;
-  const msg = `*PrimePcParts Purchase*\nItem: ${name}\nPrice: ₹${price}\nQty: ${qty}`;
-  window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`, '_blank');
+function buyItem(name, price, idx) {
+  const qty = document.getElementById(`qty-${idx}`) ? document.getElementById(`qty-${idx}`).value : 1;
+  const msg = `I want to buy:\n${name}\nPrice: ₹${price}\nQty: ${qty}`;
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function placeInquiry(name, price) {
-  const msg = `*PrimePcParts Inquiry*\nItem: ${name}\nPrice: ₹${price}\nOut of stock.`;
-  window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`, '_blank');
+  const msg = `I'm interested in ${name} (₹${price}). Please let me know when available.`;
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function viewGpuDetails(name) {
-  window.location.href = `gpu-details.html?name=${name}`;
+function viewDetails(encodedName) {
+  window.location.href = `gpu-details.html?name=${encodedName}`;
 }
 
-// Initialize
+function openFS(photos, idx) {
+  const modal = document.getElementById('fullScreenModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.getElementById('fullScreenImage').src = photos[idx];
+  }
+}
+
+// Auto-initialize based on container ID
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("✅ GPU Page JS Loaded");
-  initGPUPage();
+  if (document.getElementById('graphics-cards-container')) initProductPage('GPUs', 'graphics-cards-container', 'gpu', true);
+  if (document.getElementById('psu-container')) initProductPage('PSUs', 'psu-container', 'psu', false);
+  if (document.getElementById('cpus-container')) initProductPage('CPUs', 'cpus-container', 'cpu', true);
+  if (document.getElementById('ram-container')) initProductPage('RAMs', 'ram-container', 'ram', false);
 });
