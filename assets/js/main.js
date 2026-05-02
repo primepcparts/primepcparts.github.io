@@ -13,13 +13,13 @@ function initProductPage(sheetName, containerId, imageFolder, detailsPage = null
   fetch(sheetUrl)
     .then(r => r.json())
     .then(data => {
-      allData = data.filter(item => 
+      allData = data.filter(item =>
         item.Name && item.Price && !isNaN(parseFloat(item.Price)) &&
         item.Quantity !== undefined && item.PhotoFolder
       );
 
       if (!allData.length) {
-        document.getElementById(containerId).innerHTML = 
+        document.getElementById(containerId).innerHTML =
           `<p class="text-center py-4" style="color:#aaa;">No products available right now.</p>`;
         return;
       }
@@ -33,7 +33,7 @@ function initProductPage(sheetName, containerId, imageFolder, detailsPage = null
       renderPage(1, containerId, imageFolder, detailsPage);
     })
     .catch(() => {
-      document.getElementById(containerId).innerHTML = 
+      document.getElementById(containerId).innerHTML =
         `<p class="text-center py-4" style="color:#f87171;">Error loading data.</p>`;
     });
 }
@@ -68,26 +68,31 @@ async function renderCards(data, start, end, containerId, imageFolder, detailsPa
     }
 
     const inStock = parseInt(item.Quantity) > 0;
-    const actionHtml = inStock 
+    const actionHtml = inStock
       ? `<div class="form-group"><label>Qty:</label><select class="form-control" id="qty-${i}">${genQtyOpts(item.Quantity)}</select></div>
          <button class="btn-buy" onclick="buyItem('${item.Name}','${item.Price}',${i})"><i class="fab fa-whatsapp me-1"></i>Buy It</button>`
       : `<button class="btn-inquiry" onclick="placeInquiry('${item.Name}','${item.Price}')"><i class="fas fa-bell me-1"></i>Notify Me</button>`;
 
     container.insertAdjacentHTML('beforeend', `
-      <div class="col-6 col-md-4">
-        <div class="card">
-          ${imgHtml}
-          <div class="card-body">
-            <h5 class="card-title ${detailsPage ? `onclick="viewDetails('${encodeURIComponent(item.Name)}')"` : 'style="cursor:default;color:#fff;"'}">
-              ${item.Name}
-            </h5>
-            <p class="card-text"><i class="fas fa-tag me-1" style="color:var(--accent);font-size:0.75rem;"></i><strong>₹${item.Price}</strong></p>
-            <p class="card-text"><i class="fas fa-circle me-1" style="font-size:0.55rem;color:${inStock?'#4ade80':'#f87171'};"></i><span class="${inStock?'stock-in':'stock-out'}">${inStock?'In Stock':'Out of Stock'}</span></p>
-            ${actionHtml}
-          </div>
-        </div>
+  <div class="col-6 col-md-4">
+    <div class="card">
+      ${imgHtml}
+      <div class="card-body">
+        <h5 class="card-title" 
+            onclick="${detailsPage ? `viewDetails('${encodeURIComponent(item.Name)}')` : ''}"
+            style="${detailsPage ? 'cursor:pointer;' : 'cursor:default;color:#fff;'}">
+          ${item.Name}
+        </h5>
+        <p class="card-text"><i class="fas fa-tag me-1" style="color:var(--accent);font-size:0.75rem;"></i><strong>₹${item.Price}</strong></p>
+        <p class="card-text">
+          <i class="fas fa-circle me-1" style="font-size:0.55rem;color:${inStock ? '#4ade80' : '#f87171'};"></i>
+          <span class="${inStock ? 'stock-in' : 'stock-out'}">${inStock ? 'In Stock' : 'Out of Stock'}</span>
+        </p>
+        ${actionHtml}
       </div>
-    `);
+    </div>
+  </div>
+`);
   }
 }
 
@@ -127,7 +132,7 @@ function renderPagination(total) {
   const pg = document.getElementById('pagination');
   pg.innerHTML = '';
   for (let i = 1; i <= pages; i++) {
-    pg.insertAdjacentHTML('beforeend', `<li class="page-item${i===currentPage?' active':''}"><a class="page-link" href="#" onclick="renderPage(${i});return false;">${i}</a></li>`);
+    pg.insertAdjacentHTML('beforeend', `<li class="page-item${i === currentPage ? ' active' : ''}"><a class="page-link" href="#" onclick="renderPage(${i});return false;">${i}</a></li>`);
   }
 }
 
@@ -138,7 +143,7 @@ async function getLocalImagePaths(folder, baseFolder) {
     try {
       const r = await fetch(p);
       if (r.ok) paths.push(p);
-    } catch(e) {}
+    } catch (e) { }
   }
   return paths.length ? paths : ['assets/img/placeholder.jpg'];
 }
@@ -172,14 +177,14 @@ function closeFullScreen() {
 function zoomImage(e) {
   const img = document.getElementById('fullScreenImage');
   e.preventDefault();
-  let s = parseFloat((img.style.transform || 'scale(1)').replace(/[^\d.]/g,'')) || 1;
+  let s = parseFloat((img.style.transform || 'scale(1)').replace(/[^\d.]/g, '')) || 1;
   s = Math.min(Math.max(e.deltaY < 0 ? s * 1.1 : s / 1.1, 1), 5);
   img.style.transform = `scale(${s})`;
 }
 
 function buyItem(name, price, idx) {
   const qty = document.getElementById(`qty-${idx}`).value;
-  const msg = `*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price*qty}\n\nPlease confirm my order.`;
+  const msg = `*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price * qty}\n\nPlease confirm my order.`;
   window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
@@ -199,6 +204,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
       backBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
-    backBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 });
+
+// Add this at the end of assets/js/main.js
+function viewDetails(encodedName) {
+  if (encodedName) {
+    window.location.href = `gpu-details.html?name=${encodedName}`;
+  }
+}
