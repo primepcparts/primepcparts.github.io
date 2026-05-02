@@ -1,4 +1,7 @@
-// assets/js/main.js
+// ================================================
+// assets/js/main.js - PrimePcParts
+// ================================================
+
 const CONFIG = {
   whatsappNumber: "918275433068"
 };
@@ -7,23 +10,26 @@ let allData = [];
 let currentPage = 1;
 const itemsPerPage = 6;
 
-function initProductPage(sheetName, containerId, imageFolder, detailsPage = null) {
+// Initialize Product Listing Page
+function initProductPage(sheetName, containerId, imageFolder, detailsPage = false) {
   const sheetUrl = `https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/${sheetName}`;
 
   fetch(sheetUrl)
     .then(r => r.json())
     .then(data => {
       allData = data.filter(item =>
-        item.Name && item.Price && !isNaN(parseFloat(item.Price)) &&
+        item.Name && typeof item.Name === 'string' &&
+        item.Price && !isNaN(parseFloat(item.Price)) &&
         item.Quantity !== undefined && item.PhotoFolder
       );
 
       if (!allData.length) {
-        document.getElementById(containerId).innerHTML =
-          `<p class="text-center py-4" style="color:#aaa;">No products available right now.</p>`;
+        const cont = document.getElementById(containerId);
+        if (cont) cont.innerHTML = `<p class="text-center py-4" style="color:#aaa;">No products available.</p>`;
         return;
       }
 
+      // Sort: In stock first
       allData.sort((a, b) => {
         const sa = a.Quantity > 0 ? 1 : 0;
         const sb = b.Quantity > 0 ? 1 : 0;
@@ -33,13 +39,14 @@ function initProductPage(sheetName, containerId, imageFolder, detailsPage = null
       renderPage(1, containerId, imageFolder, detailsPage);
     })
     .catch(() => {
-      document.getElementById(containerId).innerHTML =
-        `<p class="text-center py-4" style="color:#f87171;">Error loading data.</p>`;
+      console.error("Failed to load data from sheet");
     });
 }
 
+// Render Cards
 async function renderCards(data, start, end, containerId, imageFolder, detailsPage) {
   const container = document.getElementById(containerId);
+  if (!container) return;
   container.innerHTML = '';
 
   if (!data.length) {
@@ -53,46 +60,47 @@ async function renderCards(data, start, end, containerId, imageFolder, detailsPa
 
     let imgHtml = '';
     if (photos.length > 1) {
-      const cid = `c-${i}`;
+      const cid = `carousel-${i}`;
       imgHtml = `<div id="${cid}" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">${photos.map((p, pi) => `
-          <div class="carousel-item ${pi === 0 ? 'active' : ''}">
-            <img src="${p}" class="d-block w-100 card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)},${pi})">
-          </div>`).join('')}
+        <div class="carousel-inner">
+          ${photos.map((p, pi) => `
+            <div class="carousel-item ${pi === 0 ? 'active' : ''}">
+              <img src="${p}" class="d-block w-100 card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)}, ${pi})">
+            </div>`).join('')}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
         <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
       </div>`;
     } else if (photos.length === 1) {
-      imgHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)},0)">`;
+      imgHtml = `<img src="${photos[0]}" class="card-img-top" alt="${item.Name}" onclick="openFS(${JSON.stringify(photos)}, 0)">`;
     }
 
     const inStock = parseInt(item.Quantity) > 0;
-    const actionHtml = inStock
+    const actionHtml = inStock 
       ? `<div class="form-group"><label>Qty:</label><select class="form-control" id="qty-${i}">${genQtyOpts(item.Quantity)}</select></div>
          <button class="btn-buy" onclick="buyItem('${item.Name}','${item.Price}',${i})"><i class="fab fa-whatsapp me-1"></i>Buy It</button>`
       : `<button class="btn-inquiry" onclick="placeInquiry('${item.Name}','${item.Price}')"><i class="fas fa-bell me-1"></i>Notify Me</button>`;
 
     container.insertAdjacentHTML('beforeend', `
-  <div class="col-6 col-md-4">
-    <div class="card">
-      ${imgHtml}
-      <div class="card-body">
-        <h5 class="card-title" 
-            onclick="${detailsPage ? `viewDetails('${encodeURIComponent(item.Name)}')` : ''}"
-            style="${detailsPage ? 'cursor:pointer;' : 'cursor:default;color:#fff;'}">
-          ${item.Name}
-        </h5>
-        <p class="card-text"><i class="fas fa-tag me-1" style="color:var(--accent);font-size:0.75rem;"></i><strong>₹${item.Price}</strong></p>
-        <p class="card-text">
-          <i class="fas fa-circle me-1" style="font-size:0.55rem;color:${inStock ? '#4ade80' : '#f87171'};"></i>
-          <span class="${inStock ? 'stock-in' : 'stock-out'}">${inStock ? 'In Stock' : 'Out of Stock'}</span>
-        </p>
-        ${actionHtml}
+      <div class="col-6 col-md-4">
+        <div class="card">
+          ${imgHtml}
+          <div class="card-body">
+            <h5 class="card-title" 
+                onclick="${detailsPage ? `viewDetails('${encodeURIComponent(item.Name)}')` : ''}"
+                style="${detailsPage ? 'cursor:pointer;' : 'cursor:default;color:#fff;'}">
+              ${item.Name}
+            </h5>
+            <p class="card-text"><i class="fas fa-tag me-1" style="color:var(--accent);font-size:0.75rem;"></i><strong>₹${item.Price}</strong></p>
+            <p class="card-text">
+              <i class="fas fa-circle me-1" style="font-size:0.55rem;color:${inStock?'#4ade80':'#f87171'};"></i>
+              <span class="${inStock ? 'stock-in' : 'stock-out'}">${inStock ? 'In Stock' : 'Out of Stock'}</span>
+            </p>
+            ${actionHtml}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-`);
+    `);
   }
 }
 
@@ -105,10 +113,10 @@ function renderPage(page, containerId, imageFolder, detailsPage) {
 }
 
 function applyFiltersLogic() {
-  const nm = document.getElementById('filter-name').value.toLowerCase();
-  const mn = parseFloat(document.getElementById('filter-price-min').value) || 0;
-  const mx = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
-  const st = document.getElementById('filter-stock').value;
+  const nm = document.getElementById('filter-name')?.value.toLowerCase() || '';
+  const mn = parseFloat(document.getElementById('filter-price-min')?.value) || 0;
+  const mx = parseFloat(document.getElementById('filter-price-max')?.value) || Infinity;
+  const st = document.getElementById('filter-stock')?.value || 'all';
 
   return allData.filter(item => {
     const n = (item.Name || '').toLowerCase();
@@ -130,9 +138,14 @@ function applyFilters() {
 function renderPagination(total) {
   const pages = Math.ceil(total / itemsPerPage);
   const pg = document.getElementById('pagination');
+  if (!pg) return;
   pg.innerHTML = '';
   for (let i = 1; i <= pages; i++) {
-    pg.insertAdjacentHTML('beforeend', `<li class="page-item${i === currentPage ? ' active' : ''}"><a class="page-link" href="#" onclick="renderPage(${i});return false;">${i}</a></li>`);
+    pg.insertAdjacentHTML('beforeend', `
+      <li class="page-item${i === currentPage ? ' active' : ''}">
+        <a class="page-link" href="#" onclick="renderPage(${i}); return false;">${i}</a>
+      </li>
+    `);
   }
 }
 
@@ -143,7 +156,7 @@ async function getLocalImagePaths(folder, baseFolder) {
     try {
       const r = await fetch(p);
       if (r.ok) paths.push(p);
-    } catch (e) { }
+    } catch(e) {}
   }
   return paths.length ? paths : ['assets/img/placeholder.jpg'];
 }
@@ -154,11 +167,13 @@ function genQtyOpts(max) {
   return o;
 }
 
+// Modal Functions
 function openFS(photos, idx) {
   const modal = document.getElementById('fullScreenModal');
   const img = document.getElementById('fullScreenImage');
   let ci = idx;
-  img.src = photos[ci]; img.style.transform = 'scale(1)';
+  img.src = photos[ci];
+  img.style.transform = 'scale(1)';
   modal.style.display = 'flex';
 
   modal.onclick = e => { if (e.target === modal) closeFullScreen(); };
@@ -182,6 +197,7 @@ function zoomImage(e) {
   img.style.transform = `scale(${s})`;
 }
 
+// Buy & Inquiry
 function buyItem(name, price, idx) {
   const qty = document.getElementById(`qty-${idx}`).value;
   const msg = `*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price * qty}\n\nPlease confirm my order.`;
@@ -193,8 +209,8 @@ function placeInquiry(name, price) {
   window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function viewDetails(encoded) {
-  window.location.href = `gpu-details.html?name=${encoded}`;
+function viewDetails(encodedName) {
+  window.location.href = `gpu-details.html?name=${encodedName}`;
 }
 
 // Back to Top
@@ -207,10 +223,3 @@ document.addEventListener('DOMContentLoaded', () => {
     backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 });
-
-// Add this at the end of assets/js/main.js
-function viewDetails(encodedName) {
-  if (encodedName) {
-    window.location.href = `gpu-details.html?name=${encodedName}`;
-  }
-}
