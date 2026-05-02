@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
 </head>
+
 <body>
 
   <!-- Offer Banner -->
@@ -34,7 +36,8 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="https://primepcparts.github.io/">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="gpu.html"><i class="fas fa-microchip me-1"></i>Graphics Cards</a></li>
+          <li class="nav-item"><a class="nav-link active" href="gpu.html"><i class="fas fa-microchip me-1"></i>Graphics
+              Cards</a></li>
           <li class="nav-item"><a class="nav-link" href="cpu.html">CPUs</a></li>
           <li class="nav-item"><a class="nav-link" href="ram.html">RAM</a></li>
           <li class="nav-item"><a class="nav-link" href="psu.html">PSUs</a></li>
@@ -99,9 +102,12 @@
         <div class="col-12 col-md-4">
           <p class="footer-heading">Contact</p>
           <ul class="footer-links">
-            <li><a href="tel:+918275433068"><i class="fas fa-phone me-2" style="color:var(--accent);"></i>+91 82754 33068</a></li>
-            <li><a href="mailto:primepcpartspune@gmail.com"><i class="fas fa-envelope me-2" style="color:var(--accent);"></i>primepcpartspune@gmail.com</a></li>
-            <li><a href="https://wa.me/918275433068"><i class="fab fa-whatsapp me-2" style="color:#25d366;"></i>Chat on WhatsApp</a></li>
+            <li><a href="tel:+918275433068"><i class="fas fa-phone me-2" style="color:var(--accent);"></i>+91 82754
+                33068</a></li>
+            <li><a href="mailto:primepcpartspune@gmail.com"><i class="fas fa-envelope me-2"
+                  style="color:var(--accent);"></i>primepcpartspune@gmail.com</a></li>
+            <li><a href="https://wa.me/918275433068"><i class="fab fa-whatsapp me-2" style="color:#25d366;"></i>Chat on
+                WhatsApp</a></li>
           </ul>
         </div>
       </div>
@@ -113,116 +119,139 @@
   <!-- WhatsApp Float -->
   <div class="whatsapp-float">
     <span class="whatsapp-label">Chat with us!</span>
-    <a href="https://wa.me/918275433068?text=Hi!%20I%20need%20help%20with%20a%20GPU." class="whatsapp-btn" target="_blank">
+    <a href="https://wa.me/918275433068?text=Hi!%20I%20need%20help%20with%20a%20GPU." class="whatsapp-btn"
+      target="_blank">
       <i class="fab fa-whatsapp"></i>
     </a>
   </div>
   <div id="backToTop"><i class="fas fa-chevron-up"></i></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
   <script>
+    // ==================== GPU DETAILS PAGE ====================
+
     const sheetUrl = 'https://opensheet.elk.sh/1iUhbStYP6d63-AFyalNRyLUAhsEhDf7JF0pzKoqYK6M/GPUs';
     const urlParams = new URLSearchParams(window.location.search);
     const gpuName = urlParams.get('name') ? decodeURIComponent(urlParams.get('name')) : null;
 
-    if (!gpuName) {
-      document.getElementById('gpu-details-container').innerHTML = '<p style="color:#aaa;text-align:center;padding:40px 0;">No GPU specified. <a href="gpu.html" style="color:var(--accent);">Browse all GPUs</a></p>';
-    } else {
-      fetch(sheetUrl)
-        .then(r => r.json())
-        .then(async data => {
-          const gpu = data.find(item => item.Name === gpuName);
-          if (!gpu) {
-            document.getElementById('gpu-details-container').innerHTML = '<p style="color:#f87171;text-align:center;padding:40px 0;">GPU not found. <a href="gpu.html" style="color:var(--accent);">Go back</a></p>';
-            return;
-          }
+    async function loadGPUDetails() {
+      const container = document.getElementById('gpu-details-container');
 
-          const photos = await getLocalImagePaths(gpu.PhotoFolder);
-          let imgHtml = '';
-          if (photos.length > 1) {
-            const cid = sanitizeId(`c-${gpu.Name.replace(/\s+/g,'-')}`);
-            imgHtml = `<div id="${cid}" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">${photos.map((p,pi)=>`<div class="carousel-item${pi===0?' active':''}"><img src="${p}" class="d-block" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)},${pi})"></div>`).join('')}</div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-            </div>`;
-          } else {
-            imgHtml = `<img src="${photos[0]}" class="card-img-top d-block w-100" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)},0)">`;
-          }
-
-          const inStock = parseInt(gpu.Quantity) > 0;
-          const stockHtml = inStock ? `<span class="stock-in"><i class="fas fa-circle me-1" style="font-size:0.55rem;"></i>In Stock (${gpu.Quantity} available)</span>` : `<span class="stock-out"><i class="fas fa-circle me-1" style="font-size:0.55rem;"></i>Out of Stock</span>`;
-          const actionHtml = inStock
-            ? `<div class="d-flex align-items-center gap-3 flex-wrap mt-3">
-                <div>
-                  <label style="font-size:0.78rem;color:#aaa;display:block;margin-bottom:4px;">Quantity</label>
-                  <select class="form-control" id="qty" style="width:80px;">${genQtyOpts(gpu.Quantity)}</select>
-                </div>
-                <button class="btn-buy" onclick="buyItem('${gpu.Name}','${gpu.Price}')"><i class="fab fa-whatsapp me-2"></i>Buy on WhatsApp</button>
-               </div>`
-            : `<div class="mt-3"><button class="btn-inquiry" onclick="placeInquiry('${gpu.Name}','${gpu.Price}')"><i class="fas fa-bell me-2"></i>Notify Me When Available</button></div>`;
-
-          const description = (gpu.Description && typeof gpu.Description==='string' && gpu.Description.trim())
-            ? gpu.Description : null;
-
-          document.title = `PrimePcParts | ${gpu.Name}`;
-
-          document.getElementById('gpu-details-container').innerHTML = `
-            <div class="detail-card">
-              ${imgHtml}
-              <div class="detail-body">
-                <h1 class="detail-title">${gpu.Name}</h1>
-                <div class="detail-meta">
-                  <div class="meta-badge"><strong>Price</strong><span>₹${gpu.Price}</span></div>
-                  <div class="meta-badge"><strong>Stock Status</strong>${stockHtml}</div>
-                </div>
-                ${description ? `<div class="description-block"><p>${description}</p></div>` : ''}
-                ${actionHtml}
-              </div>
-            </div>`;
-        })
-        .catch(() => document.getElementById('gpu-details-container').innerHTML = '<p style="color:#f87171;text-align:center;padding:40px 0;">Error loading details. Please try again later.</p>');
-    }
-
-    async function getLocalImagePaths(folder) {
-      const paths = [];
-      for (let i=1;i<=5;i++) {
-        const p=`assets/img/gpu/${folder}/photo${i}.jpeg`;
-        try { const r=await fetch(p); if(r.ok) paths.push(p); } catch(e){}
+      if (!gpuName) {
+        container.innerHTML = `
+        <p style="color:#aaa;text-align:center;padding:60px 0;">
+          No GPU specified. <a href="gpu.html" style="color:var(--accent);">Browse all GPUs</a>
+        </p>`;
+        return;
       }
-      return paths.length ? paths : ['assets/img/placeholder.jpg'];
-    }
-    function sanitizeId(id) { return id.replace(/[^\w-]/g,'_'); }
-    function genQtyOpts(max) { let o=''; for(let i=1;i<=Math.min(max,10);i++) o+=`<option value="${i}">${i}</option>`; return o; }
 
-    function openFS(photos, idx) {
-      const modal=document.getElementById('fullScreenModal'), img=document.getElementById('fullScreenImage');
-      let ci=idx; img.src=photos[ci]; img.style.transform='scale(1)'; modal.style.display='flex';
-      modal.onclick = e => { if(e.target===modal) closeFullScreen(); };
-      document.onkeydown = e => {
-        if(e.key==='ArrowRight'){ci=(ci+1)%photos.length;img.src=photos[ci];}
-        else if(e.key==='ArrowLeft'){ci=(ci-1+photos.length)%photos.length;img.src=photos[ci];}
-        else if(e.key==='Escape') closeFullScreen();
-      };
-    }
-    function closeFullScreen() { document.getElementById('fullScreenModal').style.display='none'; document.onkeydown=null; }
-    function zoomImage(e) {
-      const img=document.getElementById('fullScreenImage'); e.preventDefault();
-      let s=parseFloat((img.style.transform||'scale(1)').replace('scale(','').replace(')','')); 
-      s=Math.min(Math.max(e.deltaY<0?s*1.1:s/1.1,1),5); img.style.transform=`scale(${s})`;
-    }
-    function buyItem(name,price) {
-      const qty=document.getElementById('qty').value;
-      const msg=`*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price*qty}\n\nPlease confirm my order.`;
-      window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`,'_blank');
-    }
-    function placeInquiry(name,price) {
-      const msg=`*PrimePcParts - Stock Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\n\nOut of stock — please notify me when available.`;
-      window.open(`https://wa.me/918275433068?text=${encodeURIComponent(msg)}`,'_blank');
+      try {
+        const response = await fetch(sheetUrl);
+        const data = await response.json();
+        const gpu = data.find(item => item.Name === gpuName);
+
+        if (!gpu) {
+          container.innerHTML = `
+          <p style="color:#f87171;text-align:center;padding:60px 0;">
+            GPU not found. <a href="gpu.html" style="color:var(--accent);">Go back to GPUs</a>
+          </p>`;
+          return;
+        }
+
+        // Get images
+        const photos = await getLocalImagePaths(gpu.PhotoFolder, 'gpu');
+
+        // Build carousel or single image
+        let imgHtml = '';
+        if (photos.length > 1) {
+          const cid = sanitizeId(`detail-carousel-${gpu.Name}`);
+          imgHtml = `
+          <div id="${cid}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              ${photos.map((p, i) => `
+                <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                  <img src="${p}" class="d-block w-100" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)}, ${i})">
+                </div>`).join('')}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${cid}" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${cid}" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>`;
+        } else if (photos.length === 1) {
+          imgHtml = `<img src="${photos[0]}" class="detail-img" alt="${gpu.Name}" onclick="openFS(${JSON.stringify(photos)}, 0)">`;
+        }
+
+        const inStock = parseInt(gpu.Quantity) > 0;
+        const stockHtml = inStock
+          ? `<span class="stock-in"><i class="fas fa-circle me-1"></i>In Stock (${gpu.Quantity})</span>`
+          : `<span class="stock-out"><i class="fas fa-circle me-1"></i>Out of Stock</span>`;
+
+        const actionHtml = inStock
+          ? `
+          <div class="d-flex align-items-end gap-3 mt-4">
+            <div>
+              <label style="font-size:0.8rem;color:#aaa;">Quantity</label>
+              <select class="form-control" id="detail-qty" style="width:100px;">
+                ${genQtyOpts(gpu.Quantity)}
+              </select>
+            </div>
+            <button class="btn-buy" onclick="buyDetailItem('${gpu.Name}', '${gpu.Price}')">
+              <i class="fab fa-whatsapp me-2"></i>Buy on WhatsApp
+            </button>
+          </div>`
+          : `
+          <button class="btn-inquiry mt-4" onclick="placeInquiry('${gpu.Name}','${gpu.Price}')">
+            <i class="fas fa-bell me-2"></i>Notify Me When Available
+          </button>`;
+
+        const description = gpu.Description && gpu.Description.trim()
+          ? `<div class="description-block"><p>${gpu.Description}</p></div>`
+          : '';
+
+        container.innerHTML = `
+        <div class="detail-card">
+          ${imgHtml}
+          <div class="detail-body">
+            <h1 class="detail-title">${gpu.Name}</h1>
+            <div class="detail-meta">
+              <div class="meta-badge">
+                <strong>Price</strong>
+                <span>₹${gpu.Price}</span>
+              </div>
+              <div class="meta-badge">
+                <strong>Stock Status</strong>
+                ${stockHtml}
+              </div>
+            </div>
+            ${description}
+            ${actionHtml}
+          </div>
+        </div>
+      `;
+
+        document.title = `PrimePcParts | ${gpu.Name}`;
+
+      } catch (err) {
+        container.innerHTML = `
+        <p style="color:#f87171;text-align:center;padding:60px 0;">
+          Error loading details. Please try again later.
+        </p>`;
+      }
     }
 
-    window.addEventListener('scroll',()=>{ document.getElementById('backToTop').style.display=window.scrollY>300?'flex':'none'; });
-    document.getElementById('backToTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    // Helper for detail page
+    function buyDetailItem(name, price) {
+      const qty = document.getElementById('detail-qty').value;
+      const msg = `*PrimePcParts - Purchase Inquiry*\n\nItem: ${name}\nPrice: ₹${price}\nQuantity: ${qty}\nTotal: ₹${price * qty}\n\nPlease confirm my order.`;
+      window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', loadGPUDetails);
   </script>
 </body>
 </html>
